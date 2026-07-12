@@ -101,7 +101,7 @@ export default function Dashboard() {
                             <div className="bmi-label" style={{ color: 'var(--text-muted)', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px', width: '100%' }}>
                                 <BmiIcon width="32" height="32" color={bmiColor} style={{ flexShrink: 0 }} />
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                                    <span style={{ whiteSpace: 'nowrap', fontSize: '0.9rem' }}>شاخص BMI</span>
+                                    <span style={{ whiteSpace: 'nowrap', fontSize: '0.9rem' }}>BMI</span>
                                     <span style={{ whiteSpace: 'nowrap', fontSize: '0.65rem', opacity: 0.7, marginTop: '-2px' }}>شاخص توده بدنی</span>
                                 </div>
                             </div>
