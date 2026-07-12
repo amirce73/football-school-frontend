@@ -16,8 +16,8 @@ export default function Dashboard() {
     let bmiColor = '#475569';
     let bmiBg = '#f1f5f9';
     if (user?.weight && user?.height) {
-        const w = parseFloat(user.weight);
-        const h = parseFloat(user.height) / 100;
+        const w = Number(user.weight);
+        const h = Number(user.height) / 100;
         if (w > 0 && h > 0) {
             const bmi = parseFloat((w / (h * h)).toFixed(1));
             bmiVal = bmi.toString();
