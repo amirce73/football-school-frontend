@@ -1,0 +1,1196 @@
+﻿<!-- 📱 TOP NAVBAR -->
+<nav class="top-navbar">
+    <div class="navbar-container">
+        <!-- Header Profile & Dropdown -->
+        <div class="header-profile" onclick="toggleProfileMenu(event)">
+            <div class="header-profile-avatar">
+                <img src="src/images/messi-profile.jpg" alt="user" onerror="this.src=''">
+            </div>
+            <div>
+                <div class="header-profile-info">
+                    <span class="name">محمدرضا قربانی</span>
+                    <span class="meta"><i class="fa fa-calendar-check-o" style="margin-left:4px"></i>عضویت:
+                        ۱۴۰۰/۰۹/۱۷</span>
+                </div>
+            </div>
+            <i class="fa fa-angle-down" style="color: var(--text-muted); margin-right: 4px; font-size: 1.1rem;"></i>
+
+            <div id="profileMenu" class="profile-menu">
+                <div style="padding: 16px; border-bottom: 1px solid var(--border); background: #f8fafc;">
+                    <div style="display: flex; flex-direction: row;">
+                        <div
+                            style="font-weight: 800;color: var(--text-dark);margin-bottom: 12px;font-size: 1.05rem;text-align: center;display: flex;justify-content: center;align-items: center;">
+                            محمدرضا قربانی</div>
+                        <div style="margin-right: auto; margin-bottom: 12px; display: flex; justify-content: center;"
+                            onclick="switchTab('verification')">
+                            <span style="border-color: #334155" class="badge-verify unverified"><i
+                                    class="fa fa-exclamation-circle"></i>استعلام هویت نشده</span>
+                        </div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">
+                        <span>کد ملی:</span> <strong>۱۲۳۴۵۶۷۸۹۰</strong>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">
+                        <span>تاریخ تولد:</span> <strong>۱۳۷۵/۰۵/۱۲</strong>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">
+                        <span>سن:</span> <strong>۳۰ سال</strong>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
+                        <span>رده سنی:</span> <strong>بزرگسالان</strong>
+                    </div>
+                </div>
+
+                <a href="#" style="color: #334155;" onclick="switchTab('verification')"><i class="fa fa-shield"></i>
+                    تایید هویت و مدارک</a>
+                <a href="#" style="color: var(--danger); padding: 12px 16px;"><i class="fa fa-sign-out"></i> خروج از
+                    حساب</a>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <!-- Bulletin / Notifications Button -->
+            <button class="btn-noti" title="اعلان‌ها" onclick="switchTab('bulletin')">
+                <i class="fa fa-bell-o"></i>
+                <span class="badge">۳</span>
+            </button>
+            <a href="#" class="btn-app-header" title="دانلود اپلیکیشن">
+                <i class="fa fa-android"></i> <span>دانلود اپ</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- 💻 DESKTOP SIDEBAR -->
+<aside class="desktop-sidebar">
+    <div
+        style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); margin-bottom: 16px; padding-right: 8px;">
+        منوی اصلی</div>
+    <div class="dnav-item active" onclick="switchTab('dashboard')"><i class="fa fa-home"></i> خانه</div>
+    <div class="dnav-item" onclick="switchTab('profile-hub')"><i class="fa fa-user"></i> پروفایل</div>
+    <div class="dnav-item" onclick="switchTab('registration')"><i class="fa fa-edit"></i> ثبت‌نام</div>
+    <div class="dnav-item" onclick="switchTab('financial-hub')"><i class="fa fa-credit-card"></i> مالی</div>
+    <div class="dnav-item" onclick="switchTab('specialized-hub')"><i class="fa fa-building"></i> تخصصی</div>
+</aside>
+
+<main class="main-wrapper">
+
+    <!-- ========================================== -->
+    <!-- 1. DASHBOARD VIEW                          -->
+    <!-- ========================================== -->
+    <div id="view-dashboard" class="view-section fade-in">
+        <div class="dashboard-grid">
+            <div class="profile-card col-span-2">
+                <div class="profile-actions-box">
+                    <div class="action-row" style="margin-bottom: 6px;">
+                        <span class="action-label"><i class="fa fa-exclamation-triangle"
+                                style="color: #fde047; font-size: 1rem;"></i> اطلاعات شما تکمیل نیست (۳۲٪)</span>
+                        <button class="btn-mini" onclick="switchTab('profile-hub')">تکمیل اطلاعات</button>
+                    </div>
+                    <div class="progress-bar-wrap">
+                        <div class="progress-fill" style="width: 32%;"></div>
+                    </div>
+                </div>
+
+                <div class="profile-club-row">
+                    <div class="club-logo">
+                        <img src="src/images/logo/Sepahan_New_Logo.svg" alt="logo" onerror="this.src=''">
+                    </div>
+                    <div class="club-info">
+                        <h3>استعداد برتر دامغان</h3>
+                        <div class="term-pill">ترم تابستان ۱۴۰۵</div>
+                        <div style="font-size:0.75rem; color:rgba(255,255,255,0.8); margin-top: 4px;">کلاس آموزشی
+                        </div>
+                        <div class="social-row">
+                            <a href="#" class="social-btn" title="تلگرام"><i style="color: deepskyblue"
+                                    class="fa fa-paper-plane"></i></a>
+                            <a href="#" class="social-btn" title="اینستاگرام"><i style="color: red"
+                                    class="fa fa-instagram"></i></a>
+                            <a href="#" class="social-btn" title="واتساپ"><i style="color: lawngreen"
+                                    class="fa fa-whatsapp"></i></a>
+                            <a href="#" class="social-btn" title="وب‌سایت"><i style="color: orange"
+                                    class="fa fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="debt-card status-clear">
+                <div class="debt-info-wrap">
+                    <div class="debt-icon"><i class="fa fa-check"></i></div>
+                    <div class="debt-info">
+                        <span class="label">وضعیت مالی حساب</span>
+                        <span class="amount">بدون بدهی</span>
+                    </div>
+                </div>
+                <button class="btn-credit" title="افزایش اعتبار"><i class="fa fa-plus"></i> شارژ</button>
+            </div>
+
+            <div class="stats-container-block">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon ic-blue"><i class="fa fa-users"></i></div>
+                        <div class="stat-info"><span class="stat-label">رده سنی</span><span
+                                class="stat-val">بزرگسالان</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon ic-green"><i class="fa fa-check-square-o"></i></div>
+                        <div class="stat-info"><span class="stat-label">حضور تمرین</span><span class="stat-val">۰ از
+                                ۰</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon ic-orange"><i class="fa fa-shield"></i></div>
+                        <div class="stat-info"><span class="stat-label">اعتبار بیمه</span><span
+                                class="stat-val">—</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon ic-purple"><i class="fa fa-trophy"></i></div>
+                        <div class="stat-info"><span class="stat-label">استعدادیابی</span><span
+                                class="stat-val">۰</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-3 media-group-wrapper">
+                <div class="dash-action-grid">
+                    <div class="dash-action-card card-store" onclick="switchTab('store')">
+                        <i class="fa fa-shopping-cart"></i>
+                        <h4>فروشگاه باشگاه</h4>
+                    </div>
+                    <div class="dash-action-card card-gallery" onclick="switchTab('gallery')">
+                        <i class="fa fa-picture-o"></i>
+                        <h4>گالری تصاویر</h4>
+                    </div>
+                </div>
+                <div class="card news-card" onclick="switchTab('bulletin')" style="cursor:pointer; margin-bottom: 0px;">
+                    <div class="news-header">
+                        <h4><i class="fa fa-bell-o" style="color:var(--primary)"></i> اطلاعیه و پیام‌ها</h4>
+                        <span class="badge-new">۱ پیام جدید</span>
+                    </div>
+                    <div class="news-body">
+                        برای مشاهده همه پیام‌های بولتن خبری کلیک کنید. ثبت‌نام در طرح ترم تابستان ۱۴۰۵ شروع شده
+                        است...
+                        <span class="news-date">۱۴۰۵/۰۳/۰۱</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. PROFILE HUB                             -->
+    <!-- ========================================== -->
+    <div id="view-profile-hub" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                    class="fa fa-arrow-right"></i> داشبورد</button>
+            <h3 class="sticky-title">پروفایل کاربری</h3>
+            <div style="width: 80px;"></div>
+        </div>
+
+        <div class="verify-banner unverified">
+            <div class="verify-banner-content">
+                <div class="verify-banner-icon"><i class="fa fa-shield"></i></div>
+                <div class="verify-banner-text">
+                    <h4>کاربر استعلام هویتی نشده است!</h4>
+                    <p>جهت استفاده از تمامی امکانات و ثبت‌نام، مدارک خود را تکمیل کنید.</p>
+                </div>
+            </div>
+            <button class="btn-verify-action" onclick="switchTab('verification')">تکمیل هویت</button>
+        </div>
+
+        <div class="profile-frame">
+            <div class="frame-title">
+                <i class="fa fa-user" style="color: var(--primary);"></i> اطلاعات فردی
+            </div>
+            <div class="frame-grid">
+                <div class="frame-item" onclick="switchTab('personal-info')">
+                    <div class="frame-icon-circle ic-blue"><i class="fa fa-id-card-o"></i></div>
+                    <span class="frame-item-label">اطلاعات فردی</span>
+                </div>
+                <div class="frame-item" onclick="switchTab('contact-info')">
+                    <div class="frame-icon-circle ic-green"><i class="fa fa-phone"></i></div>
+                    <span class="frame-item-label">اطلاعات تماس</span>
+                </div>
+                <div class="frame-item" onclick="switchTab('passport-info')">
+                    <div class="frame-icon-circle ic-orange"><i class="fa fa-globe"></i></div>
+                    <span class="frame-item-label">سایر (گذرنامه)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-frame">
+            <div class="frame-title">
+                <i class="fa fa-soccer-ball-o" style="color: var(--warning);"></i> اطلاعات ورزشی
+            </div>
+            <div class="frame-grid">
+                <div class="frame-item" onclick="switchTab('sports-info')">
+                    <div class="frame-icon-circle ic-purple"><i class="fa fa-star"></i></div>
+                    <span class="frame-item-label">مشخصات ورزشی</span>
+                </div>
+                <div class="frame-item" onclick="switchTab('club-info')">
+                    <div class="frame-icon-circle ic-blue"><i class="fa fa-shield"></i></div>
+                    <span class="frame-item-label">اطلاعات باشگاهی</span>
+                </div>
+                <div class="frame-item" onclick="alert('فرم مشخصات سایز لباس و کفش بازیکن...')">
+                    <div class="frame-icon-circle ic-orange"><i class="fa fa-arrows-v"></i></div>
+                    <span class="frame-item-label">سایز پوشاک</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-frame">
+            <div class="frame-title">
+                <i class="fa fa-folder-open" style="color: var(--danger);"></i> مستندات و مدارک
+            </div>
+            <div class="frame-grid">
+                <div class="frame-item" onclick="switchTab('documents')">
+                    <div class="frame-icon-circle ic-blue"><i class="fa fa-file-image-o"></i></div>
+                    <span class="frame-item-label">کارت ملی</span>
+                </div>
+                <div class="frame-item" onclick="switchTab('documents')">
+                    <div class="frame-icon-circle ic-green"><i class="fa fa-file-text-o"></i></div>
+                    <span class="frame-item-label">شناسنامه</span>
+                </div>
+                <div class="frame-item" onclick="switchTab('documents')">
+                    <div class="frame-icon-circle ic-purple"><i class="fa fa-certificate"></i></div>
+                    <span class="frame-item-label">مجوز ورزشی</span>
+                </div>
+                <div class="frame-item" onclick="switchTab('documents')">
+                    <div class="frame-icon-circle ic-red-card"><i class="fa fa-plus-circle"></i></div>
+                    <span class="frame-item-label">مدارک و سایر</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-frame" style="padding: 10px 16px;">
+            <div class="frame-grid" style="grid-template-columns: 1fr;">
+                <div class="frame-item" onclick="switchTab('password')"
+                    style="flex-direction: row; justify-content: center; background: #fff; border-style: dashed; padding: 12px; gap: 8px;">
+                    <i class="fa fa-lock" style="color: var(--warning); font-size: 1.2rem;"></i>
+                    <span>تنظیمات امنیت و تغییر رمز عبور</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. FINANCIAL HUB                           -->
+    <!-- ========================================== -->
+    <div id="view-financial-hub" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                    class="fa fa-arrow-right"></i> داشبورد</button>
+            <h3 class="sticky-title">اطلاعات مالی</h3>
+            <div style="width: 80px;"></div>
+        </div>
+
+        <!-- Desktop Refined Grid for Financial Top -->
+        <div class="financial-top-grid">
+            <div class="debt-card status-due" style="padding: 16px;">
+                <div class="debt-info-wrap">
+                    <div class="debt-icon">❌</div>
+                    <div class="debt-info">
+                        <span class="label">وضعیت مالی حساب</span>
+                        <span class="amount" style="padding-top: 3px;">۷,۵۰۰,۰۰۰ تومان</span>
+                    </div>
+                </div>
+                <button class="btn-credit" title="پرداخت بدهی" onclick="alert('انتقال به درگاه پرداخت...')"><i
+                        class="fa fa-plus"></i> پرداخت بدهی</button>
+            </div>
+
+            <div class="card">
+                <div class="hub-list">
+                    <div class="hub-btn" onclick="switchTab('bank-info')">
+                        <div class="hub-btn-left">
+                            <div class="hub-btn-icon"><i class="fa fa-bank"></i></div> حساب‌های بانکی
+                        </div>
+                        <i class="fa fa-angle-left"></i>
+                    </div>
+                    <div class="hub-btn" onclick="alert('انتقال به درگاه پرداخت...')">
+                        <div class="hub-btn-left">
+                            <div class="hub-btn-icon" style="color:var(--success)"><i class="fa fa-credit-card"></i>
+                            </div> پرداخت شهریه
+                        </div>
+                        <i class="fa fa-angle-left"></i>
+                    </div>
+                    <div class="hub-btn" onclick="switchTab('financial-timeline')">
+                        <div class="hub-btn-left">
+                            <div class="hub-btn-icon" style="color:var(--info)"><i class="fa fa-bar-chart"></i>
+                            </div> گزارشات و تایم‌لاین مالی
+                        </div>
+                        <i class="fa fa-angle-left"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card recent-transactions-card">
+            <h4 class="transactions-title"><i class="fa fa-exchange"
+                    style="color: var(--primary); margin-left: 8px;"></i> سوابق تراکنش‌های اخیر</h4>
+            <div class="transactions-list">
+                <div class="transaction-item">
+                    <div class="tr-info">
+                        <div class="tr-icon success"><i class="fa fa-arrow-down"></i></div>
+                        <div>
+                            <strong>پرداخت شهریه خرداد</strong>
+                            <span class="tr-date">۱۴۰۵/۰۳/۰۱ | ۱۲:۴۵</span>
+                        </div>
+                    </div>
+                    <div class="tr-amount success">۶,۸۰۰,۰۰۰ تومان <span class="badge-success">موفق</span></div>
+                </div>
+                <div class="transaction-item">
+                    <div class="tr-info">
+                        <div class="tr-icon success"><i class="fa fa-arrow-down"></i></div>
+                        <div>
+                            <strong>هزینه لباس فرم مسابقات</strong>
+                            <span class="tr-date">۱۴۰۵/۰۲/۱۵ | ۰۹:۳۰</span>
+                        </div>
+                    </div>
+                    <div class="tr-amount success">۸۵۰,۰۰۰ تومان <span class="badge-success">موفق</span></div>
+                </div>
+                <div class="transaction-item">
+                    <div class="tr-info">
+                        <div class="tr-icon fail"><i class="fa fa-arrow-up"></i></div>
+                        <div>
+                            <strong>شهریه ترم تابستان (بدهی)</strong>
+                            <span class="tr-date">۱۴۰۵/۰۳/۰۵ | ۱۸:۱۰</span>
+                        </div>
+                    </div>
+                    <div class="tr-amount fail">۷,۵۰۰,۰۰۰ تومان <span class="badge-fail">ناموفق / بدهی</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 4. SPECIALIZED HUB                         -->
+    <!-- ========================================== -->
+    <div id="view-specialized-hub" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                    class="fa fa-arrow-right"></i> داشبورد</button>
+            <h3 class="sticky-title">اطلاعات تخصصی</h3>
+            <div style="width: 80px;"></div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="section-title" style="padding: 0 16px; margin-top: 16px;">
+                <i class="fa fa-dashboard" style="color:var(--primary)"></i> شاخص‌های عملکرد (KPI) - باشگاهی
+            </div>
+            <div class="stats-grid" style="padding: 0 16px 16px;">
+                <div class="stat-card">
+                    <div class="stat-icon ic-matches"><i class="fa fa-play-circle"></i></div>
+                    <div class="stat-info"><span class="stat-label">مسابقات (فیکس/ذخیره)</span><span class="stat-val">۱۴
+                            (۱۰ فیکس)</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon ic-green"><i class="fa fa-calendar-check-o"></i></div>
+                    <div class="stat-info"><span class="stat-label">حضور در تمرینات</span><span
+                            class="stat-val">۸۵٪</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon ic-yellow-card"><i class="fa fa-times-rectangle"></i></div>
+                    <div class="stat-info"><span class="stat-label">کارت زرد</span><span class="stat-val">۲</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon ic-red-card"><i class="fa fa-times-rectangle"></i></div>
+                    <div class="stat-info"><span class="stat-label">کارت قرمز</span><span class="stat-val">۰</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px; padding: 16px;">
+            <div class="section-title" style="margin-top: 0;">
+                <i class="fa fa-area-chart" style="color:var(--warning)"></i> شاخص فشار تمرین (RPE) - هفته اخیر
+            </div>
+            <div class="css-chart-wrap">
+                <div class="css-bar-col">
+                    <div class="css-bar">
+                        <div class="css-bar-fill" style="height: 40%;"><span class="css-bar-val">4</span></div>
+                    </div><span class="css-bar-label">شنبه</span>
+                </div>
+                <div class="css-bar-col">
+                    <div class="css-bar">
+                        <div class="css-bar-fill" style="height: 60%;"><span class="css-bar-val">6</span></div>
+                    </div><span class="css-bar-label">۱شنبه</span>
+                </div>
+                <div class="css-bar-col">
+                    <div class="css-bar">
+                        <div class="css-bar-fill" style="height: 80%; background:var(--warning);"><span
+                                class="css-bar-val">8</span></div>
+                    </div><span class="css-bar-label">۲شنبه</span>
+                </div>
+                <div class="css-bar-col">
+                    <div class="css-bar">
+                        <div class="css-bar-fill" style="height: 30%;"><span class="css-bar-val">3</span></div>
+                    </div><span class="css-bar-label">۳شنبه</span>
+                </div>
+                <div class="css-bar-col">
+                    <div class="css-bar">
+                        <div class="css-bar-fill" style="height: 70%;"><span class="css-bar-val">7</span></div>
+                    </div><span class="css-bar-label">۴شنبه</span>
+                </div>
+                <div class="css-bar-col">
+                    <div class="css-bar">
+                        <div class="css-bar-fill" style="height: 50%;"><span class="css-bar-val">5</span></div>
+                    </div><span class="css-bar-label">۵شنبه</span>
+                </div>
+                <div class="css-bar-col">
+                    <div class="css-bar">
+                        <div class="css-bar-fill" style="height: 0%;"><span class="css-bar-val">0</span></div>
+                    </div><span class="css-bar-label">جمعه</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title" style="padding: 0 16px; margin-top: 16px;">
+                <i class="fa fa-folder-open" style="color:var(--danger)"></i> فرم‌ها و گزارش‌ها
+            </div>
+            <div class="spec-grid">
+                <div class="spec-item" onclick="switchTab('attendance')">
+                    <div class="spec-icon" style="color:#10b981; background:#dcfce7;"><i
+                            class="fa fa-check-square-o"></i></div>
+                    <div class="spec-title">گزارش حضور و غیاب<br>در تمرینات</div>
+                </div>
+                <div class="spec-item" onclick="alert('باز کردن فرم RPE / Hooper...')">
+                    <div class="spec-icon" style="color:var(--warning); background:#fef3c7;"><i
+                            class="fa fa-battery-half"></i></div>
+                    <div class="spec-title">فرم فشار تمرین<br>(RPE / Hooper)</div>
+                </div>
+                <div class="spec-item" onclick="switchTab('registration-history')">
+                    <div class="spec-icon" style="color:#1d4ed8; background:var(--primary-light);"><i
+                            class="fa fa-history"></i></div>
+                    <div class="spec-title">تاریخچه<br>ثبت‌نام‌ها</div>
+                </div>
+                <div class="spec-item" onclick="switchTab('talent')">
+                    <div class="spec-icon" style="color:#9333ea; background:#f3e8ff;"><i class="fa fa-search"></i>
+                    </div>
+                    <div class="spec-title">فرم<br>استعدادیابی</div>
+                </div>
+                <div class="spec-item" onclick="alert('گزارش عملکرد مسابقه...')">
+                    <div class="spec-icon" style="color:#f59e0b; background:#fef3c7;"><i class="fa fa-line-chart"></i>
+                    </div>
+                    <div class="spec-title">تحلیل عملکرد<br>در مسابقه</div>
+                </div>
+                <div class="spec-item" onclick="alert('گزارش عملکرد تمرین...')">
+                    <div class="spec-icon" style="color:#3b82f6; background:#e0e7ff;"><i class="fa fa-area-chart"></i>
+                    </div>
+                    <div class="spec-title">تحلیل عملکرد<br>در تمرینات</div>
+                </div>
+                <div class="spec-item" onclick="switchTab('insurance-status')">
+                    <div class="spec-icon" style="color:#0ea5e9; background:#e0f2fe;"><i class="fa fa-heartbeat"></i>
+                    </div>
+                    <div class="spec-title">وضعیت<br>بیمه ورزشی</div>
+                </div>
+                <div class="spec-item" onclick="switchTab('certificate')">
+                    <div class="spec-icon" style="color:#f59e0b; background:#fef3c7;"><i class="fa fa-certificate"></i>
+                    </div>
+                    <div class="spec-title">گواهی<br>پایان دوره</div>
+                </div>
+                <div class="spec-item" onclick="alert('باز کردن فرم پزشکی...')">
+                    <div class="spec-icon" style="color:#ef4444; background:#fee2e2;"><i class="fa fa-medkit"></i>
+                    </div>
+                    <div class="spec-title">فرم<br>پزشکی</div>
+                </div>
+                <div class="spec-item" onclick="alert('کارت عضویت شما در حال دانلود است...')">
+                    <div class="spec-icon" style="color:#64748b; background:#f1f5f9;"><i class="fa fa-id-badge"></i>
+                    </div>
+                    <div class="spec-title">دریافت کارت<br>عضویت</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 5. REGISTRATION PAGE                       -->
+    <!-- ========================================== -->
+    <div id="view-registration" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                    class="fa fa-arrow-right"></i> داشبورد</button>
+            <h3 class="sticky-title">ثبت‌نام در دوره</h3>
+            <button class="btn-top-action btn-submit-top" onclick="submitForm()"><i class="fa fa-check"></i> تایید
+                نهایی</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group" style="grid-column: 1 / -1;">
+                    <label>دوره انتخابی:</label>
+                    <select>
+                        <option value="1">ترم تابستان ۱۴۰۵</option>
+                        <option value="2">ترم پاییز ۱۴۰۵</option>
+                    </select>
+                </div>
+                <div class="input-group" style="grid-column: 1 / -1;">
+                    <label>کلاس / رده سنی:</label>
+                    <select>
+                        <option value="1">رده سنی ۱۴ و ۱۵ سال</option>
+                        <option value="2">رده سنی ۱۶ و ۱۷ سال</option>
+                    </select>
+                </div>
+                <div class="input-group"
+                    style="grid-column: 1 / -1; background:var(--primary-light); padding: 12px; border-radius: 10px; border: 1px solid rgba(234,179,8,0.3); color: var(--text-dark);">
+                    <label style="color:var(--text-dark); display:flex; align-items:center; gap:8px;">
+                        <input type="checkbox" style="width:auto; transform:scale(1.2);">
+                        قوانین و مقررات باشگاه را مطالعه کرده و می‌پذیرم.
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 16px; margin-top: 16px;">
+            <h4
+                style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: var(--text-dark); font-weight: 800;">
+                <i class="fa fa-pie-chart" style="color: var(--primary);"></i> گزارش مالی ثبت‌نام‌ها
+            </h4>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem;">
+                <span>کل پرداختی‌های شما:</span>
+                <strong style="color: var(--success);">۱۵,۰۰۰,۰۰۰ تومان</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 0.85rem;">
+                <span>بدهی فعلی (ترم جاری):</span>
+                <strong style="color: var(--danger);">۷,۵۰۰,۰۰۰ تومان</strong>
+            </div>
+            <button onclick="switchTab('financial-timeline')"
+                style="width: 100%; background: #f8fafc; color: var(--text-dark); border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-weight: 800; font-family: inherit; cursor: pointer; transition: 0.2s;">
+                <i class="fa fa-history" style="color: var(--primary);"></i> مشاهده تایم‌لاین مالی تراکنش‌ها
+            </button>
+        </div>
+    </div>
+
+    <!-- NEW: Store Page -->
+    <div id="view-store" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                    class="fa fa-arrow-right"></i> داشبورد</button>
+            <h3 class="sticky-title">فروشگاه باشگاه</h3>
+            <div style="width: 80px;"></div>
+        </div>
+        <div class="store-grid">
+            <div class="product-card">
+                <img src="" alt="product" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">پیراهن رسمی مسابقات (آستین کوتاه)</div>
+                    <div class="product-price">۴۵۰,۰۰۰ تومان</div>
+                    <button class="btn-buy" onclick="alert('به سبد خرید اضافه شد.')"><i class="fa fa-shopping-cart"></i>
+                        افزودن به سبد</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="" alt="product" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">شورت ورزشی تمرینی (اورجینال)</div>
+                    <div class="product-price">۲۸۰,۰۰۰ تومان</div>
+                    <button class="btn-buy" onclick="alert('به سبد خرید اضافه شد.')"><i class="fa fa-shopping-cart"></i>
+                        افزودن به سبد</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="" alt="product" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">جوراب ورزشی ساق بلند حرفه‌ای</div>
+                    <div class="product-price">۱۲۰,۰۰۰ تومان</div>
+                    <button class="btn-buy" onclick="alert('به سبد خرید اضافه شد.')"><i class="fa fa-shopping-cart"></i>
+                        افزودن به سبد</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="" alt="product" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">کوله پشتی باشگاه با لوگو اختصاصی</div>
+                    <div class="product-price">۸۵۰,۰۰۰ تومان</div>
+                    <button class="btn-buy" onclick="alert('به سبد خرید اضافه شد.')"><i class="fa fa-shopping-cart"></i>
+                        افزودن به سبد</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Image Gallery Page -->
+    <div id="view-gallery" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                    class="fa fa-arrow-right"></i> داشبورد</button>
+            <h3 class="sticky-title">گالری تصاویر</h3>
+            <div style="width: 80px;"></div>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="" alt="gallery"></div>
+            <div class="gallery-item"><img src="" alt="gallery"></div>
+            <div class="gallery-item"><img src="" alt="gallery"></div>
+            <div class="gallery-item"><img src="" alt="gallery"></div>
+            <div class="gallery-item"><img src="" alt="gallery"></div>
+            <div class="gallery-item"><img src="" alt="gallery"></div>
+        </div>
+    </div>
+
+    <!-- NEW: Financial Timeline Page -->
+    <div id="view-financial-timeline" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('registration')"><i
+                    class="fa fa-arrow-right"></i> ثبت‌نام</button>
+            <h3 class="sticky-title">تایم‌لاین گزارشات مالی</h3>
+            <div style="width: 80px;"></div>
+        </div>
+
+        <div class="card" style="background: transparent; border: none; box-shadow: none;">
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-icon-circle fail"><i class="fa fa-times"></i></div>
+                    <div class="timeline-content fail">
+                        <div class="tl-header fail">
+                            <span class="tl-title fail">شهریه ترم تابستان ۱۴۰۵</span>
+                            <span class="tl-date">۱۴۰۵/۰۳/۰۱</span>
+                        </div>
+                        <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۷,۵۰۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-row"><span>بابت:</span> <strong>کلاس پیشرفته الف</strong></div>
+                        <div class="tl-status fail"><i class="fa fa-exclamation-circle"></i> پرداخت نشده (بدهی)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon-circle success"><i class="fa fa-check"></i></div>
+                    <div class="timeline-content success">
+                        <div class="tl-header success">
+                            <span class="tl-title success">خرید پکیج لباس فرم</span>
+                            <span class="tl-date">۱۴۰۵/۰۲/۱۵</span>
+                        </div>
+                        <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۸۵۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-row"><span>شماره پیگیری:</span> <strong>۱۴۵۸۷۹۶۵۲۳</strong></div>
+                        <div class="tl-status success"><i class="fa fa-check-circle"></i> پرداخت موفق - درگاه بانک
+                            ملت</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon-circle success"><i class="fa fa-check"></i></div>
+                    <div class="timeline-content success">
+                        <div class="tl-header success">
+                            <span class="tl-title success">شهریه ترم بهار ۱۴۰۵</span>
+                            <span class="tl-date">۱۴۰۴/۱۲/۲۰</span>
+                        </div>
+                        <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۶,۸۰۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-row"><span>بابت:</span> <strong>کلاس استعداد برتر</strong></div>
+                        <div class="tl-status success"><i class="fa fa-check-circle"></i> پرداخت موفق - فیش واریزی
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon-circle" style="border-color: var(--warning); color: var(--warning);">
+                        <i class="fa fa-refresh"></i>
+                    </div>
+                    <div class="timeline-content warning">
+                        <div class="tl-header warning">
+                            <span class="tl-title warning">هزینه اردوی تدارکاتی مشهد</span>
+                            <span class="tl-date">۱۴۰۴/۱۱/۰۵</span>
+                        </div>
+                        <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۱,۲۰۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-status warning"><i class="fa fa-clock-o"></i> در حال بررسی فیش واریزی</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon-circle success"><i class="fa fa-check"></i></div>
+                    <div class="timeline-content success">
+                        <div class="tl-header success">
+                            <span class="tl-title success">شهریه ترم زمستان ۱۴۰۴</span>
+                            <span class="tl-date">۱۴۰۴/۰۹/۱۵</span>
+                        </div>
+                        <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۵,۵۰۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-status success"><i class="fa fa-check-circle"></i> پرداخت موفق - درگاه سامان
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- FORMS (SUB-PAGES)                          -->
+    <!-- ========================================== -->
+
+    <!-- Verification Page (احراز هویت) -->
+    <div id="view-verification" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">احراز هویت حساب</h3>
+            <button class="btn-top-action btn-submit-top" onclick="submitForm()"><i class="fa fa-check"></i> ارسال
+                مدارک</button>
+        </div>
+
+        <div
+            style="background: var(--primary-light); color: var(--primary); padding: 16px; border-radius: 12px; margin-bottom: 16px; font-size: 0.8rem; font-weight: 700; line-height: 1.6;">
+            <i class="fa fa-info-circle" style="font-size: 1.1rem; margin-bottom: 6px; display: block;"></i>
+            لطفاً اطلاعات هویتی خود را دقیق وارد کنید. این اطلاعات برای استعلام از سامانه ثبت احوال استفاده می‌شود.
+        </div>
+
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>کد ملی (۱۰ رقم)</label>
+                    <input type="number" placeholder="مثال: ۱۲۳۴۵۶۷۸۹۰">
+                </div>
+                <div class="input-group">
+                    <label>تاریخ تولد (طبق شناسنامه)</label>
+                    <input type="date">
+                </div>
+                <div class="input-group" style="grid-column: 1 / -1; margin-top: 8px;">
+                    <label>آپلود تصویر روی کارت ملی</label>
+                    <div
+                        style="border: 2px dashed var(--border); padding: 20px; text-align: center; border-radius: 12px; background: #f8fafc; cursor: pointer;">
+                        <i class="fa fa-id-card-o"
+                            style="font-size: 2rem; color: var(--text-muted); margin-bottom: 8px;"></i>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">برای انتخاب فایل
+                            کلیک کنید</p>
+                        <input type="file" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                <div class="input-group" style="grid-column: 1 / -1;">
+                    <label>تصویر چهره (سلفی زنده)</label>
+                    <div
+                        style="border: 2px dashed var(--border); padding: 20px; text-align: center; border-radius: 12px; background: #f8fafc; cursor: pointer;">
+                        <i class="fa fa-camera"
+                            style="font-size: 2rem; color: var(--text-muted); margin-bottom: 8px;"></i>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">برای گرفتن عکس
+                            کلیک کنید</p>
+                        <input type="file" accept="image/*" capture="user" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration History Timeline -->
+    <div id="view-registration-history" class="view-section hidden fade-in">
+        <div class="sticky-top-bar">
+            <button class="btn-top-action btn-back-top" onclick="switchTab('specialized-hub')"><i
+                    class="fa fa-arrow-right"></i> تخصصی</button>
+            <h3 class="sticky-title">تاریخچه ثبت‌نام‌ها</h3>
+            <div style="width: 80px;"></div>
+        </div>
+
+        <div class="card" style="background: transparent; border: none; box-shadow: none;">
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-logo success">
+                        <img src="src/images/logo/Sepahan_New_Logo.svg" alt="logo"
+                            onerror="this.src='https://via.placeholder.com/100'">
+                    </div>
+                    <div class="timeline-content success">
+                        <div class="tl-header success">
+                            <span class="tl-title success">ترم تابستان ۱۴۰۵</span>
+                            <span class="tl-date">۱۴۰۵/۰۳/۰۱</span>
+                        </div>
+                        <div class="tl-row"><span>رده سنی:</span> <strong>۱۴ و ۱۵ سال</strong></div>
+                        <div class="tl-row"><span>نام کلاس:</span> <strong>پیشرفته الف</strong></div>
+                        <div class="tl-row"><span>هزینه دوره:</span> <strong>۷,۵۰۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-status success"><i class="fa fa-check-circle"></i> ثبت‌نام موفق و قطعی</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-logo success">
+                        <img src="src/images/logo/damghan.jpg" alt="logo"
+                            onerror="this.src='https://via.placeholder.com/100'">
+                    </div>
+                    <div class="timeline-content success">
+                        <div class="tl-header success">
+                            <span class="tl-title success">ترم بهار ۱۴۰۵</span>
+                            <span class="tl-date">۱۴۰۴/۱۲/۲۰</span>
+                        </div>
+                        <div class="tl-row"><span>رده سنی:</span> <strong>۱۴ و ۱۵ سال</strong></div>
+                        <div class="tl-row"><span>نام کلاس:</span> <strong>استعداد برتر</strong></div>
+                        <div class="tl-row"><span>هزینه دوره:</span> <strong>۶,۸۰۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-status success"><i class="fa fa-check-circle"></i> ثبت‌نام موفق و قطعی</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-logo success">
+                        <img src="src/images/logo/staregan-logo.jpg" alt="logo"
+                            onerror="this.src='https://via.placeholder.com/100'">
+                    </div>
+                    <div class="timeline-content success">
+                        <div class="tl-header success">
+                            <span class="tl-title success">ترم زمستان ۱۴۰۴</span>
+                            <span class="tl-date">۱۴۰۴/۰۹/۱۵</span>
+                        </div>
+                        <div class="tl-row"><span>رده سنی:</span> <strong>۱۲ و ۱۳ سال</strong></div>
+                        <div class="tl-row"><span>نام کلاس:</span> <strong>تکنیک و تاکتیک</strong></div>
+                        <div class="tl-row"><span>هزینه دوره:</span> <strong>۵,۵۰۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-status success"><i class="fa fa-check-circle"></i> ثبت‌نام موفق و قطعی</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-logo fail">
+                        <img src="src/images/logo/tam%20logo.png" alt="logo"
+                            onerror="this.src='https://via.placeholder.com/100'">
+                    </div>
+                    <div class="timeline-content fail">
+                        <div class="tl-header fail">
+                            <span class="tl-title fail">ترم پاییز ۱۴۰۴</span>
+                            <span class="tl-date">۱۴۰۴/۰۶/۲۵</span>
+                        </div>
+                        <div class="tl-row"><span>رده سنی:</span> <strong>۱۲ و ۱۳ سال</strong></div>
+                        <div class="tl-row"><span>نام کلاس:</span> <strong>پایه</strong></div>
+                        <div class="tl-row"><span>هزینه دوره:</span> <strong>۵,۰۰۰,۰۰۰ تومان</strong></div>
+                        <div class="tl-status fail"><i class="fa fa-exclamation-circle"></i> انصراف از دوره</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal Info -->
+    <div id="view-personal-info" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">مشخصات فردی</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group"><label>نام</label><input type="text" value="محمدرضا"></div>
+                <div class="input-group"><label>نام خانوادگی</label><input type="text" value="قربانی"></div>
+                <div class="input-group"><label>نام پدر</label><input type="text" placeholder="نام پدر"></div>
+                <div class="input-group"><label>جنسیت</label><select>
+                        <option>مرد</option>
+                        <option>زن</option>
+                    </select></div>
+                <div class="input-group"><label>قد (سانتی‌متر)</label><input type="number" placeholder="مثال: 180">
+                </div>
+                <div class="input-group"><label>وزن (کیلوگرم)</label><input type="number" placeholder="مثال: 75">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div id="view-contact-info" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">اطلاعات تماس</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group"><label>موبایل بازیکن</label><input type="tel" value="09120000000"></div>
+                <div class="input-group"><label>موبایل ولی/سرپرست</label><input type="tel" placeholder="0912...">
+                </div>
+                <div class="input-group"><label>تلفن ثابت</label><input type="tel" placeholder="021..."></div>
+                <div class="input-group" style="grid-column: 1 / -1;"><label>آدرس منزل</label><input type="text"
+                        placeholder="استان، شهر، خیابان..."></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Passport Info -->
+    <div id="view-passport-info" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">اطلاعات گذرنامه</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group"><label>شماره گذرنامه</label><input type="text" placeholder="شماره گذرنامه">
+                </div>
+                <div class="input-group"><label>تاریخ صدور</label><input type="date"></div>
+                <div class="input-group"><label>تاریخ انقضا</label><input type="date"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bank Info -->
+    <div id="view-bank-info" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('financial-hub')"><i
+                    class="fa fa-arrow-right"></i> مالی</button>
+            <h3 class="sticky-title">حساب بانکی</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group"><label>نام بانک</label><input type="text" placeholder="مثال: ملی"></div>
+                <div class="input-group"><label>شماره کارت</label><input type="text" placeholder="xxxx-xxxx-xxxx-xxxx">
+                </div>
+                <div class="input-group" style="grid-column: 1 / -1;"><label>شماره شبا</label><input type="text"
+                        placeholder="IR..."></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sports Info -->
+    <div id="view-sports-info" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">مشخصات ورزشی</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group"><label>پست اصلی</label><select>
+                        <option>مهاجم</option>
+                        <option>هافبک</option>
+                        <option>مدافع</option>
+                        <option>دروازه‌بان</option>
+                    </select></div>
+                <div class="input-group"><label>پای تخصصی</label><select>
+                        <option>راست</option>
+                        <option>چپ</option>
+                        <option>هردو</option>
+                    </select></div>
+                <div class="input-group"><label>سابقه بازی ملی؟</label><select>
+                        <option>خیر</option>
+                        <option>بله</option>
+                    </select></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Club Info -->
+    <div id="view-club-info" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">اطلاعات باشگاهی</h3>
+            <div style="width: 80px;"></div>
+        </div>
+        <div class="card" style="padding: 20px;">
+            <div class="info-row-text"><strong>باشگاه فعلی:</strong> <span>استعداد برتر دامغان</span></div>
+            <div class="info-row-text"><strong>شماره پیراهن:</strong> <span>۱۰</span></div>
+            <div class="info-row-text"><strong>رده سنی:</strong> <span>۱۴ و ۱۵ سال</span></div>
+            <div class="info-row-text"><strong>تاریخ شروع قرارداد:</strong> <span>۱۴۰۵/۰۳/۰۱</span></div>
+        </div>
+    </div>
+
+    <!-- Clothing Info -->
+    <div id="view-clothing-info" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">سایز پوشاک</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group"><label>سایز پیراهن</label><select>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>XXL</option>
+                    </select></div>
+                <div class="input-group"><label>سایز شورت ورزشی</label><select>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>XXL</option>
+                    </select></div>
+                <div class="input-group"><label>سایز کفش (شماره)</label><input type="number" placeholder="مثال: 42">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents -->
+    <div id="view-documents" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">مستندات و مدارک</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> آپلود</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group"><label>اسکن کارت ملی</label><input type="file" accept="image/*"></div>
+                <div class="input-group"><label>اسکن شناسنامه</label><input type="file" accept="image/*"></div>
+                <div class="input-group" style="grid-column: 1 / -1;"><label>عکس پرسنلی (۴×۳)</label><input type="file"
+                        accept="image/*"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password -->
+    <div id="view-password" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                    class="fa fa-arrow-right"></i> پروفایل</button>
+            <h3 class="sticky-title">تغییر رمز عبور</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> تغییر رمز</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group" style="grid-column: 1 / -1;"><label>رمز عبور فعلی</label><input
+                        type="password"></div>
+                <div class="input-group"><label>رمز عبور جدید</label><input type="password"></div>
+                <div class="input-group"><label>تکرار رمز عبور جدید</label><input type="password"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance -->
+    <div id="view-attendance" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+            <h3 class="sticky-title">حضور و غیاب</h3>
+            <div style="width: 80px;"></div>
+        </div>
+        <div class="card" style="padding: 20px; text-align:center;">
+            <div class="stat-icon ic-green" style="width:60px; height:60px; font-size:2rem; margin:0 auto 16px;"><i
+                    class="fa fa-check-square-o"></i></div>
+            <h3 style="margin-bottom: 8px;">گزارش حضور در تمرینات</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem;">در ماه جاری در <strong>۰</strong> جلسه از
+                <strong>۰</strong> جلسه حضور داشته‌اید.
+            </p>
+        </div>
+    </div>
+
+    <!-- Talent Scouting -->
+    <div id="view-talent" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+            <h3 class="sticky-title">استعدادیابی</h3>
+            <div style="width: 80px;"></div>
+        </div>
+        <div class="card" style="padding: 20px; text-align:center;">
+            <div class="stat-icon ic-purple" style="width:60px; height:60px; font-size:2rem; margin:0 auto 16px;"><i
+                    class="fa fa-trophy"></i></div>
+            <h3 style="margin-bottom: 8px;">سوابق استعدادیابی</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem;">هنوز هیچ فرم ارزیابی یا استعدادیابی برای شما ثبت
+                نشده است.</p>
+        </div>
+    </div>
+
+    <!-- Insurance RPE -->
+    <div id="view-insurance" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+            <h3 class="sticky-title">فرم فشار تمرین RPE</h3><button class="btn-top-action btn-submit-top"
+                onclick="submitForm()"><i class="fa fa-check"></i> ثبت گزارش</button>
+        </div>
+        <div class="card">
+            <div class="form-grid">
+                <div class="input-group"><label>شاخص فشار تمرین RPE (از ۰ تا ۱۰)</label><input type="number" min="0"
+                        max="10" value="5"></div>
+                <div class="input-group"><label>کیفیت خواب (۱ تا ۵)</label><input type="number" min="1" max="5"
+                        value="4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insurance Status -->
+    <div id="view-insurance-status" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+            <h3 class="sticky-title">وضعیت بیمه ورزشی</h3>
+            <div style="width: 80px;"></div>
+        </div>
+        <div class="card" style="padding: 20px; text-align:center;">
+            <div class="stat-icon ic-matches" style="width:60px; height:60px; font-size:2rem; margin:0 auto 16px;">
+                <i class="fa fa-heartbeat"></i>
+            </div>
+            <h3 style="margin-bottom: 8px;">بیمه ورزشی شما فعال نیست!</h3>
+            <p style="color:var(--danger); font-size:0.85rem; font-weight: 700;">لطفاً جهت تمدید بیمه ورزشی خود به
+                دفتر باشگاه مراجعه کنید.</p>
+        </div>
+    </div>
+
+    <!-- Certificate -->
+    <div id="view-certificate" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+            <h3 class="sticky-title">گواهی پایان دوره</h3>
+            <div style="width: 80px;"></div>
+        </div>
+        <div class="card" style="padding: 20px; text-align:center; border: 2px dashed var(--primary);">
+            <i class="fa fa-certificate" style="font-size: 3rem; color: var(--primary); margin-bottom: 12px;"></i>
+            <h3 style="margin-bottom: 8px;">گواهی سطح پیشرفته</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom: 16px;">ترم تابستان ۱۴۰۴ با نمره
+                عالی گذرانده شد.</p>
+            <button class="btn-buy" style="margin: 0 auto; width: 200px;" onclick="alert('در حال ایجاد فایل PDF...')"><i
+                    class="fa fa-download"></i> دانلود گواهی PDF</button>
+        </div>
+    </div>
+
+    <!-- Bulletin History -->
+    <div id="view-bulletin" class="view-section hidden fade-in">
+        <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                    class="fa fa-arrow-right"></i> داشبورد</button>
+            <h3 class="sticky-title">تاریخچه پیام ها</h3>
+            <div style="width: 80px;"></div>
+        </div>
+        <div class="card" style="margin-bottom: 12px; border-right: 4px solid var(--primary);">
+            <div class="news-body"><strong>شروع ثبت‌نام ترم جدید</strong><br><br>ثبت‌نام در طرح ترم تابستان ۱۴۰۵
+                شروع شده است...<span class="news-date">۱۴۰۵/۰۳/۰۱</span></div>
+        </div>
+        <div class="card" style="margin-bottom: 12px; border-right: 4px solid var(--text-muted);">
+            <div class="news-body"><strong>تعطیلی تمرینات پنجشنبه</strong><br><br>به اطلاع می‌رساند تمرینات روز
+                پنجشنبه این هفته برگزار نخواهد شد.<span class="news-date">۱۴۰۵/۰۲/۲۸</span></div>
+        </div>
+    </div>
+
+</main>
+
+<!-- 📱 BOTTOM NAV -->
+<nav class="bottom-nav">
+    <button class="bnav-item active" onclick="switchTab('dashboard')"><i class="fa fa-home"></i> خانه</button>
+    <button class="bnav-item" onclick="switchTab('profile-hub')"><i class="fa fa-user"></i> پروفایل</button>
+    <button class="bnav-item" onclick="switchTab('registration')"><i class="fa fa-edit"></i> ثبت‌نام</button>
+    <button class="bnav-item" onclick="switchTab('financial-hub')"><i class="fa fa-credit-card"></i> مالی</button>
+    <button class="bnav-item" onclick="switchTab('specialized-hub')"><i class="fa fa-building"></i> تخصصی</button>
+</nav>
+
+<script>
+    function switchTab(targetId) {
+        window.scrollTo(0, 0);
+        document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('fade-in'); });
+
+        const viewId = 'view-' + targetId;
+        const targetView = document.getElementById(viewId);
+        if (targetView) { targetView.classList.remove('hidden'); void targetView.offsetWidth; targetView.classList.add('fade-in'); }
+
+        document.querySelectorAll('.bnav-item, .dnav-item').forEach(btn => btn.classList.remove('active'));
+
+        let activeIndex = -1;
+        const dashPages = ['dashboard', 'store', 'gallery', 'bulletin'];
+        const profilePages = ['profile-hub', 'personal-info', 'contact-info', 'passport-info', 'sports-info', 'club-info', 'clothing-info', 'documents', 'password', 'verification'];
+        const financePages = ['financial-hub', 'bank-info'];
+        const regPages = ['registration', 'financial-timeline']; // Financial timeline grouped under Registration
+        const specPages = ['specialized-hub', 'attendance', 'talent', 'insurance', 'insurance-status', 'certificate', 'registration-history', 'medkit'];
+
+        if (dashPages.includes(targetId)) activeIndex = 0;
+        else if (profilePages.includes(targetId)) activeIndex = 1;
+        else if (regPages.includes(targetId)) activeIndex = 2;
+        else if (financePages.includes(targetId)) activeIndex = 3;
+        else if (specPages.includes(targetId)) activeIndex = 4;
+
+        if (activeIndex !== -1) {
+            const bnavs = document.querySelectorAll('.bnav-item');
+            if (bnavs[activeIndex]) bnavs[activeIndex].classList.add('active');
+            const dnavs = document.querySelectorAll('.dnav-item');
+            if (dnavs[activeIndex]) dnavs[activeIndex].classList.add('active');
+        }
+    }
+
+    function submitForm() {
+        alert('اطلاعات با موفقیت ذخیره شد!');
+    }
+
+    function toggleProfileMenu(e) {
+        e.stopPropagation();
+        document.getElementById('profileMenu').classList.toggle('show');
+    }
+
+    document.addEventListener('click', function (e) {
+        const menu = document.getElementById('profileMenu');
+        if (menu && menu.classList.contains('show')) { menu.classList.remove('show'); }
+    });
+</script>

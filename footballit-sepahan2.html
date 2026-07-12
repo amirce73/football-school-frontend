@@ -1,0 +1,3446 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>فوتبالیت - داشبورد مدرن</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* ─── RESET & BASE ─────────────────────────────────────────── */
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        html {
+            font-size: 14px;
+            -webkit-text-size-adjust: 100%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: #f8fafc;
+            color: #334155;
+            direction: rtl;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ─── CSS VARS ─────────────────────────────────────────────── */
+        :root {
+            --primary: #eab308;
+            --primary-light: #fef9c3;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --surface: #ffffff;
+            --border: #eab308;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --navbar-h: 70px;
+        }
+
+        /* ─── ANIMATIONS ───────────────────────────────────────────── */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* ─── TOP NAVBAR ───────────────────────────────────────────── */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1000;
+            height: var(--navbar-h);
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+        }
+
+        .navbar-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+        }
+
+        .header-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .header-profile-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            overflow: hidden;
+            background: #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .header-profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-profile-info .name {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .header-profile-info .meta {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .btn-app-header i {
+            font-size: 20px;
+        }
+
+        /* ─── VERIFICATION STATUS BADGES & BANNERS ─────────────────── */
+        .badge-verify {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 800;
+        }
+
+        .badge-verify.unverified {
+            background: #fee2e2;
+            color: var(--danger);
+            border: 1px solid #fca5a5;
+        }
+
+        .badge-verify.verified {
+            background: #dcfce7;
+            color: var(--success);
+            border: 1px solid #86efac;
+        }
+
+        .verify-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+        }
+
+        .verify-banner.unverified {
+            background: linear-gradient(to left, #fee2e2, #fef2f2);
+            border: 1px solid #fca5a5;
+            color: var(--danger);
+        }
+
+        .verify-banner.verified {
+            background: linear-gradient(to left, #dcfce7, #f0fdf4);
+            border: 1px solid #86efac;
+            color: var(--success);
+        }
+
+        .verify-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .verify-banner-icon {
+            font-size: 1.8rem;
+        }
+
+        .verify-banner-text h4 {
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .verify-banner-text p {
+            font-size: 0.7rem;
+            opacity: 0.85;
+            font-weight: 600;
+        }
+
+        .btn-verify-action {
+            background: var(--danger);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-verify-action:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+
+        .profile-menu {
+            position: absolute;
+            top: 56px;
+            right: 0;
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 260px;
+            overflow: hidden;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .profile-menu.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .profile-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-menu a:hover {
+            background: #f8fafc;
+            color: var(--primary);
+        }
+
+        .profile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-app-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .btn-app-header:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-noti {
+            position: relative;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        .btn-noti .badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 800;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+        }
+
+        @media (max-width: 380px) {
+            .btn-app-header span {
+                display: none;
+            }
+        }
+
+        .desktop-sidebar {
+            display: none;
+        }
+
+        .main-wrapper {
+            flex: 1;
+            margin-top: var(--navbar-h);
+            padding: 16px;
+            width: 100%;
+            padding-bottom: 80px;
+            transition: all 0.3s;
+        }
+
+        .sticky-top-bar {
+            position: sticky;
+            top: var(--navbar-h);
+            z-index: 900;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+            box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+            margin: -16px -16px 20px -16px;
+        }
+
+        .sticky-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .btn-top-action {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-back-top {
+            background: #f1f5f9;
+            color: var(--text-dark);
+        }
+
+        .btn-submit-top {
+            background: var(--success);
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1fr;
+            padding: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .input-group input,
+        .input-group select {
+            padding: 12px;
+            border: 1px solid rgba(234, 179, 8, 0.5);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+            background: #f8fafc;
+            width: 100%;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .info-row-text {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px dashed rgba(234, 179, 8, 0.3);
+            font-size: 0.85rem;
+        }
+
+        .info-row-text:last-child {
+            border-bottom: none;
+        }
+
+        .info-row-text strong {
+            color: var(--text-dark);
+        }
+
+        .info-row-text span {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ─── TIMELINE (HISTORY) ───────────────────────────────────── */
+        .timeline-container {
+            padding: 10px 16px 20px 16px;
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            bottom: 0;
+            right: 23px;
+            width: 2px;
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-right: 30px;
+            margin-bottom: 24px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-content {
+            right: 10px
+        }
+
+        .timeline-content.success {
+            background: var(--surface);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .timeline-content.fail {
+            background: var(--surface);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .timeline-content.warning {
+            background: var(--surface);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .timeline-content.success::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: -6px;
+            width: 10px;
+            height: 10px;
+            background: var(--surface);
+            border-top: 1px solid rgba(16, 185, 129, 0.3);
+            border-right: 1px solid rgba(16, 185, 129, 0.3);
+            transform: rotate(45deg);
+        }
+
+        .timeline-content.fail::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: -6px;
+            width: 10px;
+            height: 10px;
+            background: var(--surface);
+            border-top: 1px solid rgba(239, 68, 68, 0.3);
+            border-right: 1px solid rgba(239, 68, 68, 0.3);
+            transform: rotate(45deg);
+        }
+
+        .timeline-content.warning::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: -6px;
+            width: 10px;
+            height: 10px;
+            background: var(--surface);
+            border-top: 1px solid rgba(245, 158, 11, 0.3);
+            border-right: 1px solid rgba(245, 158, 11, 0.3);
+            transform: rotate(45deg);
+        }
+
+        .timeline-logo {
+            position: absolute;
+            right: -12px;
+            top: -4px;
+            width: 40px;
+            height: 40px;
+            border-radius: 15%;
+            background: var(--surface);
+            border: 2px solid;
+            z-index: 2;
+            box-shadow: 0 0 0 4px #f8fafc;
+            object-fit: contain;
+            padding: 4px;
+        }
+
+        .timeline-logo.success {
+            border-color: var(--primary)
+        }
+
+        .timeline-logo.fail {
+            border-color: var(--danger)
+        }
+
+        .timeline-logo.warning {
+            border-color: var(--warning);
+        }
+
+        .timeline-icon-circle {
+            position: absolute;
+            right: -12px;
+            top: -4px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid;
+            z-index: 2;
+            box-shadow: 0 0 0 4px #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .timeline-icon-circle.success {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .timeline-icon-circle.fail {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .tl-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed;
+            padding-bottom: 8px;
+        }
+
+        .tl-header.success {
+            border-bottom-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .tl-header.fail {
+            border-bottom-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .tl-header.warning {
+            border-bottom-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .tl-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+
+        .tl-title.success {
+            color: var(--success);
+        }
+
+        .tl-title.fail {
+            color: var(--danger);
+        }
+
+        .tl-title.warning {
+            color: var(--warning);
+        }
+
+        .tl-date {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .tl-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+        }
+
+        .tl-row span {
+            color: var(--text-muted);
+        }
+
+        .tl-row strong {
+            color: var(--text-dark);
+            font-weight: 800;
+        }
+
+        .tl-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .tl-status.fail {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .tl-status.success {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .tl-status.warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        /* ─── HUB LISTS ────────────────────────────────────────────── */
+        .hub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px;
+        }
+
+        .hub-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: #f8fafc;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 12px;
+            font-weight: 700;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .hub-btn:hover {
+            border-color: var(--primary);
+            background: #fff;
+            transform: translateX(-4px);
+        }
+
+        .hub-btn-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hub-btn-icon {
+            width: 36px;
+            height: 36px;
+            background: #fff;
+            color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ─── FINANCIAL HUB ENHANCEMENTS (Mobile + Base) ─── */
+        .financial-top-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1fr;
+            margin-bottom: 16px;
+        }
+
+        .recent-transactions-card {
+            padding: 20px;
+        }
+
+        .transactions-title {
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            border-bottom: 1px dashed rgba(234, 179, 8, 0.3);
+            padding-bottom: 12px;
+            font-weight: 800;
+            font-size: 1.05rem;
+        }
+
+        .transactions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            border-radius: 12px;
+            background: #f8fafc;
+            transition: 0.2s;
+        }
+
+        .transaction-item:hover {
+            background: #fff;
+            box-shadow: var(--shadow-sm);
+            border-color: var(--primary);
+        }
+
+        .tr-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tr-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .tr-icon.success {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .tr-icon.fail {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .tr-info strong {
+            display: block;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .tr-info .tr-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .tr-amount {
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .tr-amount.success {
+            color: var(--success);
+        }
+
+        .tr-amount.fail {
+            color: var(--danger);
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+        }
+
+        .badge-fail {
+            background: var(--danger);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+        }
+
+        /* ─── DASHBOARD ELEMENTS ───────────────────────────────────── */
+        .dashboard-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1fr;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #fff;
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-actions-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .action-row:last-child {
+            margin-bottom: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 8px;
+        }
+
+        .action-label {
+            font-size: 0.75rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-mini {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-mini.action-success {
+            background: var(--success);
+        }
+
+        .progress-bar-wrap {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .profile-club-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .club-logo {
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 4px;
+            flex-shrink: 0;
+            border: 2px solid var(--primary);
+        }
+
+        .club-info {
+            margin-left: auto;
+            margin-right: 15px;
+        }
+
+        .club-info h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--primary);
+        }
+
+        .term-pill {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 4px;
+        }
+
+        .social-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .social-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+        }
+
+        .social-btn:hover {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+
+        .debt-card {
+            background: var(--surface);
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .debt-card.status-clear {
+            border: 1px solid var(--success);
+        }
+
+        .debt-card.status-due {
+            border: 1px solid var(--danger);
+        }
+
+        .debt-info-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .debt-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .status-clear .debt-icon {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .status-due .debt-icon {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .debt-info {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 0;
+        }
+
+        .debt-card .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            font-weight: 600;
+            display: block;
+        }
+
+        .status-clear .amount {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--success);
+        }
+
+        .status-due .amount {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--danger);
+        }
+
+        .btn-credit {
+            background: var(--surface);
+            color: var(--success);
+            border: 1px solid rgba(234, 179, 8, 0.5);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 800;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-credit:hover {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .debt-card.status-clear::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80%;
+            background: linear-gradient(to top, rgba(34, 197, 94, 0.15), transparent);
+            pointer-events: none;
+            border-radius: inherit;
+            z-index: 0;
+        }
+
+        .debt-card.status-due::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80%;
+            background: linear-gradient(to top, rgba(239, 68, 68, 0.15), transparent);
+            pointer-events: none;
+            border-radius: inherit;
+            z-index: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+            justify-content: center;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .stat-val {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-top: 2px;
+        }
+
+        .ic-blue {
+            background: #e0e7ff;
+            color: #3b82f6;
+        }
+
+        .ic-green {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .ic-orange {
+            background: #ffedd5;
+            color: #f97316;
+        }
+
+        .ic-purple {
+            background: #f3e8ff;
+            color: #9333ea;
+        }
+
+        .ic-yellow-card {
+            background: #fef9c3;
+            color: #eab308;
+        }
+
+        .ic-red-card {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .ic-matches {
+            background: #e0f2fe;
+            color: #0ea5e9;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ─── SPECIALIZED HUB STYLES (نمودار و گرید جدید) ──────────── */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 0 16px 16px;
+        }
+
+        .spec-item {
+            background: #f8fafc;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 12px;
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .spec-item:hover {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-3px);
+        }
+
+        .spec-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light);
+            border-radius: 12px;
+        }
+
+        .spec-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        .css-chart-wrap {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 140px;
+            padding-top: 20px;
+            gap: 8px;
+        }
+
+        .css-bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+            height: 100%;
+        }
+
+        .css-bar {
+            width: 100%;
+            max-width: 32px;
+            background: #f1f5f9;
+            border-radius: 6px 6px 0 0;
+            position: relative;
+            transition: 0.3s;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .css-bar-fill {
+            background: var(--primary);
+            width: 100%;
+            border-radius: 6px 6px 0 0;
+            transition: height 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .css-bar-col:hover .css-bar-fill {
+            background: var(--warning);
+        }
+
+        .css-bar-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .css-bar-val {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #fff;
+            margin-top: 4px;
+        }
+
+        .media-group-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            border-bottom: 1px solid rgba(234, 179, 8, 0.3);
+            background: #f8fafc;
+        }
+
+        .news-header h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .badge-new {
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .news-body {
+            padding: 16px;
+            font-size: 0.85rem;
+            background-color: #fefce8;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .news-body strong {
+            color: black;
+        }
+
+        .news-date {
+            font-size: 0.75rem;
+            color: var(--primary);
+            margin-top: 10px;
+            display: block;
+            font-weight: 800;
+        }
+
+        .dash-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .dash-action-card {
+            border-radius: var(--radius-lg);
+            padding: 10px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dash-action-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .dash-action-card i {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            z-index: 1;
+        }
+
+        .dash-action-card h4 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 1.1rem;
+            z-index: 1;
+        }
+
+        .card-store {
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+        }
+
+        .card-gallery {
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+        }
+
+        .dash-action-card::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+            padding: 16px;
+        }
+
+        .product-card {
+            background: var(--surface);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            background: #f8fafc;
+            padding: 10px;
+        }
+
+        .product-info {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-top: auto;
+            margin-bottom: 10px;
+        }
+
+        .btn-buy {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 8px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+        }
+
+        .btn-buy:hover {
+            background: var(--warning);
+            color: #fff;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 16px;
+        }
+
+        .gallery-item {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 1;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* ─── NEW COLORFUL COMPACT PROFILE FRAMES (3 COLUMNS ON MOBILE) ─── */
+        .profile-frame {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .frame-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        .frame-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* ۲ ستونه در موبایل */
+            gap: 8px;
+        }
+
+        .frame-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 4px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .frame-item:hover {
+            border-color: var(--primary);
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .frame-icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .frame-item:hover .frame-icon-circle {
+            transform: scale(1.05);
+        }
+
+        .frame-item-label {
+            line-height: 1.2;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        /* ─── BOTTOM NAV ───────────────────────────────────────────── */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            z-index: 1000;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+            padding-bottom: env(safe-area-inset-bottom);
+            border-top: 1px solid rgba(234, 179, 8, 0.2);
+        }
+
+        .bnav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 0;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 800;
+            gap: 4px;
+        }
+
+        .bnav-item i {
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .bnav-item.active {
+            color: var(--primary);
+        }
+
+        .bnav-item.active i {
+            transform: translateY(-3px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ─── TABLET ADJUSTMENTS ─── */
+        @media (min-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .frame-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 12px;
+            }
+
+            .frame-item {
+                font-size: 0.8rem;
+                padding: 14px 8px;
+            }
+
+            .frame-icon-circle {
+                width: 42px;
+                height: 42px;
+                font-size: 1.1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 700px) and (max-width: 1023px) {
+            .timeline-logo {
+                width: 75px;
+                height: 75px;
+            }
+
+            .timeline-content {
+                right: 45px;
+                margin-left: 65px;
+            }
+
+            .timeline-container::before {
+                right: 41px;
+            }
+        }
+
+        @media (min-width: 1023px) {
+            .timeline-logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .timeline-content {
+                right: 70px;
+                margin-left: 65px;
+            }
+
+            .timeline-container::before {
+                right: 53px;
+            }
+
+            .frame-item {
+                gap: 28px;
+                padding: 10px 4px;
+            }
+        }
+
+        @media (min-width: 500px) and (max-width: 1023px) {
+            .dash-action-grid {
+                margin-left: 16px;
+                margin-bottom: 0px;
+            }
+        }
+
+        /* ─── DESKTOP & LAPTOP REFINED LAYOUT (min-width: 1024px) ─── */
+        @media (min-width: 1024px) {
+            html {
+                font-size: 17px;
+            }
+
+            .bottom-nav {
+                display: none;
+            }
+
+            .desktop-sidebar {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: var(--navbar-h);
+                right: 0;
+                bottom: 0;
+                width: 280px;
+                background: #ffffff;
+                border-left: 1px solid rgba(234, 179, 8, 0.2);
+                padding: 30px 20px;
+                z-index: 950;
+                box-shadow: -4px 0 15px rgba(0, 0, 0, 0.03);
+            }
+
+            .dnav-item {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 16px 20px;
+                color: var(--text-muted);
+                font-weight: 800;
+                font-size: 1.05rem;
+                border-radius: 14px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-bottom: 12px;
+            }
+
+            .dnav-item:hover {
+                background: #f8fafc;
+                color: var(--text-dark);
+                padding-right: 26px;
+            }
+
+            .dnav-item.active {
+                background: var(--primary-light);
+                color: var(--text-dark);
+                border-right: 5px solid var(--primary);
+            }
+
+            .dnav-item i {
+                font-size: 1.5rem;
+                width: 28px;
+                text-align: center;
+                color: var(--primary);
+            }
+
+            .navbar-container {
+                padding: 0 50px;
+            }
+
+            .main-wrapper {
+                margin-right: 280px;
+                width: calc(100% - 280px);
+                padding: 40px 50px;
+                background: #f1f5f9;
+                min-height: calc(100vh - var(--navbar-h));
+            }
+
+            .profile-menu {
+                width: 300px;
+            }
+
+            .view-section {
+                max-width: 1300px;
+                margin: 0 auto;
+            }
+
+            .sticky-top-bar {
+                margin: 0 0 30px 0;
+                padding: 20px 30px;
+                border-radius: var(--radius-lg);
+                border: 1px solid rgba(234, 179, 8, 0.15);
+                background: #ffffff;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .sticky-title {
+                font-size: 1.2rem;
+            }
+
+            /* Dashboard */
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+                align-items: stretch;
+            }
+
+            .col-span-2 {
+                grid-column: span 2;
+            }
+
+            .col-span-3 {
+                grid-column: span 3;
+            }
+
+            .profile-card {
+                grid-row: auto;
+                padding: 35px;
+                border-radius: 24px;
+                box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.2);
+            }
+
+            .club-logo {
+                width: 90px;
+                height: 90px;
+                padding: 8px;
+                border-width: 3px;
+            }
+
+            .club-info h3 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            .term-pill {
+                font-size: 0.85rem;
+                padding: 6px 14px;
+            }
+
+            .debt-card {
+                margin-bottom: 0;
+                padding: 30px;
+                border-width: 2px;
+                border-radius: 24px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .debt-info-wrap {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .debt-icon {
+                width: 65px;
+                height: 65px;
+                font-size: 2rem;
+            }
+
+            .debt-info {
+                padding: 0;
+            }
+
+            .debt-card .label {
+                font-size: 0.95rem;
+                margin-bottom: 6px;
+            }
+
+            .debt-card .amount {
+                font-size: 1.4rem;
+            }
+
+            .btn-credit {
+                width: 100%;
+                justify-content: center;
+                padding: 14px;
+                font-size: 1rem;
+                border-radius: 12px;
+            }
+
+            .stats-container-block {
+                grid-column: span 3;
+                grid-row: auto;
+                height: auto;
+            }
+
+            .stats-grid {
+                gap: 24px;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: auto;
+                height: auto;
+            }
+
+            .stat-card {
+                padding: 24px;
+                border-radius: 16px;
+            }
+
+            .stat-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 1.6rem;
+            }
+
+            .stat-label {
+                font-size: 0.85rem;
+                margin-bottom: 4px;
+            }
+
+            .stat-val {
+                font-size: 1.15rem;
+            }
+
+            .media-group-wrapper {
+                grid-template-columns: 2fr 1fr;
+                gap: 24px;
+            }
+
+            .dash-action-grid {
+                gap: 24px;
+                margin-bottom: 0;
+                height: 100%;
+            }
+
+            .dash-action-card {
+                padding: 40px 30px;
+                border-radius: 20px;
+                justify-content: center;
+            }
+
+            .dash-action-card i {
+                font-size: 4rem;
+                margin-bottom: 20px;
+            }
+
+            .dash-action-card h4 {
+                font-size: 1.4rem;
+            }
+
+            .news-card {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 0;
+                border-radius: 20px;
+            }
+
+            .news-body {
+                flex: 1;
+                font-size: 0.95rem;
+                padding: 24px;
+                line-height: 2;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                padding: 40px;
+            }
+
+            .input-group label {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+            }
+
+            .input-group input,
+            .input-group select {
+                padding: 16px;
+                font-size: 1.05rem;
+                border-radius: 12px;
+            }
+
+            .frame-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 24px;
+            }
+
+            .frame-item {
+                padding: 28px 16px;
+                font-size: 0.95rem;
+                border-radius: 16px;
+            }
+
+            .frame-icon-circle {
+                width: 65px;
+                height: 65px;
+                font-size: 1.7rem;
+                margin-bottom: 12px;
+            }
+
+            .frame-title {
+                font-size: 1.05rem;
+                padding-bottom: 12px;
+                margin-bottom: 20px;
+            }
+
+            .timeline-container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding-right: 40px;
+            }
+
+            .timeline-container::before {
+                right: 122px;
+            }
+
+            .timeline-logo {
+                right: 48px;
+                width: 70px;
+                height: 70px;
+                top: -8px;
+            }
+
+            .timeline-item {
+                padding-right: 110px;
+                margin-bottom: 40px;
+            }
+
+            .timeline-content.success::before,
+            .timeline-content.fail::before,
+            .timeline-content.warning::before {
+                right: -5px;
+            }
+
+            .timeline-content.success,
+            .timeline-content.fail,
+            .timeline-content.warning {
+                right: 30px;
+                padding: 35px;
+                border-radius: 16px;
+                top: 10px;
+            }
+
+            .timeline-icon-circle {
+                width: 60px;
+                height: 60px;
+                right: 53px;
+            }
+
+            .timeline-icon-circle i {
+                font-size: 25px;
+            }
+
+            .tl-title.success,
+            .tl-title.warning,
+            .tl-title.fail {
+                font-size: 1.1rem;
+            }
+
+            .tl-row span {
+                font-size: 16px;
+            }
+
+            .store-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 30px;
+                padding: 30px;
+            }
+
+            .product-img {
+                height: 240px;
+            }
+
+            .product-title {
+                font-size: 1rem;
+            }
+
+            .product-price {
+                font-size: 1.1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 24px;
+                padding: 30px;
+            }
+
+            .spec-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 24px;
+                padding: 0 30px 30px;
+            }
+
+            .spec-item {
+                padding: 35px 16px;
+                border-radius: 20px;
+            }
+
+            .spec-icon {
+                width: 75px;
+                height: 75px;
+                font-size: 2.5rem;
+                margin-bottom: 16px;
+            }
+
+            .spec-title {
+                font-size: 0.95rem;
+            }
+
+            /* ─── Financial Hub Enhancements Desktop ─── */
+            .financial-top-grid {
+                display: grid !important;
+                grid-template-columns: 1fr 2fr !important;
+                gap: 24px;
+                align-items: stretch;
+                margin-bottom: 24px;
+            }
+
+            .financial-top-grid .card {
+                margin-bottom: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .financial-top-grid .hub-list {
+                padding: 30px;
+                gap: 16px;
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+
+            .financial-top-grid .hub-btn {
+                padding: 18px 24px;
+                font-size: 1.05rem;
+                border-radius: 16px;
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+                justify-content: center;
+            }
+
+            .financial-top-grid .hub-btn-left {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .financial-top-grid .hub-btn-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 1.6rem;
+                border-radius: 12px;
+                margin: 0 auto;
+            }
+
+            .financial-top-grid .hub-btn>i.fa-angle-left {
+                display: none !important;
+            }
+
+            .recent-transactions-card {
+                padding: 35px;
+                border-radius: 20px;
+            }
+
+            .transactions-title {
+                font-size: 1.3rem;
+                margin-bottom: 24px;
+                padding-bottom: 16px;
+            }
+
+            .transactions-list {
+                gap: 16px;
+            }
+
+            .transaction-item {
+                padding: 20px 24px;
+                border-radius: 16px;
+            }
+
+            .tr-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+                border-radius: 12px;
+            }
+
+            .tr-info strong {
+                font-size: 1.1rem;
+                margin-bottom: 6px;
+            }
+
+            .tr-info .tr-date {
+                font-size: 0.85rem;
+            }
+
+            .tr-amount {
+                font-size: 1.2rem;
+                flex-direction: row;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .badge-success,
+            .badge-fail {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                border-radius: 8px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .club-info {
+                width: fit-content;
+                margin-right: auto;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 📱 TOP NAVBAR -->
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <!-- Header Profile & Dropdown -->
+            <div class="header-profile" onclick="toggleProfileMenu(event)">
+                <div class="header-profile-avatar">
+                    <img src="../footballit/src/images/messi-profile.jpg" alt="user"
+                        onerror="this.src='https://via.placeholder.com/100/eab308/ffffff?text=User'">
+                </div>
+                <div>
+                    <div class="header-profile-info">
+                        <span class="name">محمدرضا قربانی</span>
+                        <span class="meta"><i class="fa fa-calendar-check-o" style="margin-left:4px"></i>عضویت:
+                            ۱۴۰۰/۰۹/۱۷</span>
+                    </div>
+                </div>
+                <i class="fa fa-angle-down" style="color: var(--text-muted); margin-right: 4px; font-size: 1.1rem;"></i>
+
+                <div id="profileMenu" class="profile-menu">
+                    <div style="padding: 16px; border-bottom: 1px solid var(--border); background: #f8fafc;">
+                        <div style="display: flex; flex-direction: row;">
+                            <div
+                                style="font-weight: 800;color: var(--text-dark);margin-bottom: 12px;font-size: 1.05rem;text-align: center;display: flex;justify-content: center;align-items: center;">
+                                محمدرضا قربانی</div>
+                            <div style="margin-right: auto; margin-bottom: 12px; display: flex; justify-content: center;"
+                                onclick="switchTab('verification')">
+                                <span style="border-color: #334155" class="badge-verify unverified"><i
+                                        class="fa fa-exclamation-circle"></i>استعلام هویت نشده</span>
+                            </div>
+                        </div>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">
+                            <span>کد ملی:</span> <strong>۱۲۳۴۵۶۷۸۹۰</strong></div>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">
+                            <span>تاریخ تولد:</span> <strong>۱۳۷۵/۰۵/۱۲</strong></div>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">
+                            <span>سن:</span> <strong>۳۰ سال</strong></div>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
+                            <span>رده سنی:</span> <strong>بزرگسالان</strong></div>
+                    </div>
+
+                    <a href="#" style="color: #334155;" onclick="switchTab('verification')"><i class="fa fa-shield"></i>
+                        تایید هویت و مدارک</a>
+                    <a href="#" style="color: var(--danger); padding: 12px 16px;"><i class="fa fa-sign-out"></i> خروج از
+                        حساب</a>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- Bulletin / Notifications Button -->
+                <button class="btn-noti" title="اعلان‌ها" onclick="switchTab('bulletin')">
+                    <i class="fa fa-bell-o"></i>
+                    <span class="badge">۳</span>
+                </button>
+                <a href="#" class="btn-app-header" title="دانلود اپلیکیشن">
+                    <i class="fa fa-android"></i> <span>دانلود اپ</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 💻 DESKTOP SIDEBAR -->
+    <aside class="desktop-sidebar">
+        <div
+            style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); margin-bottom: 16px; padding-right: 8px;">
+            منوی اصلی</div>
+        <div class="dnav-item active" onclick="switchTab('dashboard')"><i class="fa fa-home"></i> خانه</div>
+        <div class="dnav-item" onclick="switchTab('profile-hub')"><i class="fa fa-user"></i> پروفایل</div>
+        <div class="dnav-item" onclick="switchTab('registration')"><i class="fa fa-edit"></i> ثبت‌نام</div>
+        <div class="dnav-item" onclick="switchTab('financial-hub')"><i class="fa fa-credit-card"></i> مالی</div>
+        <div class="dnav-item" onclick="switchTab('specialized-hub')"><i class="fa fa-building"></i> تخصصی</div>
+    </aside>
+
+    <main class="main-wrapper">
+
+        <!-- ========================================== -->
+        <!-- 1. DASHBOARD VIEW                          -->
+        <!-- ========================================== -->
+        <div id="view-dashboard" class="view-section fade-in">
+            <div class="dashboard-grid">
+                <div class="profile-card col-span-2">
+                    <div class="profile-actions-box">
+                        <div class="action-row" style="margin-bottom: 6px;">
+                            <span class="action-label"><i class="fa fa-exclamation-triangle"
+                                    style="color: #fde047; font-size: 1rem;"></i> اطلاعات شما تکمیل نیست (۳۲٪)</span>
+                            <button class="btn-mini" onclick="switchTab('profile-hub')">تکمیل اطلاعات</button>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-fill" style="width: 32%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="profile-club-row">
+                        <div class="club-logo">
+                            <img src="src/images/logo/Sepahan_New_Logo.svg" alt="logo"
+                                onerror="this.src='https://via.placeholder.com/100'">
+                        </div>
+                        <div class="club-info">
+                            <h3>استعداد برتر دامغان</h3>
+                            <div class="term-pill">ترم تابستان ۱۴۰۵</div>
+                            <div style="font-size:0.75rem; color:rgba(255,255,255,0.8); margin-top: 4px;">کلاس آموزشی
+                            </div>
+                            <div class="social-row">
+                                <a href="#" class="social-btn" title="تلگرام"><i style="color: deepskyblue"
+                                        class="fa fa-paper-plane"></i></a>
+                                <a href="#" class="social-btn" title="اینستاگرام"><i style="color: red"
+                                        class="fa fa-instagram"></i></a>
+                                <a href="#" class="social-btn" title="واتساپ"><i style="color: lawngreen"
+                                        class="fa fa-whatsapp"></i></a>
+                                <a href="#" class="social-btn" title="وب‌سایت"><i style="color: orange"
+                                        class="fa fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="debt-card status-clear">
+                    <div class="debt-info-wrap">
+                        <div class="debt-icon"><i class="fa fa-check"></i></div>
+                        <div class="debt-info">
+                            <span class="label">وضعیت مالی حساب</span>
+                            <span class="amount">بدون بدهی</span>
+                        </div>
+                    </div>
+                    <button class="btn-credit" title="افزایش اعتبار"><i class="fa fa-plus"></i> شارژ</button>
+                </div>
+
+                <div class="stats-container-block">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon ic-blue"><i class="fa fa-users"></i></div>
+                            <div class="stat-info"><span class="stat-label">رده سنی</span><span
+                                    class="stat-val">بزرگسالان</span></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon ic-green"><i class="fa fa-check-square-o"></i></div>
+                            <div class="stat-info"><span class="stat-label">حضور تمرین</span><span class="stat-val">۰ از
+                                    ۰</span></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon ic-orange"><i class="fa fa-shield"></i></div>
+                            <div class="stat-info"><span class="stat-label">اعتبار بیمه</span><span
+                                    class="stat-val">—</span></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon ic-purple"><i class="fa fa-trophy"></i></div>
+                            <div class="stat-info"><span class="stat-label">استعدادیابی</span><span
+                                    class="stat-val">۰</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-3 media-group-wrapper">
+                    <div class="dash-action-grid">
+                        <div class="dash-action-card card-store" onclick="switchTab('store')">
+                            <i class="fa fa-shopping-cart"></i>
+                            <h4>فروشگاه باشگاه</h4>
+                        </div>
+                        <div class="dash-action-card card-gallery" onclick="switchTab('gallery')">
+                            <i class="fa fa-picture-o"></i>
+                            <h4>گالری تصاویر</h4>
+                        </div>
+                    </div>
+                    <div class="card news-card" onclick="switchTab('bulletin')"
+                        style="cursor:pointer; margin-bottom: 0px;">
+                        <div class="news-header">
+                            <h4><i class="fa fa-bell-o" style="color:var(--primary)"></i> اطلاعیه و پیام‌ها</h4>
+                            <span class="badge-new">۱ پیام جدید</span>
+                        </div>
+                        <div class="news-body">
+                            برای مشاهده همه پیام‌های بولتن خبری کلیک کنید. ثبت‌نام در طرح ترم تابستان ۱۴۰۵ شروع شده
+                            است...
+                            <span class="news-date">۱۴۰۵/۰۳/۰۱</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 2. PROFILE HUB                             -->
+        <!-- ========================================== -->
+        <div id="view-profile-hub" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                        class="fa fa-arrow-right"></i> داشبورد</button>
+                <h3 class="sticky-title">پروفایل کاربری</h3>
+                <div style="width: 80px;"></div>
+            </div>
+
+            <div class="verify-banner unverified">
+                <div class="verify-banner-content">
+                    <div class="verify-banner-icon"><i class="fa fa-shield"></i></div>
+                    <div class="verify-banner-text">
+                        <h4>کاربر استعلام هویتی نشده است!</h4>
+                        <p>جهت استفاده از تمامی امکانات و ثبت‌نام، مدارک خود را تکمیل کنید.</p>
+                    </div>
+                </div>
+                <button class="btn-verify-action" onclick="switchTab('verification')">تکمیل هویت</button>
+            </div>
+
+            <div class="profile-frame">
+                <div class="frame-title">
+                    <i class="fa fa-user" style="color: var(--primary);"></i> اطلاعات فردی
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-item" onclick="switchTab('personal-info')">
+                        <div class="frame-icon-circle ic-blue"><i class="fa fa-id-card-o"></i></div>
+                        <span class="frame-item-label">اطلاعات فردی</span>
+                    </div>
+                    <div class="frame-item" onclick="switchTab('contact-info')">
+                        <div class="frame-icon-circle ic-green"><i class="fa fa-phone"></i></div>
+                        <span class="frame-item-label">اطلاعات تماس</span>
+                    </div>
+                    <div class="frame-item" onclick="switchTab('passport-info')">
+                        <div class="frame-icon-circle ic-orange"><i class="fa fa-globe"></i></div>
+                        <span class="frame-item-label">سایر (گذرنامه)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-frame">
+                <div class="frame-title">
+                    <i class="fa fa-soccer-ball-o" style="color: var(--warning);"></i> اطلاعات ورزشی
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-item" onclick="switchTab('sports-info')">
+                        <div class="frame-icon-circle ic-purple"><i class="fa fa-star"></i></div>
+                        <span class="frame-item-label">مشخصات ورزشی</span>
+                    </div>
+                    <div class="frame-item" onclick="switchTab('club-info')">
+                        <div class="frame-icon-circle ic-blue"><i class="fa fa-shield"></i></div>
+                        <span class="frame-item-label">اطلاعات باشگاهی</span>
+                    </div>
+                    <div class="frame-item" onclick="alert('فرم مشخصات سایز لباس و کفش بازیکن...')">
+                        <div class="frame-icon-circle ic-orange"><i class="fa fa-arrows-v"></i></div>
+                        <span class="frame-item-label">سایز پوشاک</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-frame">
+                <div class="frame-title">
+                    <i class="fa fa-folder-open" style="color: var(--danger);"></i> مستندات و مدارک
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-item" onclick="switchTab('documents')">
+                        <div class="frame-icon-circle ic-blue"><i class="fa fa-file-image-o"></i></div>
+                        <span class="frame-item-label">کارت ملی</span>
+                    </div>
+                    <div class="frame-item" onclick="switchTab('documents')">
+                        <div class="frame-icon-circle ic-green"><i class="fa fa-file-text-o"></i></div>
+                        <span class="frame-item-label">شناسنامه</span>
+                    </div>
+                    <div class="frame-item" onclick="switchTab('documents')">
+                        <div class="frame-icon-circle ic-purple"><i class="fa fa-certificate"></i></div>
+                        <span class="frame-item-label">مجوز ورزشی</span>
+                    </div>
+                    <div class="frame-item" onclick="switchTab('documents')">
+                        <div class="frame-icon-circle ic-red-card"><i class="fa fa-plus-circle"></i></div>
+                        <span class="frame-item-label">مدارک و سایر</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-frame" style="padding: 10px 16px;">
+                <div class="frame-grid" style="grid-template-columns: 1fr;">
+                    <div class="frame-item" onclick="switchTab('password')"
+                        style="flex-direction: row; justify-content: center; background: #fff; border-style: dashed; padding: 12px; gap: 8px;">
+                        <i class="fa fa-lock" style="color: var(--warning); font-size: 1.2rem;"></i>
+                        <span>تنظیمات امنیت و تغییر رمز عبور</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 3. FINANCIAL HUB                           -->
+        <!-- ========================================== -->
+        <div id="view-financial-hub" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                        class="fa fa-arrow-right"></i> داشبورد</button>
+                <h3 class="sticky-title">اطلاعات مالی</h3>
+                <div style="width: 80px;"></div>
+            </div>
+
+            <!-- Desktop Refined Grid for Financial Top -->
+            <div class="financial-top-grid">
+                <div class="debt-card status-due" style="padding: 16px;">
+                    <div class="debt-info-wrap">
+                        <div class="debt-icon">❌</div>
+                        <div class="debt-info">
+                            <span class="label">وضعیت مالی حساب</span>
+                            <span class="amount" style="padding-top: 3px;">۷,۵۰۰,۰۰۰ تومان</span>
+                        </div>
+                    </div>
+                    <button class="btn-credit" title="پرداخت بدهی" onclick="alert('انتقال به درگاه پرداخت...')"><i
+                            class="fa fa-plus"></i> پرداخت بدهی</button>
+                </div>
+
+                <div class="card">
+                    <div class="hub-list">
+                        <div class="hub-btn" onclick="switchTab('bank-info')">
+                            <div class="hub-btn-left">
+                                <div class="hub-btn-icon"><i class="fa fa-bank"></i></div> حساب‌های بانکی
+                            </div>
+                            <i class="fa fa-angle-left"></i>
+                        </div>
+                        <div class="hub-btn" onclick="alert('انتقال به درگاه پرداخت...')">
+                            <div class="hub-btn-left">
+                                <div class="hub-btn-icon" style="color:var(--success)"><i class="fa fa-credit-card"></i>
+                                </div> پرداخت شهریه
+                            </div>
+                            <i class="fa fa-angle-left"></i>
+                        </div>
+                        <div class="hub-btn" onclick="switchTab('financial-timeline')">
+                            <div class="hub-btn-left">
+                                <div class="hub-btn-icon" style="color:var(--info)"><i class="fa fa-bar-chart"></i>
+                                </div> گزارشات و تایم‌لاین مالی
+                            </div>
+                            <i class="fa fa-angle-left"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card recent-transactions-card">
+                <h4 class="transactions-title"><i class="fa fa-exchange"
+                        style="color: var(--primary); margin-left: 8px;"></i> سوابق تراکنش‌های اخیر</h4>
+                <div class="transactions-list">
+                    <div class="transaction-item">
+                        <div class="tr-info">
+                            <div class="tr-icon success"><i class="fa fa-arrow-down"></i></div>
+                            <div>
+                                <strong>پرداخت شهریه خرداد</strong>
+                                <span class="tr-date">۱۴۰۵/۰۳/۰۱ | ۱۲:۴۵</span>
+                            </div>
+                        </div>
+                        <div class="tr-amount success">۶,۸۰۰,۰۰۰ تومان <span class="badge-success">موفق</span></div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="tr-info">
+                            <div class="tr-icon success"><i class="fa fa-arrow-down"></i></div>
+                            <div>
+                                <strong>هزینه لباس فرم مسابقات</strong>
+                                <span class="tr-date">۱۴۰۵/۰۲/۱۵ | ۰۹:۳۰</span>
+                            </div>
+                        </div>
+                        <div class="tr-amount success">۸۵۰,۰۰۰ تومان <span class="badge-success">موفق</span></div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="tr-info">
+                            <div class="tr-icon fail"><i class="fa fa-arrow-up"></i></div>
+                            <div>
+                                <strong>شهریه ترم تابستان (بدهی)</strong>
+                                <span class="tr-date">۱۴۰۵/۰۳/۰۵ | ۱۸:۱۰</span>
+                            </div>
+                        </div>
+                        <div class="tr-amount fail">۷,۵۰۰,۰۰۰ تومان <span class="badge-fail">ناموفق / بدهی</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 4. SPECIALIZED HUB                         -->
+        <!-- ========================================== -->
+        <div id="view-specialized-hub" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                        class="fa fa-arrow-right"></i> داشبورد</button>
+                <h3 class="sticky-title">اطلاعات تخصصی</h3>
+                <div style="width: 80px;"></div>
+            </div>
+
+            <div class="card" style="margin-bottom: 16px;">
+                <div class="section-title" style="padding: 0 16px; margin-top: 16px;">
+                    <i class="fa fa-dashboard" style="color:var(--primary)"></i> شاخص‌های عملکرد (KPI) - باشگاهی
+                </div>
+                <div class="stats-grid" style="padding: 0 16px 16px;">
+                    <div class="stat-card">
+                        <div class="stat-icon ic-matches"><i class="fa fa-play-circle"></i></div>
+                        <div class="stat-info"><span class="stat-label">مسابقات (فیکس/ذخیره)</span><span
+                                class="stat-val">۱۴ (۱۰ فیکس)</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon ic-green"><i class="fa fa-calendar-check-o"></i></div>
+                        <div class="stat-info"><span class="stat-label">حضور در تمرینات</span><span
+                                class="stat-val">۸۵٪</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon ic-yellow-card"><i class="fa fa-times-rectangle"></i></div>
+                        <div class="stat-info"><span class="stat-label">کارت زرد</span><span class="stat-val">۲</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon ic-red-card"><i class="fa fa-times-rectangle"></i></div>
+                        <div class="stat-info"><span class="stat-label">کارت قرمز</span><span class="stat-val">۰</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 16px; padding: 16px;">
+                <div class="section-title" style="margin-top: 0;">
+                    <i class="fa fa-area-chart" style="color:var(--warning)"></i> شاخص فشار تمرین (RPE) - هفته اخیر
+                </div>
+                <div class="css-chart-wrap">
+                    <div class="css-bar-col">
+                        <div class="css-bar">
+                            <div class="css-bar-fill" style="height: 40%;"><span class="css-bar-val">4</span></div>
+                        </div><span class="css-bar-label">شنبه</span>
+                    </div>
+                    <div class="css-bar-col">
+                        <div class="css-bar">
+                            <div class="css-bar-fill" style="height: 60%;"><span class="css-bar-val">6</span></div>
+                        </div><span class="css-bar-label">۱شنبه</span>
+                    </div>
+                    <div class="css-bar-col">
+                        <div class="css-bar">
+                            <div class="css-bar-fill" style="height: 80%; background:var(--warning);"><span
+                                    class="css-bar-val">8</span></div>
+                        </div><span class="css-bar-label">۲شنبه</span>
+                    </div>
+                    <div class="css-bar-col">
+                        <div class="css-bar">
+                            <div class="css-bar-fill" style="height: 30%;"><span class="css-bar-val">3</span></div>
+                        </div><span class="css-bar-label">۳شنبه</span>
+                    </div>
+                    <div class="css-bar-col">
+                        <div class="css-bar">
+                            <div class="css-bar-fill" style="height: 70%;"><span class="css-bar-val">7</span></div>
+                        </div><span class="css-bar-label">۴شنبه</span>
+                    </div>
+                    <div class="css-bar-col">
+                        <div class="css-bar">
+                            <div class="css-bar-fill" style="height: 50%;"><span class="css-bar-val">5</span></div>
+                        </div><span class="css-bar-label">۵شنبه</span>
+                    </div>
+                    <div class="css-bar-col">
+                        <div class="css-bar">
+                            <div class="css-bar-fill" style="height: 0%;"><span class="css-bar-val">0</span></div>
+                        </div><span class="css-bar-label">جمعه</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" style="padding: 0 16px; margin-top: 16px;">
+                    <i class="fa fa-folder-open" style="color:var(--danger)"></i> فرم‌ها و گزارش‌ها
+                </div>
+                <div class="spec-grid">
+                    <div class="spec-item" onclick="switchTab('attendance')">
+                        <div class="spec-icon" style="color:#10b981; background:#dcfce7;"><i
+                                class="fa fa-check-square-o"></i></div>
+                        <div class="spec-title">گزارش حضور و غیاب<br>در تمرینات</div>
+                    </div>
+                    <div class="spec-item" onclick="alert('باز کردن فرم RPE / Hooper...')">
+                        <div class="spec-icon" style="color:var(--warning); background:#fef3c7;"><i
+                                class="fa fa-battery-half"></i></div>
+                        <div class="spec-title">فرم فشار تمرین<br>(RPE / Hooper)</div>
+                    </div>
+                    <div class="spec-item" onclick="switchTab('registration-history')">
+                        <div class="spec-icon" style="color:#1d4ed8; background:var(--primary-light);"><i
+                                class="fa fa-history"></i></div>
+                        <div class="spec-title">تاریخچه<br>ثبت‌نام‌ها</div>
+                    </div>
+                    <div class="spec-item" onclick="switchTab('talent')">
+                        <div class="spec-icon" style="color:#9333ea; background:#f3e8ff;"><i class="fa fa-search"></i>
+                        </div>
+                        <div class="spec-title">فرم<br>استعدادیابی</div>
+                    </div>
+                    <div class="spec-item" onclick="alert('گزارش عملکرد مسابقه...')">
+                        <div class="spec-icon" style="color:#f59e0b; background:#fef3c7;"><i
+                                class="fa fa-line-chart"></i></div>
+                        <div class="spec-title">تحلیل عملکرد<br>در مسابقه</div>
+                    </div>
+                    <div class="spec-item" onclick="alert('گزارش عملکرد تمرین...')">
+                        <div class="spec-icon" style="color:#3b82f6; background:#e0e7ff;"><i
+                                class="fa fa-area-chart"></i></div>
+                        <div class="spec-title">تحلیل عملکرد<br>در تمرینات</div>
+                    </div>
+                    <div class="spec-item" onclick="switchTab('insurance-status')">
+                        <div class="spec-icon" style="color:#0ea5e9; background:#e0f2fe;"><i
+                                class="fa fa-heartbeat"></i></div>
+                        <div class="spec-title">وضعیت<br>بیمه ورزشی</div>
+                    </div>
+                    <div class="spec-item" onclick="switchTab('certificate')">
+                        <div class="spec-icon" style="color:#f59e0b; background:#fef3c7;"><i
+                                class="fa fa-certificate"></i></div>
+                        <div class="spec-title">گواهی<br>پایان دوره</div>
+                    </div>
+                    <div class="spec-item" onclick="alert('باز کردن فرم پزشکی...')">
+                        <div class="spec-icon" style="color:#ef4444; background:#fee2e2;"><i class="fa fa-medkit"></i>
+                        </div>
+                        <div class="spec-title">فرم<br>پزشکی</div>
+                    </div>
+                    <div class="spec-item" onclick="alert('کارت عضویت شما در حال دانلود است...')">
+                        <div class="spec-icon" style="color:#64748b; background:#f1f5f9;"><i class="fa fa-id-badge"></i>
+                        </div>
+                        <div class="spec-title">دریافت کارت<br>عضویت</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- 5. REGISTRATION PAGE                       -->
+        <!-- ========================================== -->
+        <div id="view-registration" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                        class="fa fa-arrow-right"></i> داشبورد</button>
+                <h3 class="sticky-title">ثبت‌نام در دوره</h3>
+                <button class="btn-top-action btn-submit-top" onclick="submitForm()"><i class="fa fa-check"></i> تایید
+                    نهایی</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group" style="grid-column: 1 / -1;">
+                        <label>دوره انتخابی:</label>
+                        <select>
+                            <option value="1">ترم تابستان ۱۴۰۵</option>
+                            <option value="2">ترم پاییز ۱۴۰۵</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="grid-column: 1 / -1;">
+                        <label>کلاس / رده سنی:</label>
+                        <select>
+                            <option value="1">رده سنی ۱۴ و ۱۵ سال</option>
+                            <option value="2">رده سنی ۱۶ و ۱۷ سال</option>
+                        </select>
+                    </div>
+                    <div class="input-group"
+                        style="grid-column: 1 / -1; background:var(--primary-light); padding: 12px; border-radius: 10px; border: 1px solid rgba(234,179,8,0.3); color: var(--text-dark);">
+                        <label style="color:var(--text-dark); display:flex; align-items:center; gap:8px;">
+                            <input type="checkbox" style="width:auto; transform:scale(1.2);">
+                            قوانین و مقررات باشگاه را مطالعه کرده و می‌پذیرم.
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="padding: 16px; margin-top: 16px;">
+                <h4
+                    style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: var(--text-dark); font-weight: 800;">
+                    <i class="fa fa-pie-chart" style="color: var(--primary);"></i> گزارش مالی ثبت‌نام‌ها
+                </h4>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem;">
+                    <span>کل پرداختی‌های شما:</span>
+                    <strong style="color: var(--success);">۱۵,۰۰۰,۰۰۰ تومان</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 0.85rem;">
+                    <span>بدهی فعلی (ترم جاری):</span>
+                    <strong style="color: var(--danger);">۷,۵۰۰,۰۰۰ تومان</strong>
+                </div>
+                <button onclick="switchTab('financial-timeline')"
+                    style="width: 100%; background: #f8fafc; color: var(--text-dark); border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-weight: 800; font-family: inherit; cursor: pointer; transition: 0.2s;">
+                    <i class="fa fa-history" style="color: var(--primary);"></i> مشاهده تایم‌لاین مالی تراکنش‌ها
+                </button>
+            </div>
+        </div>
+
+        <!-- NEW: Store Page -->
+        <div id="view-store" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                        class="fa fa-arrow-right"></i> داشبورد</button>
+                <h3 class="sticky-title">فروشگاه باشگاه</h3>
+                <div style="width: 80px;"></div>
+            </div>
+            <div class="store-grid">
+                <div class="product-card">
+                    <img src="" alt="product" class="product-img">
+                    <div class="product-info">
+                        <div class="product-title">پیراهن رسمی مسابقات (آستین کوتاه)</div>
+                        <div class="product-price">۴۵۰,۰۰۰ تومان</div>
+                        <button class="btn-buy" onclick="alert('به سبد خرید اضافه شد.')"><i
+                                class="fa fa-shopping-cart"></i> افزودن به سبد</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="" alt="product" class="product-img">
+                    <div class="product-info">
+                        <div class="product-title">شورت ورزشی تمرینی (اورجینال)</div>
+                        <div class="product-price">۲۸۰,۰۰۰ تومان</div>
+                        <button class="btn-buy" onclick="alert('به سبد خرید اضافه شد.')"><i
+                                class="fa fa-shopping-cart"></i> افزودن به سبد</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="" alt="product" class="product-img">
+                    <div class="product-info">
+                        <div class="product-title">جوراب ورزشی ساق بلند حرفه‌ای</div>
+                        <div class="product-price">۱۲۰,۰۰۰ تومان</div>
+                        <button class="btn-buy" onclick="alert('به سبد خرید اضافه شد.')"><i
+                                class="fa fa-shopping-cart"></i> افزودن به سبد</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="" alt="product" class="product-img">
+                    <div class="product-info">
+                        <div class="product-title">کوله پشتی باشگاه با لوگو اختصاصی</div>
+                        <div class="product-price">۸۵۰,۰۰۰ تومان</div>
+                        <button class="btn-buy" onclick="alert('به سبد خرید اضافه شد.')"><i
+                                class="fa fa-shopping-cart"></i> افزودن به سبد</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Image Gallery Page -->
+        <div id="view-gallery" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                        class="fa fa-arrow-right"></i> داشبورد</button>
+                <h3 class="sticky-title">گالری تصاویر</h3>
+                <div style="width: 80px;"></div>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="" alt="gallery"></div>
+                <div class="gallery-item"><img src="" alt="gallery"></div>
+                <div class="gallery-item"><img src="" alt="gallery"></div>
+                <div class="gallery-item"><img src="" alt="gallery"></div>
+                <div class="gallery-item"><img src="" alt="gallery"></div>
+                <div class="gallery-item"><img src="" alt="gallery"></div>
+            </div>
+        </div>
+
+        <!-- NEW: Financial Timeline Page -->
+        <div id="view-financial-timeline" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('registration')"><i
+                        class="fa fa-arrow-right"></i> ثبت‌نام</button>
+                <h3 class="sticky-title">تایم‌لاین گزارشات مالی</h3>
+                <div style="width: 80px;"></div>
+            </div>
+
+            <div class="card" style="background: transparent; border: none; box-shadow: none;">
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-icon-circle fail"><i class="fa fa-times"></i></div>
+                        <div class="timeline-content fail">
+                            <div class="tl-header fail">
+                                <span class="tl-title fail">شهریه ترم تابستان ۱۴۰۵</span>
+                                <span class="tl-date">۱۴۰۵/۰۳/۰۱</span>
+                            </div>
+                            <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۷,۵۰۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-row"><span>بابت:</span> <strong>کلاس پیشرفته الف</strong></div>
+                            <div class="tl-status fail"><i class="fa fa-exclamation-circle"></i> پرداخت نشده (بدهی)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-icon-circle success"><i class="fa fa-check"></i></div>
+                        <div class="timeline-content success">
+                            <div class="tl-header success">
+                                <span class="tl-title success">خرید پکیج لباس فرم</span>
+                                <span class="tl-date">۱۴۰۵/۰۲/۱۵</span>
+                            </div>
+                            <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۸۵۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-row"><span>شماره پیگیری:</span> <strong>۱۴۵۸۷۹۶۵۲۳</strong></div>
+                            <div class="tl-status success"><i class="fa fa-check-circle"></i> پرداخت موفق - درگاه بانک
+                                ملت</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-icon-circle success"><i class="fa fa-check"></i></div>
+                        <div class="timeline-content success">
+                            <div class="tl-header success">
+                                <span class="tl-title success">شهریه ترم بهار ۱۴۰۵</span>
+                                <span class="tl-date">۱۴۰۴/۱۲/۲۰</span>
+                            </div>
+                            <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۶,۸۰۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-row"><span>بابت:</span> <strong>کلاس استعداد برتر</strong></div>
+                            <div class="tl-status success"><i class="fa fa-check-circle"></i> پرداخت موفق - فیش واریزی
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-icon-circle" style="border-color: var(--warning); color: var(--warning);">
+                            <i class="fa fa-refresh"></i></div>
+                        <div class="timeline-content warning">
+                            <div class="tl-header warning">
+                                <span class="tl-title warning">هزینه اردوی تدارکاتی مشهد</span>
+                                <span class="tl-date">۱۴۰۴/۱۱/۰۵</span>
+                            </div>
+                            <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۱,۲۰۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-status warning"><i class="fa fa-clock-o"></i> در حال بررسی فیش واریزی</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-icon-circle success"><i class="fa fa-check"></i></div>
+                        <div class="timeline-content success">
+                            <div class="tl-header success">
+                                <span class="tl-title success">شهریه ترم زمستان ۱۴۰۴</span>
+                                <span class="tl-date">۱۴۰۴/۰۹/۱۵</span>
+                            </div>
+                            <div class="tl-row"><span>مبلغ تراکنش:</span> <strong>۵,۵۰۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-status success"><i class="fa fa-check-circle"></i> پرداخت موفق - درگاه سامان
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- FORMS (SUB-PAGES)                          -->
+        <!-- ========================================== -->
+
+        <!-- Verification Page (احراز هویت) -->
+        <div id="view-verification" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('profile-hub')"><i
+                        class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">احراز هویت حساب</h3>
+                <button class="btn-top-action btn-submit-top" onclick="submitForm()"><i class="fa fa-check"></i> ارسال
+                    مدارک</button>
+            </div>
+
+            <div
+                style="background: var(--primary-light); color: var(--primary); padding: 16px; border-radius: 12px; margin-bottom: 16px; font-size: 0.8rem; font-weight: 700; line-height: 1.6;">
+                <i class="fa fa-info-circle" style="font-size: 1.1rem; margin-bottom: 6px; display: block;"></i>
+                لطفاً اطلاعات هویتی خود را دقیق وارد کنید. این اطلاعات برای استعلام از سامانه ثبت احوال استفاده می‌شود.
+            </div>
+
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>کد ملی (۱۰ رقم)</label>
+                        <input type="number" placeholder="مثال: ۱۲۳۴۵۶۷۸۹۰">
+                    </div>
+                    <div class="input-group">
+                        <label>تاریخ تولد (طبق شناسنامه)</label>
+                        <input type="date">
+                    </div>
+                    <div class="input-group" style="grid-column: 1 / -1; margin-top: 8px;">
+                        <label>آپلود تصویر روی کارت ملی</label>
+                        <div
+                            style="border: 2px dashed var(--border); padding: 20px; text-align: center; border-radius: 12px; background: #f8fafc; cursor: pointer;">
+                            <i class="fa fa-id-card-o"
+                                style="font-size: 2rem; color: var(--text-muted); margin-bottom: 8px;"></i>
+                            <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">برای انتخاب فایل
+                                کلیک کنید</p>
+                            <input type="file" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="input-group" style="grid-column: 1 / -1;">
+                        <label>تصویر چهره (سلفی زنده)</label>
+                        <div
+                            style="border: 2px dashed var(--border); padding: 20px; text-align: center; border-radius: 12px; background: #f8fafc; cursor: pointer;">
+                            <i class="fa fa-camera"
+                                style="font-size: 2rem; color: var(--text-muted); margin-bottom: 8px;"></i>
+                            <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">برای گرفتن عکس
+                                کلیک کنید</p>
+                            <input type="file" accept="image/*" capture="user" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration History Timeline -->
+        <div id="view-registration-history" class="view-section hidden fade-in">
+            <div class="sticky-top-bar">
+                <button class="btn-top-action btn-back-top" onclick="switchTab('specialized-hub')"><i
+                        class="fa fa-arrow-right"></i> تخصصی</button>
+                <h3 class="sticky-title">تاریخچه ثبت‌نام‌ها</h3>
+                <div style="width: 80px;"></div>
+            </div>
+
+            <div class="card" style="background: transparent; border: none; box-shadow: none;">
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-logo success">
+                            <img src="src/images/logo/Sepahan_New_Logo.svg" alt="logo"
+                                onerror="this.src='https://via.placeholder.com/100'">
+                        </div>
+                        <div class="timeline-content success">
+                            <div class="tl-header success">
+                                <span class="tl-title success">ترم تابستان ۱۴۰۵</span>
+                                <span class="tl-date">۱۴۰۵/۰۳/۰۱</span>
+                            </div>
+                            <div class="tl-row"><span>رده سنی:</span> <strong>۱۴ و ۱۵ سال</strong></div>
+                            <div class="tl-row"><span>نام کلاس:</span> <strong>پیشرفته الف</strong></div>
+                            <div class="tl-row"><span>هزینه دوره:</span> <strong>۷,۵۰۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-status success"><i class="fa fa-check-circle"></i> ثبت‌نام موفق و قطعی</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-logo success">
+                            <img src="src/images/logo/damghan.jpg" alt="logo"
+                                onerror="this.src='https://via.placeholder.com/100'">
+                        </div>
+                        <div class="timeline-content success">
+                            <div class="tl-header success">
+                                <span class="tl-title success">ترم بهار ۱۴۰۵</span>
+                                <span class="tl-date">۱۴۰۴/۱۲/۲۰</span>
+                            </div>
+                            <div class="tl-row"><span>رده سنی:</span> <strong>۱۴ و ۱۵ سال</strong></div>
+                            <div class="tl-row"><span>نام کلاس:</span> <strong>استعداد برتر</strong></div>
+                            <div class="tl-row"><span>هزینه دوره:</span> <strong>۶,۸۰۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-status success"><i class="fa fa-check-circle"></i> ثبت‌نام موفق و قطعی</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-logo success">
+                            <img src="src/images/logo/staregan-logo.jpg" alt="logo"
+                                onerror="this.src='https://via.placeholder.com/100'">
+                        </div>
+                        <div class="timeline-content success">
+                            <div class="tl-header success">
+                                <span class="tl-title success">ترم زمستان ۱۴۰۴</span>
+                                <span class="tl-date">۱۴۰۴/۰۹/۱۵</span>
+                            </div>
+                            <div class="tl-row"><span>رده سنی:</span> <strong>۱۲ و ۱۳ سال</strong></div>
+                            <div class="tl-row"><span>نام کلاس:</span> <strong>تکنیک و تاکتیک</strong></div>
+                            <div class="tl-row"><span>هزینه دوره:</span> <strong>۵,۵۰۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-status success"><i class="fa fa-check-circle"></i> ثبت‌نام موفق و قطعی</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-logo fail">
+                            <img src="src/images/logo/tam%20logo.png" alt="logo"
+                                onerror="this.src='https://via.placeholder.com/100'">
+                        </div>
+                        <div class="timeline-content fail">
+                            <div class="tl-header fail">
+                                <span class="tl-title fail">ترم پاییز ۱۴۰۴</span>
+                                <span class="tl-date">۱۴۰۴/۰۶/۲۵</span>
+                            </div>
+                            <div class="tl-row"><span>رده سنی:</span> <strong>۱۲ و ۱۳ سال</strong></div>
+                            <div class="tl-row"><span>نام کلاس:</span> <strong>پایه</strong></div>
+                            <div class="tl-row"><span>هزینه دوره:</span> <strong>۵,۰۰۰,۰۰۰ تومان</strong></div>
+                            <div class="tl-status fail"><i class="fa fa-exclamation-circle"></i> انصراف از دوره</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Info -->
+        <div id="view-personal-info" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('profile-hub')"><i class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">مشخصات فردی</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group"><label>نام</label><input type="text" value="محمدرضا"></div>
+                    <div class="input-group"><label>نام خانوادگی</label><input type="text" value="قربانی"></div>
+                    <div class="input-group"><label>نام پدر</label><input type="text" placeholder="نام پدر"></div>
+                    <div class="input-group"><label>جنسیت</label><select>
+                            <option>مرد</option>
+                            <option>زن</option>
+                        </select></div>
+                    <div class="input-group"><label>قد (سانتی‌متر)</label><input type="number" placeholder="مثال: 180">
+                    </div>
+                    <div class="input-group"><label>وزن (کیلوگرم)</label><input type="number" placeholder="مثال: 75">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div id="view-contact-info" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('profile-hub')"><i class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">اطلاعات تماس</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group"><label>موبایل بازیکن</label><input type="tel" value="09120000000"></div>
+                    <div class="input-group"><label>موبایل ولی/سرپرست</label><input type="tel" placeholder="0912...">
+                    </div>
+                    <div class="input-group"><label>تلفن ثابت</label><input type="tel" placeholder="021..."></div>
+                    <div class="input-group" style="grid-column: 1 / -1;"><label>آدرس منزل</label><input type="text"
+                            placeholder="استان، شهر، خیابان..."></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Passport Info -->
+        <div id="view-passport-info" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('profile-hub')"><i class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">اطلاعات گذرنامه</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group"><label>شماره گذرنامه</label><input type="text" placeholder="شماره گذرنامه">
+                    </div>
+                    <div class="input-group"><label>تاریخ صدور</label><input type="date"></div>
+                    <div class="input-group"><label>تاریخ انقضا</label><input type="date"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Info -->
+        <div id="view-bank-info" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('financial-hub')"><i class="fa fa-arrow-right"></i> مالی</button>
+                <h3 class="sticky-title">حساب بانکی</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group"><label>نام بانک</label><input type="text" placeholder="مثال: ملی"></div>
+                    <div class="input-group"><label>شماره کارت</label><input type="text"
+                            placeholder="xxxx-xxxx-xxxx-xxxx"></div>
+                    <div class="input-group" style="grid-column: 1 / -1;"><label>شماره شبا</label><input type="text"
+                            placeholder="IR..."></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports Info -->
+        <div id="view-sports-info" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('profile-hub')"><i class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">مشخصات ورزشی</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group"><label>پست اصلی</label><select>
+                            <option>مهاجم</option>
+                            <option>هافبک</option>
+                            <option>مدافع</option>
+                            <option>دروازه‌بان</option>
+                        </select></div>
+                    <div class="input-group"><label>پای تخصصی</label><select>
+                            <option>راست</option>
+                            <option>چپ</option>
+                            <option>هردو</option>
+                        </select></div>
+                    <div class="input-group"><label>سابقه بازی ملی؟</label><select>
+                            <option>خیر</option>
+                            <option>بله</option>
+                        </select></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Club Info -->
+        <div id="view-club-info" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('profile-hub')"><i class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">اطلاعات باشگاهی</h3>
+                <div style="width: 80px;"></div>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <div class="info-row-text"><strong>باشگاه فعلی:</strong> <span>استعداد برتر دامغان</span></div>
+                <div class="info-row-text"><strong>شماره پیراهن:</strong> <span>۱۰</span></div>
+                <div class="info-row-text"><strong>رده سنی:</strong> <span>۱۴ و ۱۵ سال</span></div>
+                <div class="info-row-text"><strong>تاریخ شروع قرارداد:</strong> <span>۱۴۰۵/۰۳/۰۱</span></div>
+            </div>
+        </div>
+
+        <!-- Clothing Info -->
+        <div id="view-clothing-info" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('profile-hub')"><i class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">سایز پوشاک</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> ثبت</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group"><label>سایز پیراهن</label><select>
+                            <option>S</option>
+                            <option>M</option>
+                            <option>L</option>
+                            <option>XL</option>
+                            <option>XXL</option>
+                        </select></div>
+                    <div class="input-group"><label>سایز شورت ورزشی</label><select>
+                            <option>S</option>
+                            <option>M</option>
+                            <option>L</option>
+                            <option>XL</option>
+                            <option>XXL</option>
+                        </select></div>
+                    <div class="input-group"><label>سایز کفش (شماره)</label><input type="number" placeholder="مثال: 42">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documents -->
+        <div id="view-documents" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('profile-hub')"><i class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">مستندات و مدارک</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> آپلود</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group"><label>اسکن کارت ملی</label><input type="file" accept="image/*"></div>
+                    <div class="input-group"><label>اسکن شناسنامه</label><input type="file" accept="image/*"></div>
+                    <div class="input-group" style="grid-column: 1 / -1;"><label>عکس پرسنلی (۴×۳)</label><input
+                            type="file" accept="image/*"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div id="view-password" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('profile-hub')"><i class="fa fa-arrow-right"></i> پروفایل</button>
+                <h3 class="sticky-title">تغییر رمز عبور</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> تغییر رمز</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group" style="grid-column: 1 / -1;"><label>رمز عبور فعلی</label><input
+                            type="password"></div>
+                    <div class="input-group"><label>رمز عبور جدید</label><input type="password"></div>
+                    <div class="input-group"><label>تکرار رمز عبور جدید</label><input type="password"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance -->
+        <div id="view-attendance" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+                <h3 class="sticky-title">حضور و غیاب</h3>
+                <div style="width: 80px;"></div>
+            </div>
+            <div class="card" style="padding: 20px; text-align:center;">
+                <div class="stat-icon ic-green" style="width:60px; height:60px; font-size:2rem; margin:0 auto 16px;"><i
+                        class="fa fa-check-square-o"></i></div>
+                <h3 style="margin-bottom: 8px;">گزارش حضور در تمرینات</h3>
+                <p style="color:var(--text-muted); font-size:0.85rem;">در ماه جاری در <strong>۰</strong> جلسه از
+                    <strong>۰</strong> جلسه حضور داشته‌اید.</p>
+            </div>
+        </div>
+
+        <!-- Talent Scouting -->
+        <div id="view-talent" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+                <h3 class="sticky-title">استعدادیابی</h3>
+                <div style="width: 80px;"></div>
+            </div>
+            <div class="card" style="padding: 20px; text-align:center;">
+                <div class="stat-icon ic-purple" style="width:60px; height:60px; font-size:2rem; margin:0 auto 16px;"><i
+                        class="fa fa-trophy"></i></div>
+                <h3 style="margin-bottom: 8px;">سوابق استعدادیابی</h3>
+                <p style="color:var(--text-muted); font-size:0.85rem;">هنوز هیچ فرم ارزیابی یا استعدادیابی برای شما ثبت
+                    نشده است.</p>
+            </div>
+        </div>
+
+        <!-- Insurance RPE -->
+        <div id="view-insurance" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+                <h3 class="sticky-title">فرم فشار تمرین RPE</h3><button class="btn-top-action btn-submit-top"
+                    onclick="submitForm()"><i class="fa fa-check"></i> ثبت گزارش</button>
+            </div>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group"><label>شاخص فشار تمرین RPE (از ۰ تا ۱۰)</label><input type="number" min="0"
+                            max="10" value="5"></div>
+                    <div class="input-group"><label>کیفیت خواب (۱ تا ۵)</label><input type="number" min="1" max="5"
+                            value="4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insurance Status -->
+        <div id="view-insurance-status" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+                <h3 class="sticky-title">وضعیت بیمه ورزشی</h3>
+                <div style="width: 80px;"></div>
+            </div>
+            <div class="card" style="padding: 20px; text-align:center;">
+                <div class="stat-icon ic-matches" style="width:60px; height:60px; font-size:2rem; margin:0 auto 16px;">
+                    <i class="fa fa-heartbeat"></i></div>
+                <h3 style="margin-bottom: 8px;">بیمه ورزشی شما فعال نیست!</h3>
+                <p style="color:var(--danger); font-size:0.85rem; font-weight: 700;">لطفاً جهت تمدید بیمه ورزشی خود به
+                    دفتر باشگاه مراجعه کنید.</p>
+            </div>
+        </div>
+
+        <!-- Certificate -->
+        <div id="view-certificate" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top"
+                    onclick="switchTab('specialized-hub')"><i class="fa fa-arrow-right"></i> تخصصی</button>
+                <h3 class="sticky-title">گواهی پایان دوره</h3>
+                <div style="width: 80px;"></div>
+            </div>
+            <div class="card" style="padding: 20px; text-align:center; border: 2px dashed var(--primary);">
+                <i class="fa fa-certificate" style="font-size: 3rem; color: var(--primary); margin-bottom: 12px;"></i>
+                <h3 style="margin-bottom: 8px;">گواهی سطح پیشرفته</h3>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom: 16px;">ترم تابستان ۱۴۰۴ با نمره
+                    عالی گذرانده شد.</p>
+                <button class="btn-buy" style="margin: 0 auto; width: 200px;"
+                    onclick="alert('در حال ایجاد فایل PDF...')"><i class="fa fa-download"></i> دانلود گواهی PDF</button>
+            </div>
+        </div>
+
+        <!-- Bulletin History -->
+        <div id="view-bulletin" class="view-section hidden fade-in">
+            <div class="sticky-top-bar"><button class="btn-top-action btn-back-top" onclick="switchTab('dashboard')"><i
+                        class="fa fa-arrow-right"></i> داشبورد</button>
+                <h3 class="sticky-title">تاریخچه پیام ها</h3>
+                <div style="width: 80px;"></div>
+            </div>
+            <div class="card" style="margin-bottom: 12px; border-right: 4px solid var(--primary);">
+                <div class="news-body"><strong>شروع ثبت‌نام ترم جدید</strong><br><br>ثبت‌نام در طرح ترم تابستان ۱۴۰۵
+                    شروع شده است...<span class="news-date">۱۴۰۵/۰۳/۰۱</span></div>
+            </div>
+            <div class="card" style="margin-bottom: 12px; border-right: 4px solid var(--text-muted);">
+                <div class="news-body"><strong>تعطیلی تمرینات پنجشنبه</strong><br><br>به اطلاع می‌رساند تمرینات روز
+                    پنجشنبه این هفته برگزار نخواهد شد.<span class="news-date">۱۴۰۵/۰۲/۲۸</span></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 📱 BOTTOM NAV -->
+    <nav class="bottom-nav">
+        <button class="bnav-item active" onclick="switchTab('dashboard')"><i class="fa fa-home"></i> خانه</button>
+        <button class="bnav-item" onclick="switchTab('profile-hub')"><i class="fa fa-user"></i> پروفایل</button>
+        <button class="bnav-item" onclick="switchTab('registration')"><i class="fa fa-edit"></i> ثبت‌نام</button>
+        <button class="bnav-item" onclick="switchTab('financial-hub')"><i class="fa fa-credit-card"></i> مالی</button>
+        <button class="bnav-item" onclick="switchTab('specialized-hub')"><i class="fa fa-building"></i> تخصصی</button>
+    </nav>
+
+    <script>
+        function switchTab(targetId) {
+            window.scrollTo(0, 0);
+            document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('fade-in'); });
+
+            const viewId = 'view-' + targetId;
+            const targetView = document.getElementById(viewId);
+            if (targetView) { targetView.classList.remove('hidden'); void targetView.offsetWidth; targetView.classList.add('fade-in'); }
+
+            document.querySelectorAll('.bnav-item, .dnav-item').forEach(btn => btn.classList.remove('active'));
+
+            let activeIndex = -1;
+            const dashPages = ['dashboard', 'store', 'gallery', 'bulletin'];
+            const profilePages = ['profile-hub', 'personal-info', 'contact-info', 'passport-info', 'sports-info', 'club-info', 'clothing-info', 'documents', 'password', 'verification'];
+            const financePages = ['financial-hub', 'bank-info'];
+            const regPages = ['registration', 'financial-timeline']; // Financial timeline grouped under Registration
+            const specPages = ['specialized-hub', 'attendance', 'talent', 'insurance', 'insurance-status', 'certificate', 'registration-history', 'medkit'];
+
+            if (dashPages.includes(targetId)) activeIndex = 0;
+            else if (profilePages.includes(targetId)) activeIndex = 1;
+            else if (regPages.includes(targetId)) activeIndex = 2;
+            else if (financePages.includes(targetId)) activeIndex = 3;
+            else if (specPages.includes(targetId)) activeIndex = 4;
+
+            if (activeIndex !== -1) {
+                const bnavs = document.querySelectorAll('.bnav-item');
+                if (bnavs[activeIndex]) bnavs[activeIndex].classList.add('active');
+                const dnavs = document.querySelectorAll('.dnav-item');
+                if (dnavs[activeIndex]) dnavs[activeIndex].classList.add('active');
+            }
+        }
+
+        function submitForm() {
+            alert('اطلاعات با موفقیت ذخیره شد!');
+        }
+
+        function toggleProfileMenu(e) {
+            e.stopPropagation();
+            document.getElementById('profileMenu').classList.toggle('show');
+        }
+
+        document.addEventListener('click', function (e) {
+            const menu = document.getElementById('profileMenu');
+            if (menu && menu.classList.contains('show')) { menu.classList.remove('show'); }
+        });
+    </script>
+</body>
+
+</html>

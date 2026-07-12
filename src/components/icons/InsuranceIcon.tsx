@@ -1,0 +1,16 @@
+import React from 'react';
+
+const InsuranceIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    {...props}
+  >
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9 12h6M12 9v6" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
+  </svg>
+);
+
+export default InsuranceIcon;
