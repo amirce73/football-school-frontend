@@ -97,34 +97,36 @@ export default function Dashboard() {
                         </div>
 
                         {/* BMI Card (Mobile Only) */}
-                        <div className="card bmi-card school-top-bmi-card" style={{ flex: 1, margin: 0, padding: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                            <div className="bmi-label" style={{ color: 'var(--text-muted)', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px', width: '100%' }}>
-                                <BmiIcon width="24" height="24" color={bmiColor} style={{ flexShrink: 0 }} />
-                                <span style={{ whiteSpace: 'nowrap' }}>شاخص BMI</span>
+                        <div className="card bmi-card school-top-bmi-card" style={{ flex: 1, margin: 0, padding: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                            <div className="bmi-label" style={{ color: 'var(--text-muted)', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px', width: '100%' }}>
+                                <BmiIcon width="32" height="32" color={bmiColor} style={{ flexShrink: 0 }} />
+                                <span style={{ whiteSpace: 'nowrap', fontSize: '0.9rem' }}>شاخص BMI</span>
                             </div>
-                            <div className="bmi-val" style={{ fontWeight: '900', color: bmiColor !== '#475569' ? bmiColor : 'var(--text-dark)', fontSize: '1.2rem', marginBottom: '6px' }}>{bmiVal}</div>
-                            <div className="bmi-status" style={{ borderRadius: '16px', background: bmiBg, color: bmiColor, fontWeight: 'bold', padding: '2px 12px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>{bmiStatus}</div>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                <div className="bmi-val" style={{ fontWeight: '900', color: bmiColor !== '#475569' ? bmiColor : 'var(--text-dark)', fontSize: '1.2rem' }}>{bmiVal}</div>
+                                <div className="bmi-status" style={{ borderRadius: '16px', background: bmiBg, color: bmiColor, fontWeight: 'bold', padding: '2px 10px', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>{bmiStatus}</div>
+                            </div>
                         </div>
 
                         {/* Debt Card */}
                         <div
                             className={`debt-card status-${debtStatus} school-debt-card`}
-                            style={{ flex: 1, margin: 0, cursor: 'pointer' }}
+                            style={{ flex: 1, margin: 0, cursor: 'pointer', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
                             onClick={() => setDebtStatus(s => s === 'clear' ? 'due' : 'clear')}
                             title="برای دیدن نمونه کلیک کنید"
                         >
-                            <div className="debt-info-wrap" style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
-                                <div className="debt-icon" style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <i className={`fa ${debtStatus === 'clear' ? 'fa-check' : 'fa-exclamation-triangle'}`}></i>
-                                </div>
-                                <div className="debt-info" style={{ overflow: 'hidden' }}>
-                                    <span className="label" style={{ whiteSpace: 'nowrap' }}>وضعیت مالی حساب</span>
-                                    <span className="amount" style={{ whiteSpace: 'nowrap' }}>
-                                        {debtStatus === 'clear' ? 'بدون بدهی' : '۱,۵۰۰,۰۰۰ بدهی'}
+                            <div className="debt-info-wrap" style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', padding: '0', marginBottom: '6px' }}>
+                                <div className="debt-info" style={{ display: 'flex', alignItems: 'center', gap: '4px', overflow: 'hidden' }}>
+                                    <span className="label" style={{ whiteSpace: 'nowrap', fontSize: '0.75rem', opacity: 0.8 }}>وضعیت مالی:</span>
+                                    <span className="amount" style={{ whiteSpace: 'nowrap', fontSize: '0.9rem', fontWeight: 'bold' }}>
+                                        {debtStatus === 'clear' ? 'بدون بدهی' : '۱.۵M بدهی'}
                                     </span>
                                 </div>
+                                <div className="debt-icon" style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', opacity: 0.9 }}>
+                                    <i className={`fa ${debtStatus === 'clear' ? 'fa-check' : 'fa-exclamation-triangle'}`}></i>
+                                </div>
                             </div>
-                            <button className="btn-credit" title="افزایش اعتبار"><i className="fa fa-plus"></i> شارژ</button>
+                            <button className="btn-credit" style={{ margin: '0 auto', padding: '4px 12px', fontSize: '0.8rem', minHeight: 'auto', width: '100%' }} title="افزایش اعتبار"><i className="fa fa-plus"></i> شارژ</button>
                         </div>
                     </div>
                 </div>

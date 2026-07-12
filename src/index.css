@@ -4122,4 +4122,32 @@ img {
     .profile-club-row {
         transform: translateX(-20px);
     }
+    .school-debt-card .debt-info-wrap {
+        flex-direction: row !important;
+    }
+    .debt-info-wrap {
+        padding-right: inherit !important;
+        padding-left: inherit !important;
+    }
+    .left-cards-container {
+        margin-top: -5px !important;
+    }
+    .stats-grid {
+        margin-top: -5px !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    .school-stat-card .stat-val {
+        font-size: 14px !important;
+    }
+    .school-stat-card .stat-label {
+        font-size: 12px !important;
+    }
+    .dash-action-card i {
+        font-size: 3rem !important;
+    }
+    .dash-action-card h4 {
+        font-size: 1.2rem !important;
+    }
 }
