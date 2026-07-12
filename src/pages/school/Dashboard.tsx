@@ -100,7 +100,10 @@ export default function Dashboard() {
                         <div className="card bmi-card school-top-bmi-card" style={{ flex: 1, margin: 0, padding: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                             <div className="bmi-label" style={{ color: 'var(--text-muted)', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px', width: '100%' }}>
                                 <BmiIcon width="32" height="32" color={bmiColor} style={{ flexShrink: 0 }} />
-                                <span style={{ whiteSpace: 'nowrap', fontSize: '0.9rem' }}>شاخص BMI</span>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                                    <span style={{ whiteSpace: 'nowrap', fontSize: '0.9rem' }}>شاخص BMI</span>
+                                    <span style={{ whiteSpace: 'nowrap', fontSize: '0.65rem', opacity: 0.7, marginTop: '-2px' }}>شاخص توده بدنی</span>
+                                </div>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                                 <div className="bmi-val" style={{ fontWeight: '900', color: bmiColor !== '#475569' ? bmiColor : 'var(--text-dark)', fontSize: '1.2rem' }}>{bmiVal}</div>
