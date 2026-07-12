@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { AgeIcon, AttendanceIcon, InsuranceIcon, TalentIcon } from '../../components/icons';
+import { AgeIcon, AttendanceIcon, InsuranceIcon, TalentIcon, BmiIcon } from '../../components/icons';
 import sepahanLogo from '../../images/logo/Sepahan_New_Logo.svg';
 import ClubDetailsModal from '../../components/ClubDetailsModal';
 
@@ -97,10 +97,13 @@ export default function Dashboard() {
                         </div>
 
                         {/* BMI Card (Mobile Only) */}
-                        <div className="card bmi-card school-top-bmi-card" style={{ flex: 1, margin: 0 }}>
-                            <div className="bmi-label" style={{ color: 'var(--text-muted)', fontWeight: 'bold' }}>شاخص BMI</div>
-                            <div className="bmi-val" style={{ fontWeight: '900', color: 'var(--text-dark)' }}>{bmiVal}</div>
-                            <div className="bmi-status" style={{ borderRadius: '16px', background: bmiBg, color: bmiColor, fontWeight: 'bold' }}>{bmiStatus}</div>
+                        <div className="card bmi-card school-top-bmi-card" style={{ flex: 1, margin: 0, padding: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                            <div className="bmi-label" style={{ color: 'var(--text-muted)', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px', width: '100%' }}>
+                                <BmiIcon width="24" height="24" color={bmiColor} style={{ flexShrink: 0 }} />
+                                <span style={{ whiteSpace: 'nowrap' }}>شاخص BMI</span>
+                            </div>
+                            <div className="bmi-val" style={{ fontWeight: '900', color: bmiColor !== '#475569' ? bmiColor : 'var(--text-dark)', fontSize: '1.2rem', marginBottom: '6px' }}>{bmiVal}</div>
+                            <div className="bmi-status" style={{ borderRadius: '16px', background: bmiBg, color: bmiColor, fontWeight: 'bold', padding: '2px 12px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>{bmiStatus}</div>
                         </div>
 
                         {/* Debt Card */}
@@ -137,8 +140,10 @@ export default function Dashboard() {
                             <div className="stat-info"><span className="stat-label">کل | حضور در تمرین</span><span className="stat-val">۲۰ | ۱۴ (۷۰٪)</span></div>
                         </div>
                         <div className="stat-card school-stat-card school-kpi-bmi" style={{ cursor: 'pointer' }} onClick={() => navigate('/bmi-history')}>
-                            <div className="stat-icon" style={{ color: '#be123c', background: '#ffe4e6', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '12px', fontSize: '1.5rem', width: '48px', height: '48px' }}><i className="fa fa-heartbeat"></i></div>
-                            <div className="stat-info"><span className="stat-label">شاخص BMI</span><span className="stat-val" style={{ color: bmiColor }}>{bmiVal !== '--' ? `${bmiVal} (${bmiStatus})` : 'نامشخص'}</span></div>
+                            <div className="stat-icon" style={{ color: bmiColor, background: bmiBg, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '12px', fontSize: '1.5rem', width: '48px', height: '48px' }}>
+                                <BmiIcon width="26" height="26" />
+                            </div>
+                            <div className="stat-info"><span className="stat-label">شاخص BMI</span><span className="stat-val">{bmiVal !== '--' ? `${bmiVal} (${bmiStatus})` : 'نامشخص'}</span></div>
                         </div>
                         <div className="stat-card school-stat-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/talent')}>
                             <div className="stat-icon" style={{ color: '#9333ea', background: '#f3e8ff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '12px' }}><i className="fa fa-search"></i></div>
