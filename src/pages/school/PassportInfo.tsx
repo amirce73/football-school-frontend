@@ -106,7 +106,7 @@ export default function PassportInfo() {
                 <button type="button" className="btn-top-action btn-back-top" onClick={() => navigate('/profile-hub')}>
                     <i className="fa fa-arrow-right"></i> بازگشت</button>
                 <h3 className="sticky-title">اطلاعات گذرنامه</h3>
-                
+
             </div>
 
             <div className="card">
@@ -124,7 +124,7 @@ export default function PassportInfo() {
                             name="issueDate"
                             render={({ field }) => (
                                 <>
-                                    <div 
+                                    <div
                                         className={`date-picker-input ${errors.issueDate ? 'error' : ''}`}
                                         style={{ width: '100%', padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', background: '#fff', cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center' }}
                                         onClick={() => setIsIssueDatePickerOpen(true)}
@@ -154,7 +154,7 @@ export default function PassportInfo() {
                             name="expiryDate"
                             render={({ field }) => (
                                 <>
-                                    <div 
+                                    <div
                                         className={`date-picker-input ${errors.expiryDate ? 'error' : ''}`}
                                         style={{ width: '100%', padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', background: '#fff', cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center' }}
                                         onClick={() => setIsExpiryDatePickerOpen(true)}
@@ -207,9 +207,9 @@ export default function PassportInfo() {
                             <p style={{ margin: 0, color: 'var(--text-muted)' }}>برای انتخاب فایل کلیک کنید</p>
                         </div>
                     </div>
-                <StickySubmitButton loading={loading} text="ثبت اطلاعات" loadingText="در حال ثبت..." />
+                    <StickySubmitButton loading={loading} text="ثبت اطلاعات" loadingText="در حال ثبت..." />
 
-            </form>
+                </form>
             </div>
         </div>
     );
