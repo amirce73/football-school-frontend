@@ -2632,7 +2632,7 @@ img {
     .profile-hub-sections-wrapper .verify-banner-icon {
         width: 44px;
         height: 44px;
-        font-size: 1.4rem;
+        font-size: 2.4rem;
         flex-shrink: 0;
     }
 
@@ -3193,7 +3193,8 @@ img {
 }
 
 /* Base Flex layout for school top cards */
-.school-registration-card, .school-top-bmi-card {
+.school-registration-card,
+.school-top-bmi-card {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -3220,11 +3221,13 @@ img {
         gap: 12px !important;
     }
 
-    .school-registration-card, .school-kpi-bmi {
+    .school-registration-card,
+    .school-kpi-bmi {
         display: none !important;
     }
 
-    .school-top-bmi-card, .school-debt-card {
+    .school-top-bmi-card,
+    .school-debt-card {
         padding: 6px 8px !important;
         gap: 8px !important;
         min-height: 80px !important;
@@ -3309,22 +3312,72 @@ img {
         flex-direction: row !important;
     }
 
-    .school-registration-card .reg-label { font-size: 1.1rem !important; }
-    .school-registration-card .reg-val { font-size: 2.4rem !important; }
-    .school-registration-card .reg-status { font-size: 0.9rem !important; padding: 4px 16px !important; }
-    .school-registration-card { padding: 16px !important; gap: 16px !important; }
+    .school-registration-card .reg-label {
+        font-size: 1.1rem !important;
+    }
 
-    .school-debt-card { padding: 16px !important; gap: 20px !important; }
-    .school-debt-card .debt-icon { width: 48px !important; height: 48px !important; font-size: 1.8rem !important; }
-    .school-debt-card .label { font-size: 0.9rem !important; }
-    .school-debt-card .amount { font-size: 1.4rem !important; font-weight: bold !important; }
-    .school-debt-card .btn-credit { padding: 10px 28px !important; font-size: 1rem !important; font-weight: bold !important; }
+    .school-registration-card .reg-val {
+        font-size: 2.4rem !important;
+    }
 
-    .school-stat-card { padding: 20px !important; }
-    .school-stat-card .stat-icon { width: 48px !important; height: 48px !important; font-size: 1.5rem !important; }
-    .school-stat-card .stat-icon svg { width: 28px !important; height: 28px !important; }
-    .school-stat-card .stat-label { font-size: 0.9rem !important; }
-    .school-stat-card .stat-val { font-size: 1.2rem !important; }
+    .school-registration-card .reg-status {
+        font-size: 0.9rem !important;
+        padding: 4px 16px !important;
+    }
+
+    .school-registration-card {
+        padding: 16px !important;
+        gap: 16px !important;
+    }
+
+    .school-debt-card {
+        padding: 16px !important;
+        gap: 20px !important;
+    }
+
+    .school-debt-card .debt-icon {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 1.8rem !important;
+    }
+
+    .school-debt-card .label {
+        font-size: 0.9rem !important;
+    }
+
+    .school-debt-card .amount {
+        font-size: 1.4rem !important;
+        font-weight: bold !important;
+    }
+
+    .school-debt-card .btn-credit {
+        padding: 10px 28px !important;
+        font-size: 1rem !important;
+        font-weight: bold !important;
+    }
+
+    .school-stat-card {
+        padding: 20px !important;
+    }
+
+    .school-stat-card .stat-icon {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 1.5rem !important;
+    }
+
+    .school-stat-card .stat-icon svg {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    .school-stat-card .stat-label {
+        font-size: 0.9rem !important;
+    }
+
+    .school-stat-card .stat-val {
+        font-size: 1.2rem !important;
+    }
 
     .school-stats-grid {
         grid-template-columns: repeat(5, 1fr) !important;
@@ -3355,28 +3408,78 @@ img {
     .school-top-row {
         grid-template-columns: 1.5fr 1.5fr !important;
     }
-    
+
     .school-top-row .left-cards-container {
         grid-column: 2 / 3 !important;
         flex-direction: row !important;
     }
 
-    .school-registration-card .reg-label { font-size: 1.2rem !important; }
-    .school-registration-card .reg-val { font-size: 3.5rem !important; }
-    .school-registration-card .reg-status { font-size: 1.1rem !important; padding: 6px 20px !important; }
-    .school-registration-card { padding: 16px !important; gap: 24px !important; }
+    .school-registration-card .reg-label {
+        font-size: 1.2rem !important;
+    }
 
-    .school-debt-card { padding: 16px !important; gap: 20px !important; }
-    .school-debt-card .debt-icon { width: 48px !important; height: 48px !important; font-size: 1.8rem !important; }
-    .school-debt-card .label { font-size: 0.9rem !important; }
-    .school-debt-card .amount { font-size: 1.4rem !important; font-weight: bold !important; }
-    .school-debt-card .btn-credit { padding: 10px 28px !important; font-size: 1rem !important; font-weight: bold !important; }
+    .school-registration-card .reg-val {
+        font-size: 3.5rem !important;
+    }
 
-    .school-stat-card { padding: 20px !important; }
-    .school-stat-card .stat-icon { width: 48px !important; height: 48px !important; font-size: 1.5rem !important; }
-    .school-stat-card .stat-icon svg { width: 28px !important; height: 28px !important; }
-    .school-stat-card .stat-label { font-size: 0.9rem !important; }
-    .school-stat-card .stat-val { font-size: 1.2rem !important; }
+    .school-registration-card .reg-status {
+        font-size: 1.1rem !important;
+        padding: 6px 20px !important;
+    }
+
+    .school-registration-card {
+        padding: 16px !important;
+        gap: 24px !important;
+    }
+
+    .school-debt-card {
+        padding: 16px !important;
+        gap: 20px !important;
+    }
+
+    .school-debt-card .debt-icon {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 1.8rem !important;
+    }
+
+    .school-debt-card .label {
+        font-size: 0.9rem !important;
+    }
+
+    .school-debt-card .amount {
+        font-size: 1.4rem !important;
+        font-weight: bold !important;
+    }
+
+    .school-debt-card .btn-credit {
+        padding: 10px 28px !important;
+        font-size: 1rem !important;
+        font-weight: bold !important;
+    }
+
+    .school-stat-card {
+        padding: 20px !important;
+    }
+
+    .school-stat-card .stat-icon {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 1.5rem !important;
+    }
+
+    .school-stat-card .stat-icon svg {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    .school-stat-card .stat-label {
+        font-size: 0.9rem !important;
+    }
+
+    .school-stat-card .stat-val {
+        font-size: 1.2rem !important;
+    }
 
     .school-stats-grid {
         grid-template-columns: repeat(5, 1fr) !important;
@@ -4122,16 +4225,20 @@ img {
     .profile-club-row {
         transform: translateX(-20px);
     }
+
     .school-debt-card .debt-info-wrap {
         flex-direction: row !important;
     }
+
     .debt-info-wrap {
         padding-right: inherit !important;
         padding-left: inherit !important;
     }
+
     .left-cards-container {
         margin-top: -5px !important;
     }
+
     .stats-grid {
         margin-top: -5px !important;
     }
@@ -4141,12 +4248,15 @@ img {
     .school-stat-card .stat-val {
         font-size: 14px !important;
     }
+
     .school-stat-card .stat-label {
         font-size: 12px !important;
     }
+
     .dash-action-card i {
         font-size: 3rem !important;
     }
+
     .dash-action-card h4 {
         font-size: 1.2rem !important;
     }

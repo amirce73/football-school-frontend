@@ -22,13 +22,13 @@ export default function ClubDetailsModal({ isOpen, onClose }: ClubDetailsModalPr
                     <h2>باشگاه فولاد مبارکه سپاهان</h2>
                     <span className="modal-badge">کد ثبت: 10452</span>
                 </div>
-                
+
                 <div className="modal-body-content">
                     <h3>
                         <i className="fa fa-info-circle" style={{ color: '#eab308' }}></i>
                         اطلاعات کامل مدرسه فوتبال
                     </h3>
-                    
+
                     <div className="modal-info-list">
                         <div className="modal-info-item">
                             <div className="info-icon" style={{ background: '#dbeafe', color: '#3b82f6' }}>
@@ -39,7 +39,7 @@ export default function ClubDetailsModal({ isOpen, onClose }: ClubDetailsModalPr
                                 <p>سمنان، دامغان، خیابان شهید بهشتی، ورزشگاه انقلاب، دفتر هیئت فوتبال</p>
                             </div>
                         </div>
-                        
+
                         <div className="modal-info-item">
                             <div className="info-icon" style={{ background: '#dcfce7', color: '#22c55e' }}>
                                 <i className="fa fa-phone"></i>
@@ -63,7 +63,7 @@ export default function ClubDetailsModal({ isOpen, onClose }: ClubDetailsModalPr
                             </div>
                         </div>
                     </div>
-                    
+
                     <button onClick={onClose} className="btn-modal-close-large">
                         بستن
                     </button>
