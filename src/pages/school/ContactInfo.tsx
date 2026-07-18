@@ -185,26 +185,22 @@ export default function ContactInfo() {
                     </div>
 
                     <div className="input-group" style={{ gridColumn: '1 / -1' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                            <label className={errors.address ? 'error-label' : ''} style={{ marginBottom: 0 }}>
-                                آدرس دقیق منزل <span className="text-danger">*</span>
-                                {user?.isPostalVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
-                            </label>
-                            <button type="button" onClick={() => !user?.isPostalVerified && setActiveMapField('address')} className="btn-app-secondary" style={{ padding: '4px 8px', fontSize: '0.8rem', borderRadius: '6px', opacity: user?.isPostalVerified ? 0.5 : 1, cursor: user?.isPostalVerified ? 'not-allowed' : 'pointer' }}>
-                                <i className="fa fa-map-marker text-danger"></i> انتخاب از روی نقشه
-                            </button>
-                        </div>
+                        <label className={errors.address ? 'error-label' : ''} style={{ marginBottom: 0, right: '3px' }}>
+                            آدرس دقیق منزل <span className="text-danger">*</span>
+                            {user?.isPostalVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
+                        </label>
+                        <button type="button" onClick={() => !user?.isPostalVerified && setActiveMapField('address')} style={{ alignSelf: 'flex-start', marginTop: '16px', marginRight: '12px', marginBottom: '8px', background: 'var(--primary)', color: '#000', border: 'none', padding: '6px 12px', fontSize: '0.8rem', fontWeight: 'bold', borderRadius: '8px', opacity: user?.isPostalVerified ? 0.5 : 1, cursor: user?.isPostalVerified ? 'not-allowed' : 'pointer', boxShadow: '0 4px 6px rgba(234, 179, 8, 0.3)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                            <i className="fa fa-map-marker"></i> انتخاب از نقشه
+                        </button>
                         <textarea rows={2} {...register('address')} placeholder="استان، شهر، خیابان..." className={errors.address ? 'error' : ''} readOnly={user?.isPostalVerified} style={user?.isPostalVerified ? { background: '#f1f5f9', color: '#64748b' } : {}}></textarea>
                         {errors.address && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.address.message)}</span>}
                     </div>
 
                     <div className="input-group" style={{ gridColumn: '1 / -1' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                            <label style={{ marginBottom: 0, right: '3px' }}>آدرس محل کار والدین</label>
-                            <button type="button" onClick={() => setActiveMapField('parentsWorkAddress')} className="btn-app-secondary" style={{ padding: '4px 8px', fontSize: '0.8rem', borderRadius: '6px' }}>
-                                <i className="fa fa-map-marker text-danger"></i> انتخاب از روی نقشه
-                            </button>
-                        </div>
+                        <label style={{ marginBottom: 0, right: '3px' }}>آدرس محل کار والدین</label>
+                        <button type="button" onClick={() => setActiveMapField('parentsWorkAddress')} style={{ alignSelf: 'flex-start', marginTop: '16px', marginRight: '12px', marginBottom: '8px', background: 'var(--primary)', color: '#000', border: 'none', padding: '6px 12px', fontSize: '0.8rem', fontWeight: 'bold', borderRadius: '8px', cursor: 'pointer', boxShadow: '0 4px 6px rgba(234, 179, 8, 0.3)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                            <i className="fa fa-map-marker"></i> انتخاب از نقشه
+                        </button>
                         <textarea rows={2} {...register('parentsWorkAddress')} placeholder="آدرس دقیق"></textarea>
                     </div>
                     {!activeMapField && (
