@@ -107,7 +107,10 @@ export default function MapModal({ isOpen, onClose, onConfirm }: MapModalProps) 
             });
             const data = await response.json();
             if (data && data.status === 'ERROR') {
-                setAddress(`خطای کلید API: ${data.message} (محدودیت دامنه/آی‌پی)`);
+                const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fa`);
+                const osmData = await osmResponse.json();
+                const fallbackAddress = parseOSMAddress(osmData);
+                setAddress(fallbackAddress || `خطای کلید API: ${data.message} (محدودیت دامنه/آی‌پی)`);
             } else if (data) {
                 var addr = data.formatted_address
                     || data.route_name
@@ -117,7 +120,14 @@ export default function MapModal({ isOpen, onClose, onConfirm }: MapModalProps) 
                     || "آدرس یافت نشد";
                 setAddress(addr);
             }
-        } catch (e) { } finally { setLoading(false); }
+        } catch (e) {
+            try {
+                const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fa`);
+                const osmData = await osmResponse.json();
+                const fallbackAddress = parseOSMAddress(osmData);
+                if (fallbackAddress) setAddress(fallbackAddress);
+            } catch (fallbackError) { }
+        } finally { setLoading(false); }
     };
 
     // Try to get user's current location on open
