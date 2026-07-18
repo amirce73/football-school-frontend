@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modal) {
                 modal.style.display = 'flex';
                 // Remove inline onclick just in case
-                modal.removeAttribute('onclick'); 
+                modal.removeAttribute('onclick');
             }
         });
     }
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
         const trigger = wrapper.querySelector('.custom-select-trigger');
         const nativeSelect = wrapper.querySelector('select');
-        
+
         if (!trigger || !nativeSelect) return;
 
         // Create dropdown
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Populate options
         Array.from(nativeSelect.options).forEach(opt => {
             if (opt.disabled || opt.hidden) return; // Skip placeholder
-            
+
             const optionDiv = document.createElement('div');
             optionDiv.className = 'custom-select-option';
             if (nativeSelect.value === opt.value) {
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             optionDiv.textContent = opt.textContent;
             optionDiv.dataset.value = opt.value;
-            
+
             optionDiv.addEventListener('click', (e) => {
                 e.stopPropagation();
                 // Update native select
@@ -83,16 +83,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 trigger.textContent = opt.textContent;
                 // Trigger change event just in case
                 nativeSelect.dispatchEvent(new Event('change'));
-                
+
                 // Update selected classes
                 dropdown.querySelectorAll('.custom-select-option').forEach(el => el.classList.remove('selected'));
                 optionDiv.classList.add('selected');
-                
+
                 // Close wrapper
                 wrapper.classList.remove('open');
                 dropdown.style.display = 'none';
             });
-            
+
             dropdown.appendChild(optionDiv);
         });
 
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formElements.forEach(el => {
         const key = 'form_state_' + (el.name || el.id);
         if (!key || key === 'form_state_') return;
-        
+
         const savedVal = localStorage.getItem(key);
         if (savedVal !== null) {
             if (el.type === 'checkbox' || el.type === 'radio') {
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.textContent = savedVal;
             }
         }
-        
+
         el.addEventListener('change', () => {
             const span = el.querySelector('span');
             const val = span ? span.textContent : el.textContent;
@@ -186,13 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (datePickerInputs.length > 0) {
         let currentActiveInput = null;
         let selectedYear = 1403, selectedMonth = 1, selectedDay = 1;
-        
+
         const dpOverlay = document.createElement('div');
         dpOverlay.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; display: none; flex-direction: column; justify-content: flex-end; align-items: center; opacity: 0; transition: opacity 0.3s ease;';
-        
+
         const dpModal = document.createElement('div');
         dpModal.style.cssText = 'background: #fff; border-top-left-radius: 28px; border-top-right-radius: 28px; padding: 24px 20px; padding-bottom: max(24px, env(safe-area-inset-bottom)); box-shadow: 0 -10px 40px rgba(0,0,0,0.15); width: 100%; max-width: 400px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);';
-        
+
         dpModal.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                 <button type="button" id="dp-cancel-btn" style="background: rgba(239, 68, 68, 0.1); border: none; color: var(--danger); font-weight: bold; font-size: 0.95rem; cursor: pointer; padding: 8px 16px; border-radius: 12px;">لغو</button>
@@ -239,14 +239,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             </style>
         `;
-        
+
         dpOverlay.appendChild(dpModal);
         document.body.appendChild(dpOverlay);
-        
+
         const colDay = document.getElementById('dp-col-day');
         const colMonth = document.getElementById('dp-col-month');
         const colYear = document.getElementById('dp-col-year');
-        
+
         function renderCol(col, items, selected, isMonth = false) {
             let html = '<div style="height: 88px; scroll-snap-align: center;"></div>';
             items.forEach(val => {
@@ -264,17 +264,17 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateUI() {
             let maxDays = 31;
             if (selectedMonth > 6) maxDays = 30;
-            if (selectedMonth === 12) maxDays = 29; 
+            if (selectedMonth === 12) maxDays = 29;
             if (selectedDay > maxDays) selectedDay = maxDays;
-            
-            const days = Array.from({length: maxDays}, (_, i) => i + 1);
-            const months = Array.from({length: 12}, (_, i) => i + 1);
-            const years = Array.from({length: 1450 - 1320 + 1}, (_, i) => 1450 - i);
-            
+
+            const days = Array.from({ length: maxDays }, (_, i) => i + 1);
+            const months = Array.from({ length: 12 }, (_, i) => i + 1);
+            const years = Array.from({ length: 1450 - 1320 + 1 }, (_, i) => 1450 - i);
+
             renderCol(colDay, days, selectedDay);
             renderCol(colMonth, months, selectedMonth, true);
             renderCol(colYear, years, selectedYear);
-            
+
             setTimeout(() => {
                 colDay.scrollTop = days.indexOf(selectedDay) * 44;
                 colMonth.scrollTop = months.indexOf(selectedMonth) * 44;
@@ -289,27 +289,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 timeout = setTimeout(() => {
                     const idx = Math.round(col.scrollTop / 44);
                     const items = Array.from(col.querySelectorAll('.dp-item'));
-                    if(items[idx]) {
+                    if (items[idx]) {
                         const val = parseInt(items[idx].dataset.val);
-                        if(type === 'day' && selectedDay !== val) { selectedDay = val; updateUI(); }
-                        if(type === 'month' && selectedMonth !== val) { selectedMonth = val; updateUI(); }
-                        if(type === 'year' && selectedYear !== val) { selectedYear = val; updateUI(); }
+                        if (type === 'day' && selectedDay !== val) { selectedDay = val; updateUI(); }
+                        if (type === 'month' && selectedMonth !== val) { selectedMonth = val; updateUI(); }
+                        if (type === 'year' && selectedYear !== val) { selectedYear = val; updateUI(); }
                     }
                 }, 100);
             });
-            
+
             col.addEventListener('click', (e) => {
                 const item = e.target.closest('.dp-item');
-                if(item) {
+                if (item) {
                     const val = parseInt(item.dataset.val);
-                    if(type === 'day') selectedDay = val;
-                    if(type === 'month') selectedMonth = val;
-                    if(type === 'year') selectedYear = val;
+                    if (type === 'day') selectedDay = val;
+                    if (type === 'month') selectedMonth = val;
+                    if (type === 'year') selectedYear = val;
                     updateUI();
                 }
             });
         }
-        
+
         setupScrollListener(colDay, 'day');
         setupScrollListener(colMonth, 'month');
         setupScrollListener(colYear, 'year');
@@ -347,13 +347,13 @@ document.addEventListener('DOMContentLoaded', () => {
         dpOverlay.addEventListener('click', (e) => {
             if (e.target === dpOverlay) closeModal();
         });
-        
+
         document.getElementById('dp-today-btn').addEventListener('click', () => {
             const faDateParts = new Intl.DateTimeFormat('fa-IR').formatToParts(new Date());
             const pYear = parseInt(faDateParts.find(p => p.type === 'year').value.replace(/[۰-۹]/g, w => String.fromCharCode(w.charCodeAt(0) - 1728)));
             const pMonth = parseInt(faDateParts.find(p => p.type === 'month').value.replace(/[۰-۹]/g, w => String.fromCharCode(w.charCodeAt(0) - 1728)));
             const pDay = parseInt(faDateParts.find(p => p.type === 'day').value.replace(/[۰-۹]/g, w => String.fromCharCode(w.charCodeAt(0) - 1728)));
-            
+
             selectedYear = pYear; selectedMonth = pMonth; selectedDay = pDay;
             updateUI();
         });
@@ -363,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const m = selectedMonth.toString().padStart(2, '0');
                 const d = selectedDay.toString().padStart(2, '0');
                 const pDate = `${selectedYear}/${m}/${d}`.replace(/[0-9]/g, w => pDigits[w]);
-                
+
                 const span = currentActiveInput.querySelector('span');
                 if (span) {
                     span.textContent = pDate;
@@ -378,45 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Map Modal Mock
-    const mapTriggers = [];
-    document.querySelectorAll('button').forEach(btn => {
-        if (btn.innerHTML.includes('fa-map-marker') || btn.innerHTML.includes('انتخاب از روی نقشه')) {
-            mapTriggers.push(btn);
-        }
-    });
-    if (mapTriggers.length > 0) {
-        const mapModal = document.createElement('div');
-        mapModal.className = 'modal-overlay';
-        mapModal.style.display = 'none';
-        mapModal.innerHTML = `
-            <div class="modal-content" style="background:var(--surface); padding:20px; border-radius:12px; width:90%; max-width:500px; display:flex; flex-direction:column; gap:15px; box-shadow:var(--shadow-lg);">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 style="margin:0;"><i class="fa fa-map-marker text-danger"></i> انتخاب موقعیت (دمو)</h3>
-                    <button class="map-close" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
-                </div>
-                <div style="height:300px; background:#e2e8f0; border-radius:10px; display:flex; justify-content:center; align-items:center; color:#64748b;">
-                    نقشه در اینجا لود می‌شود
-                </div>
-                <button class="map-confirm btn-app-primary" style="padding:12px; border-radius:8px;"><i class="fa fa-check"></i> تایید آدرس پیش‌فرض</button>
-            </div>
-        `;
-        document.body.appendChild(mapModal);
-        
-        mapTriggers.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                mapModal.style.display = 'flex';
-            });
-        });
-        
-        mapModal.querySelector('.map-close').addEventListener('click', () => mapModal.style.display = 'none');
-        mapModal.querySelector('.map-confirm').addEventListener('click', () => {
-            alert('آدرس تایید شد!');
-            mapModal.style.display = 'none';
-        });
-    }
-
     // 4. Image Upload / Cropper Mock
     document.querySelectorAll('.upload-area, .profile-header-card button, button i.fa-camera').forEach(el => {
         const trigger = el.tagName === 'BUTTON' ? el : el.closest('button') || el;
@@ -426,12 +387,12 @@ document.addEventListener('DOMContentLoaded', () => {
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
+
             let fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.accept = 'image/*';
             fileInput.style.display = 'none';
-            
+
             fileInput.addEventListener('change', () => {
                 if (fileInput.files && fileInput.files.length > 0) {
                     alert('عکس انتخاب شد: ' + fileInput.files[0].name);
@@ -445,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
-            
+
             document.body.appendChild(fileInput);
             fileInput.click();
             setTimeout(() => document.body.removeChild(fileInput), 1000);
@@ -456,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const debtCards = document.querySelectorAll('.school-debt-card');
     debtCards.forEach(card => {
         card.addEventListener('click', (e) => {
-            if(e.target.closest('.btn-credit')) return;
+            if (e.target.closest('.btn-credit')) return;
             const amountSpan = card.querySelector('.amount');
             const icon = card.querySelector('.debt-icon i');
             if (card.classList.contains('status-clear')) {
@@ -560,21 +521,21 @@ document.addEventListener('DOMContentLoaded', () => {
             passportNumber: { required: 'شماره پاسپورت الزامی است', regex: /^[A-Za-z0-9]{9}$/, msg: 'شماره پاسپورت نامعتبر است' },
             issueDate: { required: 'تاریخ صدور الزامی است' },
             expiryDate: { required: 'تاریخ انقضا الزامی است' },
-            birthDate: { 
-                required: 'تاریخ تولد الزامی است', 
+            birthDate: {
+                required: 'تاریخ تولد الزامی است',
                 customCheck: (val) => {
                     const faDateParts = new Intl.DateTimeFormat('fa-IR').formatToParts(new Date());
                     const pYear = parseInt(faDateParts.find(p => p.type === 'year').value.replace(/[۰-۹]/g, w => String.fromCharCode(w.charCodeAt(0) - 1728)));
                     const pMonth = parseInt(faDateParts.find(p => p.type === 'month').value.replace(/[۰-۹]/g, w => String.fromCharCode(w.charCodeAt(0) - 1728)));
                     const pDay = parseInt(faDateParts.find(p => p.type === 'day').value.replace(/[۰-۹]/g, w => String.fromCharCode(w.charCodeAt(0) - 1728)));
-                    
+
                     const [vy, vm, vd] = val.split('/').map(n => parseInt(n));
                     if (vy > pYear) return false;
                     if (vy === pYear && vm > pMonth) return false;
                     if (vy === pYear && vm === pMonth && vd > pDay) return false;
                     return true;
                 },
-                msg: 'تاریخ تولد نمیتواند در آینده باشد' 
+                msg: 'تاریخ تولد نمیتواند در آینده باشد'
             },
             gender: { required: 'جنسیت الزامی است' },
             religion: { required: 'دین الزامی است' }
@@ -629,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (group) {
                     const label = group.querySelector('label');
                     if (label) label.classList.add('error-label');
-                    
+
                     const errSpan = document.createElement('span');
                     errSpan.className = 'error-text';
                     errSpan.style.color = 'var(--danger)';
@@ -679,7 +640,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             } else {
-                e.preventDefault(); 
+                e.preventDefault();
                 const originalHtml = submitBtn.innerHTML;
                 submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> در حال ثبت...';
                 setTimeout(() => {
@@ -694,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('input', (e) => {
     const target = e.target;
     if (!target.name) return;
-    
+
     const digitFields = ['nationalId', 'mobile', 'guardianMobile', 'tel', 'emergencyPhone', 'postalCode', 'cardNumber', 'sheba'];
     if (digitFields.includes(target.name)) {
         target.value = target.value.replace(/[^0-9]/g, '');
@@ -704,7 +665,7 @@ document.addEventListener('input', (e) => {
     if (persianFields.includes(target.name)) {
         target.value = target.value.replace(/[^\u0600-\u06FF\s]/g, '');
     }
-    
+
     const englishFields = ['englishName', 'englishSurname'];
     if (englishFields.includes(target.name)) {
         target.value = target.value.replace(/[^A-Za-z\s]/g, '');
@@ -743,7 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
     profileInput.addEventListener('change', (e) => {
         if (e.target.files && e.target.files[0]) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const img = document.getElementById('cropperImage');
                 if (img) {
                     img.src = e.target.result;
@@ -791,59 +752,225 @@ document.addEventListener('DOMContentLoaded', () => {
         passportUpload.addEventListener('change', (e) => {
             if (e.target.files && e.target.files[0]) {
                 const fileLabel = document.querySelector('label:contains("تصویر گذرنامه")');
-                if(fileLabel) {
+                if (fileLabel) {
                     fileLabel.innerHTML = '<i class="fa fa-check text-success"></i> فایل انتخاب شد';
                 }
             }
         });
     }
 
-    // --- Neshan Map Logic ---
-    let mapInstance = null;
-    let mapMarker = null;
+    // --- Neshan Map Logic (Full React Parity) ---
+    window.mapInstance = null;
+    window.mapMarker = null;
+    window.selectedMapAddress = '';
+    window.mapAddressTarget = null;
+    const NESHAN_API_KEY = 'service.ec711af1d62c4f72b2d0b33a31a65cc1';
 
-    // Bind Map Button
-    const mapBtn = Array.from(document.querySelectorAll('button')).find(el => el.textContent.includes('انتخاب از نقشه'));
-    if (mapBtn) {
-        mapBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('mapModal').style.display = 'flex';
-            
-            if (!mapInstance && typeof L !== 'undefined') {
-                // Initialize map using Leaflet
-                mapInstance = L.map('leafletMap').setView([35.6997, 51.3380], 13);
-                
-                // Add Standard OSM Tile (or replace with Neshan later)
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '© OpenStreetMap'
-                }).addTo(mapInstance);
-                
-                mapMarker = L.marker([35.6997, 51.3380], { draggable: true }).addTo(mapInstance);
-                
-                mapInstance.on('move', () => {
-                    mapMarker.setLatLng(mapInstance.getCenter());
-                });
-
-                setTimeout(() => { mapInstance.invalidateSize(); }, 300);
+    function setMapLoading(isLoading) {
+        const addrText = document.getElementById('mapAddressText');
+        const confirmBtn = document.querySelector('#mapModal .map-confirm');
+        if (isLoading) {
+            if (addrText) addrText.innerHTML = '<span style="color:var(--text-muted);"><i class="fa fa-spinner fa-spin"></i> در حال دریافت آدرس...</span>';
+            if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.style.opacity = '0.6'; }
+        } else {
+            if (addrText) {
+                if (window.selectedMapAddress && !window.selectedMapAddress.includes('خطا')) {
+                    addrText.innerHTML = `<span style="font-weight:bold; color:var(--text-dark);">${window.selectedMapAddress}</span>`;
+                    if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.style.opacity = '1'; }
+                } else {
+                    addrText.innerHTML = `<span style="color:var(--danger);">${window.selectedMapAddress || 'آدرس یافت نشد'}</span>`;
+                    if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.style.opacity = '0.6'; }
+                }
             }
-        });
+        }
     }
 
+    window.fetchMapAddress = async (lat, lng) => {
+        setMapLoading(true);
+
+        const parseOSMAddress = (osmData) => {
+            if (osmData && osmData.address) {
+                const ad = osmData.address;
+                const parts = [];
+                if (ad.city || ad.town || ad.village) parts.push(ad.city || ad.town || ad.village);
+                if (ad.suburb || ad.district) parts.push(ad.suburb || ad.district);
+                if (ad.road || ad.street || ad.pedestrian) parts.push(ad.road || ad.street || ad.pedestrian);
+                if (ad.neighbourhood) parts.push(ad.neighbourhood);
+                if (parts.length > 0) return [...new Set(parts)].join('، ');
+                return osmData.display_name;
+            }
+            return null;
+        };
+
+        try {
+            const response = await fetch(`https://api.neshan.org/v5/reverse?lat=${lat}&lng=${lng}`, {
+                headers: { 'Api-Key': NESHAN_API_KEY }
+            });
+            const data = await response.json();
+            if (data && data.status === 'ERROR') {
+                // Neshan failed (e.g., domain restriction). Fallback to OSM Nominatim
+                console.warn("Neshan API failed, falling back to OSM Nominatim. Error:", data.message);
+                const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fa`);
+                const osmData = await osmResponse.json();
+                window.selectedMapAddress = parseOSMAddress(osmData) || `خطای کلید API نشان: ${data.message}`;
+            } else if (data) {
+                window.selectedMapAddress = data.formatted_address || data.route_name || data.neighbourhood || data.city || data.state || "آدرس یافت نشد";
+            }
+        } catch (e) {
+            // Network error (CORS block etc). Fallback to OSM
+            try {
+                const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fa`);
+                const osmData = await osmResponse.json();
+                window.selectedMapAddress = parseOSMAddress(osmData) || 'آدرس یافت نشد';
+            } catch (fallbackError) {
+                window.selectedMapAddress = 'خطای ارتباط با سرور نقشه';
+            }
+        } finally {
+            setMapLoading(false);
+        }
+    };
+
+    window.searchMap = async () => {
+        const input = document.getElementById('mapSearchInput');
+        if (!input) return;
+        const query = input.value.trim();
+        if (!query) { alert('نام مکان را وارد کنید'); return; }
+        setMapLoading(true);
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            if (data.length === 0) { alert('مکان پیدا نشد'); setMapLoading(false); return; }
+            const lat = parseFloat(data[0].lat);
+            const lon = parseFloat(data[0].lon);
+            if (window.mapInstance) {
+                window.mapInstance.flyTo([lat, lon], 16);
+                if (window.mapMarker) window.mapMarker.setLatLng([lat, lon]);
+            }
+            await window.fetchMapAddress(lat, lon);
+        } catch (e) { alert('خطا در جستجو'); setMapLoading(false); }
+    };
+
     window.closeMapModal = () => {
-        document.getElementById('mapModal').style.display = 'none';
+        const modal = document.getElementById('mapModal');
+        if (modal) modal.style.display = 'none';
     };
 
     window.confirmMapSelection = () => {
-        if (mapInstance) {
-            const center = mapInstance.getCenter();
-            // Fill an address field if exists
-            const addressInput = document.querySelector('textarea[name="address"]') || document.querySelector('input[name="address"]');
-            if (addressInput) {
-                addressInput.value = `موقعیت ذخیره شد: ${center.lat.toFixed(4)}, ${center.lng.toFixed(4)}`;
-                addressInput.dispatchEvent(new Event('change'));
-            }
+        if (window.mapAddressTarget && window.selectedMapAddress && !window.selectedMapAddress.includes('خطا')) {
+            window.mapAddressTarget.value = window.selectedMapAddress;
+            window.mapAddressTarget.dispatchEvent(new Event('input', { bubbles: true }));
+            window.mapAddressTarget.dispatchEvent(new Event('change', { bubbles: true }));
         }
         window.closeMapModal();
     };
+
+    window.openMapModal = (targetInput) => {
+        window.mapAddressTarget = targetInput;
+        let modal = document.getElementById('mapModal');
+        // Build the modal dynamically if it doesn't exist or is the old version
+        if (!modal || !modal.querySelector('#mapSearchInput')) {
+            if (modal) modal.remove();
+            modal = document.createElement('div');
+            modal.id = 'mapModal';
+            modal.className = 'modal-overlay';
+            modal.style.cssText = 'display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding:15px;';
+            modal.innerHTML = `
+                <div class="modal-content" onclick="event.stopPropagation()" style="background:var(--surface); padding:20px; border-radius:12px; width:100%; max-width:500px; display:flex; flex-direction:column; gap:15px; box-shadow:var(--shadow-lg);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3 style="margin:0; font-size:1.1rem;"><i class="fa fa-map-marker text-danger"></i> انتخاب موقعیت روی نقشه</h3>
+                        <button type="button" onclick="closeMapModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-dark);">&times;</button>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" id="mapSearchInput" placeholder="جستجوی شهر، خیابان (مثلا: Isfahan)" style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--border-color);" onkeydown="if(event.key==='Enter') { event.preventDefault(); searchMap(); }">
+                        <button type="button" onclick="searchMap()" class="btn-app-secondary" style="padding:0 15px; border-radius:8px;"><i class="fa fa-search"></i></button>
+                    </div>
+                    <div id="leafletMap" style="height:300px; width:100%; background:#e2e8f0; border-radius:10px; position:relative; overflow:hidden;"></div>
+                    <div id="mapAddressText" style="padding:12px; background:var(--background); border-radius:8px; border:1px solid var(--border-color); font-size:0.9rem; min-height:60px; display:flex; align-items:center; justify-content:center; text-align:center;">
+                        <span style="color:var(--text-muted);">نقشه را کلیک کنید یا نشانگر را جابجا کنید</span>
+                    </div>
+                    <button type="button" onclick="confirmMapSelection()" class="map-confirm btn-app-primary" style="padding:12px; border-radius:8px; font-weight:bold;" disabled><i class="fa fa-check"></i> تایید و استفاده از این آدرس</button>
+                </div>
+            `;
+            modal.addEventListener('click', closeMapModal);
+            document.body.appendChild(modal);
+        }
+
+        modal.style.display = 'flex';
+
+        if (typeof L === 'undefined') {
+            alert('کتابخانه نقشه بارگذاری نشده است.');
+            return;
+        }
+
+        if (!window.mapInstance) {
+            if (L.Icon && L.Icon.Default && L.Icon.Default.prototype) {
+                delete L.Icon.Default.prototype._getIconUrl;
+                L.Icon.Default.mergeOptions({
+                    iconRetinaUrl: './assets/images/marker-icon-2x.png',
+                    iconUrl: './assets/images/marker-icon.png',
+                    shadowUrl: './assets/images/marker-shadow.png',
+                });
+            }
+
+            const defaultCenter = [32.6546, 51.6680];
+            window.mapInstance = L.map('leafletMap').setView(defaultCenter, 16);
+
+            L.tileLayer('https://raster.snappmaps.ir/styles/snapp-style/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© Snapp Maps | Neshan API'
+            }).addTo(window.mapInstance);
+
+            window.mapMarker = L.marker(defaultCenter, { draggable: true }).addTo(window.mapInstance);
+
+            window.mapMarker.on('dragend', (e) => {
+                const pos = e.target.getLatLng();
+                window.fetchMapAddress(pos.lat, pos.lng);
+            });
+
+            window.mapInstance.on('click', (e) => {
+                window.mapMarker.setLatLng(e.latlng);
+                window.fetchMapAddress(e.latlng.lat, e.latlng.lng);
+            });
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        window.mapInstance.setView([lat, lng], 16);
+                        window.mapMarker.setLatLng([lat, lng]);
+                        window.fetchMapAddress(lat, lng);
+                    },
+                    (err) => {
+                        window.fetchMapAddress(defaultCenter[0], defaultCenter[1]);
+                    }
+                );
+            } else {
+                window.fetchMapAddress(defaultCenter[0], defaultCenter[1]);
+            }
+        }
+
+        setTimeout(() => {
+            if (window.mapInstance) window.mapInstance.invalidateSize();
+        }, 300);
+    };
+
+    // Bind map buttons to openMapModal
+    const allButtons = document.querySelectorAll('button');
+    allButtons.forEach(btn => {
+        if (btn.textContent.includes('انتخاب از روی نقشه') || btn.textContent.includes('انتخاب از نقشه') || (btn.querySelector('i') && btn.querySelector('i').classList.contains('fa-map-marker'))) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const group = btn.closest('.input-group');
+                let targetTextarea = null;
+                if (group) {
+                    targetTextarea = group.querySelector('textarea') || group.querySelector('input[type="text"]') || group.querySelector('input[name="address"]');
+                } else {
+                    targetTextarea = document.querySelector('textarea[name="address"]') || document.querySelector('input[name="address"]');
+                }
+                window.openMapModal(targetTextarea);
+            });
+        }
+    });
 });
+

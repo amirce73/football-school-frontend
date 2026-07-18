@@ -4,8 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
 // Fix leaflet default icon issue in React
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import icon from '../assets/marker-icon.png';
+import iconShadow from '../assets/marker-shadow.png';
 
 let DefaultIcon = L.icon({
     iconUrl: icon,
@@ -40,15 +40,15 @@ function LocationSelector({ position, setPosition, setAddress, setLoading }: any
         setLoading(true);
         try {
             // Using Neshan Reverse Geocoding API with the provided key
-            const apiKey = 'service.ec711af1d62c4f72b2d0b33a31a65cc1'; 
-            
+            const apiKey = 'service.ec711af1d62c4f72b2d0b33a31a65cc1';
+
             const response = await fetch(`https://api.neshan.org/v5/reverse?lat=${lat}&lng=${lng}`, {
                 headers: {
                     'Api-Key': apiKey
                 }
             });
             const data = await response.json();
-            
+
             if (data && data.status === 'ERROR') {
                 setAddress(`خطای کلید API: ${data.message} (محدودیت دامنه/آی‌پی)`);
             } else if (data) {
@@ -78,7 +78,7 @@ function LocationSelector({ position, setPosition, setAddress, setLoading }: any
     });
 
     return position === null ? null : (
-        <Marker 
+        <Marker
             position={position}
             draggable={true}
             eventHandlers={{
@@ -117,7 +117,7 @@ export default function MapModal({ isOpen, onClose, onConfirm }: MapModalProps) 
                     || "آدرس یافت نشد";
                 setAddress(addr);
             }
-        } catch (e) {} finally { setLoading(false); }
+        } catch (e) { } finally { setLoading(false); }
     };
 
     // Try to get user's current location on open
@@ -187,19 +187,24 @@ export default function MapModal({ isOpen, onClose, onConfirm }: MapModalProps) 
             }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h3 style={{ margin: 0, fontSize: '1.1rem' }}><i className="fa fa-map-marker text-danger"></i> انتخاب موقعیت روی نقشه</h3>
-                    <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-dark)' }}>&times;</button>
+                    <button type="button" onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-dark)' }}>&times;</button>
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px' }}>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
-                        placeholder="جستجوی شهر، خیابان (مثلا: Isfahan)" 
+                        placeholder="جستجوی شهر، خیابان (مثلا: Isfahan)"
                         style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                        onKeyDown={e => e.key === 'Enter' && handleSearch()}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleSearch();
+                            }
+                        }}
                     />
-                    <button onClick={handleSearch} className="btn-app-secondary" style={{ padding: '0 15px', borderRadius: '8px' }}>
+                    <button type="button" onClick={handleSearch} className="btn-app-secondary" style={{ padding: '0 15px', borderRadius: '8px' }}>
                         <i className="fa fa-search"></i>
                     </button>
                 </div>
@@ -228,10 +233,11 @@ export default function MapModal({ isOpen, onClose, onConfirm }: MapModalProps) 
                     )}
                 </div>
 
-                <button 
-                    onClick={handleConfirm} 
+                <button
+                    type="button"
+                    onClick={handleConfirm}
                     disabled={!address || loading}
-                    className="btn-app-primary" 
+                    className="btn-app-primary"
                     style={{ width: '100%', padding: '12px', borderRadius: '8px', fontWeight: 'bold', opacity: (!address || loading) ? 0.6 : 1 }}
                 >
                     <i className="fa fa-check"></i> تایید و استفاده از این آدرس

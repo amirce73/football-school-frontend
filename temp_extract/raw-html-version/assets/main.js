@@ -378,44 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Map Modal Mock
-    const mapTriggers = [];
-    document.querySelectorAll('button').forEach(btn => {
-        if (btn.innerHTML.includes('fa-map-marker') || btn.innerHTML.includes('انتخاب از روی نقشه')) {
-            mapTriggers.push(btn);
-        }
-    });
-    if (mapTriggers.length > 0) {
-        const mapModal = document.createElement('div');
-        mapModal.className = 'modal-overlay';
-        mapModal.style.display = 'none';
-        mapModal.innerHTML = `
-            <div class="modal-content" style="background:var(--surface); padding:20px; border-radius:12px; width:90%; max-width:500px; display:flex; flex-direction:column; gap:15px; box-shadow:var(--shadow-lg);">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 style="margin:0;"><i class="fa fa-map-marker text-danger"></i> انتخاب موقعیت (دمو)</h3>
-                    <button class="map-close" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
-                </div>
-                <div style="height:300px; background:#e2e8f0; border-radius:10px; display:flex; justify-content:center; align-items:center; color:#64748b;">
-                    نقشه در اینجا لود می‌شود
-                </div>
-                <button class="map-confirm btn-app-primary" style="padding:12px; border-radius:8px;"><i class="fa fa-check"></i> تایید آدرس پیش‌فرض</button>
-            </div>
-        `;
-        document.body.appendChild(mapModal);
-        
-        mapTriggers.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                mapModal.style.display = 'flex';
-            });
-        });
-        
-        mapModal.querySelector('.map-close').addEventListener('click', () => mapModal.style.display = 'none');
-        mapModal.querySelector('.map-confirm').addEventListener('click', () => {
-            alert('آدرس تایید شد!');
-            mapModal.style.display = 'none';
-        });
-    }
+
 
     // 4. Image Upload / Cropper Mock
     document.querySelectorAll('.upload-area, .profile-header-card button, button i.fa-camera').forEach(el => {
@@ -798,52 +761,217 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Neshan Map Logic ---
-    let mapInstance = null;
-    let mapMarker = null;
+    // --- Neshan Map Logic (Full React Parity) ---
+    window.mapInstance = null;
+    window.mapMarker = null;
+    window.selectedMapAddress = '';
+    window.mapAddressTarget = null;
+    const NESHAN_API_KEY = 'service.ec711af1d62c4f72b2d0b33a31a65cc1';
 
-    // Bind Map Button
-    const mapBtn = Array.from(document.querySelectorAll('button')).find(el => el.textContent.includes('انتخاب از نقشه'));
-    if (mapBtn) {
-        mapBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('mapModal').style.display = 'flex';
-            
-            if (!mapInstance && typeof L !== 'undefined') {
-                // Initialize map using Leaflet
-                mapInstance = L.map('leafletMap').setView([35.6997, 51.3380], 13);
-                
-                // Add Standard OSM Tile (or replace with Neshan later)
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '© OpenStreetMap'
-                }).addTo(mapInstance);
-                
-                mapMarker = L.marker([35.6997, 51.3380], { draggable: true }).addTo(mapInstance);
-                
-                mapInstance.on('move', () => {
-                    mapMarker.setLatLng(mapInstance.getCenter());
-                });
-
-                setTimeout(() => { mapInstance.invalidateSize(); }, 300);
+    function setMapLoading(isLoading) {
+        const addrText = document.getElementById('mapAddressText');
+        const confirmBtn = document.querySelector('#mapModal .map-confirm');
+        if (isLoading) {
+            if (addrText) addrText.innerHTML = '<span style="color:var(--text-muted);"><i class="fa fa-spinner fa-spin"></i> در حال دریافت آدرس...</span>';
+            if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.style.opacity = '0.6'; }
+        } else {
+            if (addrText) {
+                if (window.selectedMapAddress && !window.selectedMapAddress.includes('خطا')) {
+                    addrText.innerHTML = `<span style="font-weight:bold; color:var(--text-dark);">${window.selectedMapAddress}</span>`;
+                    if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.style.opacity = '1'; }
+                } else {
+                    addrText.innerHTML = `<span style="color:var(--danger);">${window.selectedMapAddress || 'آدرس یافت نشد'}</span>`;
+                    if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.style.opacity = '0.6'; }
+                }
             }
-        });
+        }
     }
 
+    window.fetchMapAddress = async (lat, lng) => {
+        setMapLoading(true);
+        
+        const parseOSMAddress = (osmData) => {
+            if (osmData && osmData.address) {
+                const ad = osmData.address;
+                const parts = [];
+                if (ad.city || ad.town || ad.village) parts.push(ad.city || ad.town || ad.village);
+                if (ad.suburb || ad.district) parts.push(ad.suburb || ad.district);
+                if (ad.road || ad.street || ad.pedestrian) parts.push(ad.road || ad.street || ad.pedestrian);
+                if (ad.neighbourhood) parts.push(ad.neighbourhood);
+                if (parts.length > 0) return [...new Set(parts)].join('، ');
+                return osmData.display_name;
+            }
+            return null;
+        };
+
+        try {
+            const response = await fetch(`https://api.neshan.org/v5/reverse?lat=${lat}&lng=${lng}`, {
+                headers: { 'Api-Key': NESHAN_API_KEY }
+            });
+            const data = await response.json();
+            if (data && data.status === 'ERROR') {
+                // Neshan failed (e.g., domain restriction). Fallback to OSM Nominatim
+                console.warn("Neshan API failed, falling back to OSM Nominatim. Error:", data.message);
+                const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fa`);
+                const osmData = await osmResponse.json();
+                window.selectedMapAddress = parseOSMAddress(osmData) || `خطای کلید API نشان: ${data.message}`;
+            } else if (data) {
+                window.selectedMapAddress = data.formatted_address || data.route_name || data.neighbourhood || data.city || data.state || "آدرس یافت نشد";
+            }
+        } catch (e) {
+            // Network error (CORS block etc). Fallback to OSM
+            try {
+                const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fa`);
+                const osmData = await osmResponse.json();
+                window.selectedMapAddress = parseOSMAddress(osmData) || 'آدرس یافت نشد';
+            } catch (fallbackError) {
+                window.selectedMapAddress = 'خطای ارتباط با سرور نقشه';
+            }
+        } finally {
+            setMapLoading(false);
+        }
+    };
+
+    window.searchMap = async () => {
+        const input = document.getElementById('mapSearchInput');
+        if (!input) return;
+        const query = input.value.trim();
+        if (!query) { alert('نام مکان را وارد کنید'); return; }
+        setMapLoading(true);
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            if (data.length === 0) { alert('مکان پیدا نشد'); setMapLoading(false); return; }
+            const lat = parseFloat(data[0].lat);
+            const lon = parseFloat(data[0].lon);
+            if (window.mapInstance) {
+                window.mapInstance.flyTo([lat, lon], 16);
+                if (window.mapMarker) window.mapMarker.setLatLng([lat, lon]);
+            }
+            await window.fetchMapAddress(lat, lon);
+        } catch (e) { alert('خطا در جستجو'); setMapLoading(false); }
+    };
+
     window.closeMapModal = () => {
-        document.getElementById('mapModal').style.display = 'none';
+        const modal = document.getElementById('mapModal');
+        if (modal) modal.style.display = 'none';
     };
 
     window.confirmMapSelection = () => {
-        if (mapInstance) {
-            const center = mapInstance.getCenter();
-            // Fill an address field if exists
-            const addressInput = document.querySelector('textarea[name="address"]') || document.querySelector('input[name="address"]');
-            if (addressInput) {
-                addressInput.value = `موقعیت ذخیره شد: ${center.lat.toFixed(4)}, ${center.lng.toFixed(4)}`;
-                addressInput.dispatchEvent(new Event('change'));
-            }
+        if (window.mapAddressTarget && window.selectedMapAddress && !window.selectedMapAddress.includes('خطا')) {
+            window.mapAddressTarget.value = window.selectedMapAddress;
+            window.mapAddressTarget.dispatchEvent(new Event('input', { bubbles: true }));
+            window.mapAddressTarget.dispatchEvent(new Event('change', { bubbles: true }));
         }
         window.closeMapModal();
     };
+
+    window.openMapModal = (targetInput) => {
+        window.mapAddressTarget = targetInput;
+        let modal = document.getElementById('mapModal');
+        // Build the modal dynamically if it doesn't exist or is the old version
+        if (!modal || !modal.querySelector('#mapSearchInput')) {
+            if (modal) modal.remove();
+            modal = document.createElement('div');
+            modal.id = 'mapModal';
+            modal.className = 'modal-overlay';
+            modal.style.cssText = 'display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding:15px;';
+            modal.innerHTML = `
+                <div class="modal-content" onclick="event.stopPropagation()" style="background:var(--surface); padding:20px; border-radius:12px; width:100%; max-width:500px; display:flex; flex-direction:column; gap:15px; box-shadow:var(--shadow-lg);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3 style="margin:0; font-size:1.1rem;"><i class="fa fa-map-marker text-danger"></i> انتخاب موقعیت روی نقشه</h3>
+                        <button type="button" onclick="closeMapModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-dark);">&times;</button>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" id="mapSearchInput" placeholder="جستجوی شهر، خیابان (مثلا: Isfahan)" style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--border-color);" onkeydown="if(event.key==='Enter') { event.preventDefault(); searchMap(); }">
+                        <button type="button" onclick="searchMap()" class="btn-app-secondary" style="padding:0 15px; border-radius:8px;"><i class="fa fa-search"></i></button>
+                    </div>
+                    <div id="leafletMap" style="height:300px; width:100%; background:#e2e8f0; border-radius:10px; position:relative; overflow:hidden;"></div>
+                    <div id="mapAddressText" style="padding:12px; background:var(--background); border-radius:8px; border:1px solid var(--border-color); font-size:0.9rem; min-height:60px; display:flex; align-items:center; justify-content:center; text-align:center;">
+                        <span style="color:var(--text-muted);">نقشه را کلیک کنید یا نشانگر را جابجا کنید</span>
+                    </div>
+                    <button type="button" onclick="confirmMapSelection()" class="map-confirm btn-app-primary" style="padding:12px; border-radius:8px; font-weight:bold;" disabled><i class="fa fa-check"></i> تایید و استفاده از این آدرس</button>
+                </div>
+            `;
+            modal.addEventListener('click', closeMapModal);
+            document.body.appendChild(modal);
+        }
+
+        modal.style.display = 'flex';
+
+        if (typeof L === 'undefined') {
+            alert('کتابخانه نقشه بارگذاری نشده است.');
+            return;
+        }
+
+        if (!window.mapInstance) {
+            if (L.Icon && L.Icon.Default && L.Icon.Default.prototype) {
+                delete L.Icon.Default.prototype._getIconUrl;
+                L.Icon.Default.mergeOptions({
+                    iconRetinaUrl: './assets/images/marker-icon-2x.png',
+                    iconUrl: './assets/images/marker-icon.png',
+                    shadowUrl: './assets/images/marker-shadow.png',
+                });
+            }
+
+            const defaultCenter = [32.6546, 51.6680];
+            window.mapInstance = L.map('leafletMap').setView(defaultCenter, 16);
+
+            L.tileLayer('https://raster.snappmaps.ir/styles/snapp-style/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© Snapp Maps | Neshan API'
+            }).addTo(window.mapInstance);
+
+            window.mapMarker = L.marker(defaultCenter, { draggable: true }).addTo(window.mapInstance);
+
+            window.mapMarker.on('dragend', (e) => {
+                const pos = e.target.getLatLng();
+                window.fetchMapAddress(pos.lat, pos.lng);
+            });
+
+            window.mapInstance.on('click', (e) => {
+                window.mapMarker.setLatLng(e.latlng);
+                window.fetchMapAddress(e.latlng.lat, e.latlng.lng);
+            });
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        window.mapInstance.setView([lat, lng], 16);
+                        window.mapMarker.setLatLng([lat, lng]);
+                        window.fetchMapAddress(lat, lng);
+                    },
+                    (err) => {
+                        window.fetchMapAddress(defaultCenter[0], defaultCenter[1]);
+                    }
+                );
+            } else {
+                window.fetchMapAddress(defaultCenter[0], defaultCenter[1]);
+            }
+        }
+
+        setTimeout(() => {
+            if (window.mapInstance) window.mapInstance.invalidateSize();
+        }, 300);
+    };
+
+    // Bind map buttons to openMapModal
+    const allButtons = document.querySelectorAll('button');
+    allButtons.forEach(btn => {
+        if (btn.textContent.includes('انتخاب از روی نقشه') || btn.textContent.includes('انتخاب از نقشه') || (btn.querySelector('i') && btn.querySelector('i').classList.contains('fa-map-marker'))) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const group = btn.closest('.input-group');
+                let targetTextarea = null;
+                if (group) {
+                    targetTextarea = group.querySelector('textarea') || group.querySelector('input[type="text"]') || group.querySelector('input[name="address"]');
+                } else {
+                    targetTextarea = document.querySelector('textarea[name="address"]') || document.querySelector('input[name="address"]');
+                }
+                window.openMapModal(targetTextarea);
+            });
+        }
+    });
 });

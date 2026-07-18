@@ -55,7 +55,7 @@ export default function ClubDetailsModal({ isOpen, onClose }: ClubDetailsModalPr
 
                         <div className="modal-info-item">
                             <div className="info-icon" style={{ background: '#f3e8ff', color: '#a855f7' }}>
-                                <i className="fa fa-user-tie"></i>
+                                <i className="fa fa-user"></i>
                             </div>
                             <div>
                                 <h4>مدیرعامل / موسس</h4>

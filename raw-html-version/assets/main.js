@@ -1153,18 +1153,44 @@ function setMapLoading(isLoading) {
 
 window.fetchMapAddress = async (lat, lng) => {
     setMapLoading(true);
+
+    const parseOSMAddress = (osmData) => {
+        if (osmData && osmData.address) {
+            const ad = osmData.address;
+            const parts = [];
+            if (ad.city || ad.town || ad.village) parts.push(ad.city || ad.town || ad.village);
+            if (ad.suburb || ad.district) parts.push(ad.suburb || ad.district);
+            if (ad.road || ad.street || ad.pedestrian) parts.push(ad.road || ad.street || ad.pedestrian);
+            if (ad.neighbourhood) parts.push(ad.neighbourhood);
+            if (parts.length > 0) return [...new Set(parts)].join('، ');
+            return osmData.display_name;
+        }
+        return null;
+    };
+
     try {
         const response = await fetch(`https://api.neshan.org/v5/reverse?lat=${lat}&lng=${lng}`, {
             headers: { 'Api-Key': NESHAN_API_KEY }
         });
         const data = await response.json();
+
         if (data && data.status === 'ERROR') {
-            window.selectedMapAddress = `خطای کلید API: ${data.message}`;
+            console.warn("Neshan API failed, falling back to OSM Nominatim. Error:", data.message);
+            const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fa`);
+            const osmData = await osmResponse.json();
+            window.selectedMapAddress = parseOSMAddress(osmData) || `خطای کلید API نشان: ${data.message}`;
         } else if (data) {
             window.selectedMapAddress = data.formatted_address || data.route_name || data.neighbourhood || data.city || data.state || "آدرس یافت نشد";
         }
     } catch (e) {
-        window.selectedMapAddress = 'خطا در ارتباط با سرور نشان.';
+        // Network error (CORS block etc). Fallback to OSM
+        try {
+            const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=fa`);
+            const osmData = await osmResponse.json();
+            window.selectedMapAddress = parseOSMAddress(osmData) || 'آدرس یافت نشد';
+        } catch (fallbackError) {
+            window.selectedMapAddress = 'خطای ارتباط با سرور نقشه';
+        }
     } finally {
         setMapLoading(false);
     }
@@ -1180,7 +1206,7 @@ window.searchMap = async () => {
     }
     setMapLoading(true);
     try {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=ir&accept-language=fa`);
         const data = await response.json();
         if (data.length === 0) {
             alert('مکان پیدا نشد');
@@ -1231,9 +1257,9 @@ window.openMapModal = (textareaTarget) => {
     if (!window.mapInstance) {
         delete L.Icon.Default.prototype._getIconUrl;
         L.Icon.Default.mergeOptions({
-            iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+            iconRetinaUrl: './assets/images/marker-icon-2x.png',
+            iconUrl: './assets/images/marker-icon.png',
+            shadowUrl: './assets/images/marker-shadow.png',
         });
 
         const defaultCenter = [32.6546, 51.6680];

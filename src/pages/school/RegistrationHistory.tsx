@@ -19,7 +19,7 @@ export default function RegistrationHistory() {
                 <div className="timeline-container">
                     <div className="timeline-item">
                         <div className="timeline-logo success">
-                            <img src={sepahanLogo} alt="logo" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/100'; }} />
+                            <img src={sepahanLogo} alt="logo" />
                         </div>
                         <div className="timeline-content success">
                             <div className="tl-header success">
@@ -34,7 +34,7 @@ export default function RegistrationHistory() {
                     </div>
                     <div className="timeline-item">
                         <div className="timeline-logo success">
-                            <img src={damghanLogo} alt="logo" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/100'; }} />
+                            <img src={damghanLogo} alt="logo" />
                         </div>
                         <div className="timeline-content success">
                             <div className="tl-header success">
@@ -49,7 +49,7 @@ export default function RegistrationHistory() {
                     </div>
                     <div className="timeline-item">
                         <div className="timeline-logo success">
-                            <img src={stareganLogo} alt="logo" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/100'; }} />
+                            <img src={stareganLogo} alt="logo" />
                         </div>
                         <div className="timeline-content success">
                             <div className="tl-header success">
@@ -64,7 +64,7 @@ export default function RegistrationHistory() {
                     </div>
                     <div className="timeline-item">
                         <div className="timeline-logo fail">
-                            <img src={tamLogo} alt="logo" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/100'; }} />
+                            <img src={tamLogo} alt="logo" />
                         </div>
                         <div className="timeline-content fail">
                             <div className="tl-header fail">
