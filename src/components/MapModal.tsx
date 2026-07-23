@@ -219,7 +219,7 @@ export default function MapModal({ isOpen, onClose, onConfirm }: MapModalProps) 
         }} onClick={onClose}>
             <div className="modal-content" onClick={e => e.stopPropagation()} style={{
                 background: 'var(--surface)', padding: '20px', borderRadius: '12px',
-                width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '15px',
+                width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column',
                 boxShadow: 'var(--shadow-lg)'
             }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -227,13 +227,13 @@ export default function MapModal({ isOpen, onClose, onConfirm }: MapModalProps) 
                     <button type="button" onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-dark)' }}>&times;</button>
                 </div>
 
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
                     <input
                         type="text"
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
                         placeholder="جستجوی شهر، خیابان (مثلا: Isfahan)"
-                        style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)' }}
+                        style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)', marginBottom: '' }}
                         onKeyDown={e => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
@@ -305,7 +305,7 @@ export default function MapModal({ isOpen, onClose, onConfirm }: MapModalProps) 
                 </div>
 
                 <div style={{
-                    padding: '12px', background: 'var(--background)', borderRadius: '8px',
+                    padding: '12px', marginBottom: '-25px', background: 'var(--background)', borderRadius: '8px',
                     border: '1px solid var(--border-color)', fontSize: '0.9rem', minHeight: '60px',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center'
                 }}>
