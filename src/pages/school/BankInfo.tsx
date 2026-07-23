@@ -103,11 +103,11 @@ export default function BankInfo() {
     const onSubmit = async (data: FormData) => {
         setLoading(true);
         try {
-            await api.post('/Finance/bank-account', {
+            await api.put('/users/bank-info', {
                 bankName: data.bankName,
                 cardNumber: data.cardNumber,
-                sheba: data.sheba,
-                branch: data.branch
+                shabaNumber: data.sheba,
+                accountOwner: data.accountName
             });
             alert('حساب بانکی با موفقیت اضافه شد!');
             setIsModalOpen(false);
@@ -207,7 +207,7 @@ export default function BankInfo() {
                                     شماره کارت بانکی (۱۶ رقم) <span className="text-danger">*</span>
                                     {user?.isBankVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
                                 </label>
-                                <input type="text" inputMode="numeric" style={{ direction: 'ltr', textAlign: 'left', ...(user?.isBankVerified ? { background: '#f1f5f9', color: '#64748b' } : {}) }} placeholder="xxxx-xxxx-xxxx-xxxx" {...register('cardNumber')} onInput={(e) => enforceNumericLength(e, 16)} className={errors.cardNumber ? 'error' : ''} readOnly={user?.isBankVerified} />
+                                <input type="text" inputMode="numeric" style={{ direction: 'ltr', textAlign: 'left' }} placeholder="xxxx-xxxx-xxxx-xxxx" {...register('cardNumber')} onInput={(e) => enforceNumericLength(e, 16)} className={errors.cardNumber ? 'error' : ''} />
                                 {errors.cardNumber && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.cardNumber.message)}</span>}
                             </div>
 
@@ -218,7 +218,7 @@ export default function BankInfo() {
                                 </label>
                                 <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                                     <span style={{ padding: '0 10px', background: '#e2e8f0', borderRadius: '0 8px 8px 0', border: '1px solid #cbd5e1', borderLeft: 'none', height: '42px', display: 'flex', alignItems: 'center', zIndex: 1, color: '#475569', fontWeight: 'bold' }}>IR</span>
-                                    <input type="text" style={{ direction: 'ltr', textAlign: 'left', borderRadius: '8px 0 0 8px', flex: 1, ...(user?.isBankVerified ? { background: '#f1f5f9', color: '#64748b' } : {}) }} placeholder="000000000000000000000000" {...register('sheba')} onInput={(e) => enforceNumericLength(e, 24)} className={errors.sheba ? 'error' : ''} readOnly={user?.isBankVerified} />
+                                    <input type="text" style={{ direction: 'ltr', textAlign: 'left', borderRadius: '8px 0 0 8px', flex: 1 }} placeholder="000000000000000000000000" {...register('sheba')} onInput={(e) => enforceNumericLength(e, 24)} className={errors.sheba ? 'error' : ''} />
                                 </div>
                                 {errors.sheba && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.sheba.message)}</span>}
                             </div>

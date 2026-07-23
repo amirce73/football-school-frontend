@@ -130,13 +130,22 @@ namespace Footballit.API.Migrations
                     b.Property<string>("BankName")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("BirthCertificateNo")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("BirthCertificatePath")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BirthDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("BloodGroup")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("CardNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CompetitionSeason")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
@@ -148,7 +157,28 @@ namespace Footballit.API.Migrations
                     b.Property<string>("CurrentTerm")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("DominantFoot")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Eitaa")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EmergencyPhone")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EnglishName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EnglishSurname")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Facebook")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FatherName")
@@ -161,10 +191,16 @@ namespace Footballit.API.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("HealthStatus")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("Height")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("HomeAddress")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Instagram")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LandlinePhone")
@@ -174,7 +210,16 @@ namespace Footballit.API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("LinkedIn")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("MainPosition")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MaritalStatus")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MilitaryServiceStatus")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MobileNumber")
@@ -191,13 +236,19 @@ namespace Footballit.API.Migrations
                     b.Property<string>("NationalTeamExperience")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Occupation")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ParentMobile")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("PassportExpiryDate")
+                    b.Property<string>("ParentsWorkAddress")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("PassportIssueDate")
+                    b.Property<string>("PassportExpiryDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PassportIssueDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PassportNumber")
@@ -209,12 +260,27 @@ namespace Footballit.API.Migrations
                     b.Property<string>("PersonalPhotoPath")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PlayingAbility")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Religion")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("RpeIndex")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Rubika")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Sect")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ShabaNumber")
                         .HasColumnType("TEXT");
@@ -231,8 +297,29 @@ namespace Footballit.API.Migrations
                     b.Property<int?>("SleepQuality")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("SlipperSize")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SportsInsuranceNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SportsSlogan")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SportsWarmerSize")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Telegram")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("Weight")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Whatsapp")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

@@ -40,7 +40,7 @@ export default function Documents() {
         formData.append('documentType', doc.type);
 
         try {
-            await api.post('/Profile/documents', formData, {
+            await api.post('/users/documents', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setDocs(prev => ({ ...prev, [key]: { ...prev[key], status: 'success' } }));

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\amirce73\\Desktop\\Final React Footballit\\Footballit.API\\Footballit.API.csproj": {}
+    "C:\\Users\\amirce73\\Desktop\\amirce73\\SchoolPlayer\\Footballit.API\\Footballit.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\amirce73\\Desktop\\Final React Footballit\\Footballit.API\\Footballit.API.csproj": {
+    "C:\\Users\\amirce73\\Desktop\\amirce73\\SchoolPlayer\\Footballit.API\\Footballit.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\amirce73\\Desktop\\Final React Footballit\\Footballit.API\\Footballit.API.csproj",
+        "projectUniqueName": "C:\\Users\\amirce73\\Desktop\\amirce73\\SchoolPlayer\\Footballit.API\\Footballit.API.csproj",
         "projectName": "Footballit.API",
-        "projectPath": "C:\\Users\\amirce73\\Desktop\\Final React Footballit\\Footballit.API\\Footballit.API.csproj",
+        "projectPath": "C:\\Users\\amirce73\\Desktop\\amirce73\\SchoolPlayer\\Footballit.API\\Footballit.API.csproj",
         "packagesPath": "C:\\Users\\amirce73\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\amirce73\\Desktop\\Final React Footballit\\Footballit.API\\obj\\",
+        "outputPath": "C:\\Users\\amirce73\\Desktop\\amirce73\\SchoolPlayer\\Footballit.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\amirce73\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

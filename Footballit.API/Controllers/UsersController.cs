@@ -48,9 +48,18 @@ namespace Footballit.API.Controllers
             public string? NationalCode { get; set; }
             public string? BirthDate { get; set; }
             public string? FatherName { get; set; }
+            public string? BirthCertificateNo { get; set; }
             public string? Gender { get; set; }
             public int? Height { get; set; }
             public int? Weight { get; set; }
+            public string? BloodGroup { get; set; }
+            public string? MaritalStatus { get; set; }
+            public string? MilitaryServiceStatus { get; set; }
+            public string? Religion { get; set; }
+            public string? Sect { get; set; }
+            public string? Occupation { get; set; }
+            public string? HealthStatus { get; set; }
+            public string? Description { get; set; }
         }
 
         [HttpPut("personal-info")]
@@ -63,11 +72,21 @@ namespace Footballit.API.Controllers
             user.LastName = req.LastName ?? user.LastName;
             user.NationalCode = req.NationalCode ?? user.NationalCode;
             user.BirthDate = req.BirthDate ?? user.BirthDate;
-            user.FatherName = req.FatherName;
-            user.Gender = req.Gender;
-            user.Height = req.Height;
-            user.Weight = req.Weight;
+            user.FatherName = req.FatherName ?? user.FatherName;
+            user.BirthCertificateNo = req.BirthCertificateNo ?? user.BirthCertificateNo;
+            user.Gender = req.Gender ?? user.Gender;
+            user.Height = req.Height ?? user.Height;
+            user.Weight = req.Weight ?? user.Weight;
+            user.BloodGroup = req.BloodGroup ?? user.BloodGroup;
+            user.MaritalStatus = req.MaritalStatus ?? user.MaritalStatus;
+            user.MilitaryServiceStatus = req.MilitaryServiceStatus ?? user.MilitaryServiceStatus;
+            user.Religion = req.Religion ?? user.Religion;
+            user.Sect = req.Sect ?? user.Sect;
+            user.Occupation = req.Occupation ?? user.Occupation;
+            user.HealthStatus = req.HealthStatus ?? user.HealthStatus;
+            user.Description = req.Description ?? user.Description;
 
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return Ok(user);
         }
@@ -98,6 +117,19 @@ namespace Footballit.API.Controllers
             public string? ParentMobile { get; set; }
             public string? LandlinePhone { get; set; }
             public string? HomeAddress { get; set; }
+            public string? PostalCode { get; set; }
+            public string? EmergencyPhone { get; set; }
+            public string? Email { get; set; }
+            public string? Telegram { get; set; }
+            public string? Instagram { get; set; }
+            public string? LinkedIn { get; set; }
+            public string? Facebook { get; set; }
+            public string? Website { get; set; }
+            public string? Eitaa { get; set; }
+            public string? Rubika { get; set; }
+            public string? Whatsapp { get; set; }
+            public string? Bale { get; set; }
+            public string? ParentsWorkAddress { get; set; }
         }
 
         [HttpPut("contact-info")]
@@ -106,19 +138,71 @@ namespace Footballit.API.Controllers
             var user = await GetCurrentUser();
             if (user == null) return Unauthorized();
 
-            user.ParentMobile = req.ParentMobile;
-            user.LandlinePhone = req.LandlinePhone;
-            user.HomeAddress = req.HomeAddress;
+            user.ParentMobile = req.ParentMobile ?? user.ParentMobile;
+            user.LandlinePhone = req.LandlinePhone ?? user.LandlinePhone;
+            user.HomeAddress = req.HomeAddress ?? user.HomeAddress;
+            user.PostalCode = req.PostalCode ?? user.PostalCode;
+            user.EmergencyPhone = req.EmergencyPhone ?? user.EmergencyPhone;
+            user.Email = req.Email ?? user.Email;
+            user.Telegram = req.Telegram ?? user.Telegram;
+            user.Instagram = req.Instagram ?? user.Instagram;
+            user.LinkedIn = req.LinkedIn ?? user.LinkedIn;
+            user.Facebook = req.Facebook ?? user.Facebook;
+            user.Website = req.Website ?? user.Website;
+            user.Eitaa = req.Eitaa ?? user.Eitaa;
+            user.Rubika = req.Rubika ?? user.Rubika;
+            user.Whatsapp = req.Whatsapp ?? user.Whatsapp;
+            user.Bale = req.Bale ?? user.Bale;
+            user.ParentsWorkAddress = req.ParentsWorkAddress ?? user.ParentsWorkAddress;
 
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return Ok(user);
+        }
+
+        public class ChangeMobileRequest
+        {
+            public string? NewMobile { get; set; }
+        }
+
+        [HttpPut("mobile")]
+        public async Task<IActionResult> UpdateMobile([FromBody] ChangeMobileRequest req)
+        {
+            if (string.IsNullOrEmpty(req.NewMobile) || !System.Text.RegularExpressions.Regex.IsMatch(req.NewMobile, @"^09[0-9]{9}$"))
+            {
+                return BadRequest("شماره موبایل نامعتبر است.");
+            }
+
+            var user = await GetCurrentUser();
+            if (user == null) return Unauthorized();
+
+            var existing = await _context.Users.FirstOrDefaultAsync(u => u.MobileNumber == req.NewMobile && u.Id != user.Id);
+            if (existing != null)
+            {
+                return BadRequest("این شماره موبایل قبلاً در سیستم ثبت شده است.");
+            }
+
+            user.MobileNumber = req.NewMobile;
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return Ok(user);
         }
 
         public class SportsInfoRequest
         {
+            public string? CompetitionSeason { get; set; }
             public string? MainPosition { get; set; }
+            public string? PlayingAbility { get; set; }
             public string? DominantFoot { get; set; }
             public string? NationalTeamExperience { get; set; }
+            public string? SportsInsuranceNumber { get; set; }
+            public string? ShirtSize { get; set; }
+            public string? ShortsSize { get; set; }
+            public int? ShoeSize { get; set; }
+            public string? SlipperSize { get; set; }
+            public string? SportsWarmerSize { get; set; }
+            public string? SportsSlogan { get; set; }
+            public string? Description { get; set; }
         }
 
         [HttpPut("sports-info")]
@@ -127,18 +211,32 @@ namespace Footballit.API.Controllers
             var user = await GetCurrentUser();
             if (user == null) return Unauthorized();
 
+            user.CompetitionSeason = req.CompetitionSeason;
             user.MainPosition = req.MainPosition;
+            user.PlayingAbility = req.PlayingAbility;
             user.DominantFoot = req.DominantFoot;
             user.NationalTeamExperience = req.NationalTeamExperience;
+            user.SportsInsuranceNumber = req.SportsInsuranceNumber;
+            user.ShirtSize = req.ShirtSize;
+            user.ShortsSize = req.ShortsSize;
+            user.ShoeSize = req.ShoeSize;
+            user.SlipperSize = req.SlipperSize;
+            user.SportsWarmerSize = req.SportsWarmerSize;
+            user.SportsSlogan = req.SportsSlogan;
+            user.Description = req.Description;
 
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return Ok(user);
         }
         public class PassportInfoRequest
         {
             public string? PassportNumber { get; set; }
-            public DateTime? PassportIssueDate { get; set; }
-            public DateTime? PassportExpiryDate { get; set; }
+            public string? PassportIssueDate { get; set; }
+            public string? PassportExpiryDate { get; set; }
+            public string? EnglishName { get; set; }
+            public string? EnglishSurname { get; set; }
+            public string? Description { get; set; }
         }
 
         [HttpPut("passport")]
@@ -150,6 +248,11 @@ namespace Footballit.API.Controllers
             user.PassportNumber = req.PassportNumber;
             user.PassportIssueDate = req.PassportIssueDate;
             user.PassportExpiryDate = req.PassportExpiryDate;
+            user.EnglishName = req.EnglishName;
+            user.EnglishSurname = req.EnglishSurname;
+            user.Description = req.Description; // Using the existing Description field for now, assuming shared
+            
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return Ok(user);
         }
@@ -255,8 +358,15 @@ namespace Footballit.API.Controllers
             return Ok(user);
         }
 
+        public class DocumentUploadRequest
+        {
+            public IFormFile? NationalCard { get; set; }
+            public IFormFile? BirthCertificate { get; set; }
+            public IFormFile? PersonalPhoto { get; set; }
+        }
+
         [HttpPost("documents")]
-        public async Task<IActionResult> UploadDocuments([FromForm] IFormFile? nationalCard, [FromForm] IFormFile? birthCertificate, [FromForm] IFormFile? personalPhoto)
+        public async Task<IActionResult> UploadDocuments([FromForm] DocumentUploadRequest req)
         {
             var user = await GetCurrentUser();
             if (user == null) return Unauthorized();
@@ -276,9 +386,9 @@ namespace Footballit.API.Controllers
                 return "/uploads/" + fileName;
             }
 
-            var nationalPath = await SaveFile(nationalCard);
-            var birthPath = await SaveFile(birthCertificate);
-            var photoPath = await SaveFile(personalPhoto);
+            var nationalPath = await SaveFile(req.NationalCard);
+            var birthPath = await SaveFile(req.BirthCertificate);
+            var photoPath = await SaveFile(req.PersonalPhoto);
 
             if (nationalPath != null) user.NationalCardPath = nationalPath;
             if (birthPath != null) user.BirthCertificatePath = birthPath;

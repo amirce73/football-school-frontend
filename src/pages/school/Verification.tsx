@@ -93,7 +93,7 @@ export default function Verification() {
 
             {step === 'initial' && (
                 <>
-                    <div style={{ "background": "var(--primary-light)", "color": "var(--primary)", "padding": "16px", "borderRadius": "var(--radius-md)", "marginBottom": "16px", "fontSize": "0.8rem", "fontWeight": "700", "lineHeight": "1.6" }}>
+                    <div style={{ "background": "var(--primary-light)", "color": "white", "padding": "16px", "borderRadius": "var(--radius-md)", "marginBottom": "16px", "fontSize": "0.8rem", "fontWeight": "700", "lineHeight": "1.6" }}>
                         <i className="fa fa-info-circle" style={{ "fontSize": "1.1rem", "marginBottom": "6px", "marginLeft": "3px" }}></i>
                         با پرداخت هزینه استعلام (۵,۰۰۰ تومان)، اطلاعات شما به صورت خودکار از سامانه ثبت احوال دریافت و در پروفایل شما ثبت می‌شود.
                     </div>

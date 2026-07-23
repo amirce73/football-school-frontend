@@ -46,7 +46,9 @@ img {
 /* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ CSS VARS Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 :root {
     --primary: #eab308;
-    --primary-light: #fef9c3;
+    --primary-light: color-mix(in srgb, var(--primary) 50%, white);
+    --primary-dark: color-mix(in srgb, var(--primary) 80%, black);
+    --font-color: black;
     --success: #10b981;
     --warning: #f59e0b;
     --danger: #ef4444;
@@ -992,7 +994,6 @@ img {
 
 .term-pill {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.1);
     font-size: 0.7rem;
     padding: 4px 10px;
     border-radius: var(--radius-xl);
@@ -1837,7 +1838,7 @@ img {
 
     .dnav-item.active {
         background: var(--primary-light);
-        color: var(--text-dark);
+        color: var(--font-color);
         border-right: 5px solid var(--primary);
     }
 
@@ -2356,16 +2357,15 @@ img {
 .club-phone-number-btn {
     font-size: 0.8rem;
     font-weight: 800;
-    color: #1e293b;
-    background: #facc15;
-    /* Yellow */
+    color: var(--font-color);
+    background: var(--primary-light);
     padding: 6px 16px;
     border-radius: var(--radius-sm);
     display: inline-flex;
     align-items: center;
     gap: 6px;
     text-decoration: none;
-    box-shadow: 0 4px 6px -1px rgba(250, 204, 21, 0.4);
+    box-shadow: none;
     transition: transform 0.2s, background 0.2s;
 }
 
@@ -2740,7 +2740,7 @@ img {
 }
 
 .modal-header-gradient {
-    background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+    background: linear-gradient(135deg, var(--primary));
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -2993,8 +2993,8 @@ img {
 }
 
 .term-pill {
-    background: var(--primary);
-    color: black;
+    background: var(--primary-light);
+    color: var(--font-color);
 }
 
 .action-label {
@@ -4259,5 +4259,74 @@ img {
 
     .dash-action-card h4 {
         font-size: 1.2rem !important;
+    }
+}
+
+@media (min-width: 768px) {
+    #view-passport-info .form-grid {
+        grid-template-columns: repeat(6, 1fr) !important;
+    }
+
+    #view-passport-info .form-grid>.input-group:nth-child(1),
+    #view-passport-info .form-grid>.input-group:nth-child(2),
+    #view-passport-info .form-grid>.input-group:nth-child(3) {
+        grid-column: span 2 !important;
+    }
+
+    #view-passport-info .form-grid>.input-group:nth-child(4),
+    #view-passport-info .form-grid>.input-group:nth-child(5) {
+        grid-column: span 3 !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .password-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* ===== Social Network Add Form - Responsive ===== */
+.social-add-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    direction: rtl;
+}
+
+.social-fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.social-buttons-row {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+    .social-add-controls {
+        flex-direction: row;
+        align-items: flex-end;
+    }
+
+    .social-fields-row {
+        display: contents;
+    }
+
+    .social-network-field {
+        width: 138px;
+        flex-shrink: 0;
+    }
+
+    .social-url-field {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .social-buttons-row {
+        flex-shrink: 0;
+        justify-content: flex-start;
     }
 }

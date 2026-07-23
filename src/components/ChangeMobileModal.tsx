@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from '../api';
 
 interface ChangeMobileModalProps {
     isOpen: boolean;
@@ -25,18 +26,30 @@ export default function ChangeMobileModal({ isOpen, currentMobile, onClose, onSu
         setStep('new_number');
     };
 
-    const handleChangeMobile = () => {
+    const handleChangeMobile = async () => {
         setError('');
         if (!/^09[0-9]{9}$/.test(newMobile)) {
-            setError('شماره موبایل جدید نامعتبر است');
+            setError('شماره موبایل جدید باید ۱۱ رقم باشد و با ۰۹ شروع شود.');
             return;
         }
+        if (newMobile === currentMobile) {
+            setError('شماره موبایل جدید نمی‌تواند با شماره فعلی یکسان باشد.');
+            return;
+        }
+
         setLoading(true);
-        // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
+        try {
+            await api.put('/users/mobile', { newMobile });
             onSuccess(newMobile);
-        }, 1500);
+        } catch (err: any) {
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError('خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.');
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
     const convertPersianToEnglishDigits = (str: string) => {

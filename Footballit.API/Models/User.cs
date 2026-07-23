@@ -16,19 +16,45 @@ namespace Footballit.API.Models
 
         // --- Personal Info ---
         public string? FatherName { get; set; }
+        public string? BirthCertificateNo { get; set; }
         public string? Gender { get; set; }
         public int? Height { get; set; }
         public int? Weight { get; set; }
+        public string? BloodGroup { get; set; }
+        public string? MaritalStatus { get; set; }
+        public string? MilitaryServiceStatus { get; set; }
+        public string? Religion { get; set; }
+        public string? Sect { get; set; }
+        public string? Occupation { get; set; }
+        public string? HealthStatus { get; set; }
+        public string? Description { get; set; }
 
         // --- Contact Info ---
+        public string? PostalCode { get; set; }
         public string? ParentMobile { get; set; }
         public string? LandlinePhone { get; set; }
         public string? HomeAddress { get; set; }
+        public string? EmergencyPhone { get; set; }
+        public string? Email { get; set; }
+        public string? Telegram { get; set; }
+        public string? Instagram { get; set; }
+        public string? LinkedIn { get; set; }
+        public string? Facebook { get; set; }
+        public string? Website { get; set; }
+        public string? Eitaa { get; set; }
+        public string? Rubika { get; set; }
+        public string? Whatsapp { get; set; }
+        public string? Bale { get; set; }
+        public string? ParentsWorkAddress { get; set; }
 
         // --- Sports Info ---
         public string? MainPosition { get; set; }
         public string? DominantFoot { get; set; }
         public string? NationalTeamExperience { get; set; } // بله/خیر
+        public string? SportsInsuranceNumber { get; set; }
+        public string? SportsSlogan { get; set; }
+        public string? PlayingAbility { get; set; }
+        public string? CompetitionSeason { get; set; }
 
         // --- Bank Info ---
         public string? BankName { get; set; }
@@ -37,13 +63,19 @@ namespace Footballit.API.Models
 
         // --- Passport Info ---
         public string? PassportNumber { get; set; }
-        public DateTime? PassportIssueDate { get; set; }
-        public DateTime? PassportExpiryDate { get; set; }
+        public string? PassportIssueDate { get; set; }
+        public string? PassportExpiryDate { get; set; }
+        public string? EnglishName { get; set; }
+
+
+        public string? EnglishSurname { get; set; }
 
         // --- Clothing Info ---
         public string? ShirtSize { get; set; }
         public string? ShortsSize { get; set; }
         public int? ShoeSize { get; set; }
+        public string? SlipperSize { get; set; }
+        public string? SportsWarmerSize { get; set; }
 
         // --- Insurance / RPE ---
         public int? RpeIndex { get; set; }

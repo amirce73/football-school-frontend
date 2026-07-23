@@ -59,9 +59,9 @@ export default function Dashboard() {
                                 </div>
                                 <div className="club-info" style={{ marginRight: '18px', marginLeft: 0 }}>
                                     <h3 style={{ margin: '0 0 8px 0', fontSize: '1.2rem', color: 'black' }}>باشگاه فوتبال</h3>
-                                    <div className="term-pill">ترم تابستان ۱۴۰۵</div>
+                                    <div className="term-pill">{user?.currentTerm || 'دوره انتخاب نشده'}</div>
                                     <div style={{ "fontSize": "0.75rem", "marginTop": "4px", "marginBottom": "12px", "opacity": 1, "color": "rgb(113 113 122 / var(--tw-text-opacity, 1))" }}>
-                                        کلاس آموزشی
+                                        {user?.currentClass?.replace('رده سنی ', '') || 'رده سنی نامشخص'}
                                     </div>
 
                                     <button className="beautiful-modal-btn" onClick={() => setIsModalOpen(true)}>
@@ -138,7 +138,7 @@ export default function Dashboard() {
                     <div className="stats-grid school-stats-grid">
                         <div className="stat-card school-stat-card">
                             <div className="stat-icon ic-blue"><AgeIcon width="24" height="24" /></div>
-                            <div className="stat-info"><span className="stat-label">رده سنی</span><span className="stat-val">بزرگسالان</span></div>
+                            <div className="stat-info"><span className="stat-label">رده سنی</span><span className="stat-val">{user?.currentClass?.replace('رده سنی ', '') || 'نامشخص'}</span></div>
                         </div>
                         <div className="stat-card school-stat-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/attendance')}>
                             <div className="stat-icon ic-green"><i className="fa fa-calendar-check-o"></i></div>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HHuFtdS3hEw=",
+  "dgSpecHash": "BsePE/o5alA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\amirce73\\Desktop\\Final React Footballit\\Footballit.API\\Footballit.API.csproj",
+  "projectFilePath": "C:\\Users\\amirce73\\Desktop\\amirce73\\SchoolPlayer\\Footballit.API\\Footballit.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amirce73\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\amirce73\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.9\\microsoft.aspnetcore.authentication.jwtbearer.10.0.9.nupkg.sha512",
@@ -56,9 +56,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q",
-      "projectPath": "C:\\Users\\amirce73\\Desktop\\Final React Footballit\\Footballit.API\\Footballit.API.csproj",
+      "projectPath": "C:\\Users\\amirce73\\Desktop\\amirce73\\SchoolPlayer\\Footballit.API\\Footballit.API.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\amirce73\\Desktop\\Final React Footballit\\Footballit.API\\Footballit.API.csproj",
+      "filePath": "C:\\Users\\amirce73\\Desktop\\amirce73\\SchoolPlayer\\Footballit.API\\Footballit.API.csproj",
       "libraryId": "SQLitePCLRaw.lib.e_sqlite3",
       "targetGraphs": [
         "net10.0"

@@ -84,7 +84,7 @@ export default function Topbar() {
                                 </strong>
                             </div>
                             <div style={{ "display": "flex", "justifyContent": "space-between", "fontSize": "0.8rem", "color": "var(--text-muted)" }}>
-                                <span>رده سنی:</span> <strong>{user?.currentClass || "- - - - - - -"}</strong></div>
+                                <span>رده سنی:</span> <strong>{user?.currentClass?.replace('رده سنی ', '') || "- - - - - - -"}</strong></div>
                         </div>
 
                         <a href="#" style={{ "color": "#334155" }} onClick={() => navigate('/verification')}><i className="fa fa-shield"></i>

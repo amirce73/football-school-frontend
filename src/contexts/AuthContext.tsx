@@ -31,6 +31,10 @@ export interface User {
     linkedIn?: string;
     facebook?: string;
     website?: string;
+    eitaa?: string;
+    rubika?: string;
+    whatsapp?: string;
+    bale?: string;
     parentsWorkAddress?: string;
   };
   passport?: {
@@ -106,7 +110,67 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     try {
       const res = await api.get('/users/me');
-      setUser(res.data);
+      const flatUser = res.data;
+      
+      const formattedUser: User = {
+        ...flatUser,
+        nationalId: flatUser.nationalCode,
+        contact: {
+          mobile: flatUser.mobileNumber,
+          guardianMobile: flatUser.parentMobile,
+          tel: flatUser.landlinePhone,
+          postalCode: flatUser.postalCode,
+          address: flatUser.homeAddress,
+          emergencyPhone: flatUser.emergencyPhone,
+          email: flatUser.email,
+          telegram: flatUser.telegram,
+          instagram: flatUser.instagram,
+          linkedIn: flatUser.linkedIn,
+          facebook: flatUser.facebook,
+          website: flatUser.website,
+          eitaa: flatUser.eitaa,
+          rubika: flatUser.rubika,
+          whatsapp: flatUser.whatsapp,
+          bale: flatUser.bale,
+          parentsWorkAddress: flatUser.parentsWorkAddress,
+        },
+        sports: {
+          mainPosition: flatUser.mainPosition,
+          preferredFoot: flatUser.dominantFoot,
+          hasNationalTeam: flatUser.nationalTeamExperience === 'بله' || flatUser.nationalTeamExperience === 'true',
+          shirtSize: flatUser.shirtSize,
+          shortsSize: flatUser.shortsSize,
+          footballShoeSize: flatUser.shoeSize ? String(flatUser.shoeSize) : '',
+          competitionSeason: flatUser.competitionSeason,
+          playingAbility: flatUser.playingAbility,
+          sportsInsuranceNumber: flatUser.sportsInsuranceNumber,
+          slipperSize: flatUser.slipperSize,
+          sportsWarmerSize: flatUser.sportsWarmerSize,
+          sportsSlogan: flatUser.sportsSlogan,
+          description: flatUser.description,
+        },
+        passport: {
+          passportNumber: flatUser.passportNumber,
+          issueDate: flatUser.passportIssueDate,
+          expiryDate: flatUser.passportExpiryDate,
+          englishName: flatUser.englishName,
+          englishSurname: flatUser.englishSurname,
+          description: flatUser.description,
+        },
+        bankDetails: {
+          bankName: flatUser.bankName,
+          cardNumber: flatUser.cardNumber,
+          sheba: flatUser.shabaNumber
+        },
+        club: {
+           // Mapping club if any
+        },
+        isIdentityVerified: !!flatUser.nationalCode && !!flatUser.firstName && !!flatUser.lastName,
+        isBankVerified: !!flatUser.cardNumber && !!flatUser.shabaNumber,
+        isPostalVerified: !!flatUser.homeAddress
+      };
+
+      setUser(formattedUser);
     } catch (err) {
       console.error(err);
       setUser(null);
@@ -127,6 +191,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('panelType');
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('form-draft-')) {
+        localStorage.removeItem(key);
+      }
+    });
     setUser(null);
     setPanelTypeState(null);
   };

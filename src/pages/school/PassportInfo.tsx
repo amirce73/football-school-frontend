@@ -88,7 +88,12 @@ export default function PassportInfo() {
     const onSubmit = async (data: FormData) => {
         setLoading(true);
         try {
-            await api.post('/Profile/passport-info', data);
+            const payload = {
+                ...data,
+                passportIssueDate: data.issueDate,
+                passportExpiryDate: data.expiryDate
+            };
+            await api.put('/users/passport', payload);
             clearDraft();
             await refreshUser();
             alert('اطلاعات گذرنامه با موفقیت ذخیره شد!');

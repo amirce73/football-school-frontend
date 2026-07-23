@@ -32,7 +32,7 @@ const schema = yup.object().shape({
             const englishValue = value.replace(/[۰-۹]/g, (w: string) => persianDigits.indexOf(w).toString());
             return englishValue <= todayStr;
         }),
-    birthCertificateNo: yup.string().matches(/^[0-9]{1,10}$/, 'شماره شناسنامه حداکثر ۱۰ رقم و فقط عدد است').nullable(),
+    birthCertificateNo: yup.string().matches(/^([0-9]{1,10})?$/, 'شماره شناسنامه حداکثر ۱۰ رقم و فقط عدد است').nullable(),
     fatherName: yup.string().matches(/^[آ-یژپچگ\s]*$/, 'فقط حروف فارسی مجاز است').nullable(),
     gender: yup.string().required('جنسیت الزامی است'),
     height: yup.string().matches(/^[0-9]*$/, 'فقط عدد مجاز است').nullable(),
@@ -53,10 +53,7 @@ export default function PersonalInfo() {
     const navigate = useNavigate();
     const methods = useForm<any>({
         resolver: yupResolver(schema),
-        mode: 'onChange',
-        defaultValues: {
-            gender: 'مرد'
-        }
+        mode: 'onChange'
     });
     const { user, refreshUser } = useAuth();
     const [loading, setLoading] = React.useState(false);
@@ -73,7 +70,7 @@ export default function PersonalInfo() {
                 nationalId: user.nationalId || '',
                 birthDate: user.birthDate || '',
                 fatherName: user.fatherName || '',
-                gender: user.gender || 'مرد',
+                gender: user.gender || '',
                 height: user.height || null,
                 weight: user.weight || null,
                 birthCertificateNo: user.birthCertificateNo || '',
@@ -114,7 +111,11 @@ export default function PersonalInfo() {
     const onSubmit = async (data: FormData) => {
         setLoading(true);
         try {
-            await api.post('/Profile/personal-info', data);
+            const payload = {
+                ...data,
+                nationalCode: data.nationalId
+            };
+            await api.put('/users/personal-info', payload);
             clearDraft();
             await refreshUser();
             alert('اطلاعات با موفقیت ذخیره شد!');
@@ -141,7 +142,7 @@ export default function PersonalInfo() {
                             نام <span className="text-danger">*</span>
                             {user?.isIdentityVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
                         </label>
-                        <input type="text" maxLength={50} {...register('firstName')} onInput={enforcePersian} className={errors.firstName ? 'error' : ''} readOnly={user?.isIdentityVerified} style={user?.isIdentityVerified ? { background: '#f1f5f9', color: '#64748b' } : {}} />
+                        <input type="text" maxLength={50} {...register('firstName')} onInput={enforcePersian} className={errors.firstName ? 'error' : ''} />
                         {errors.firstName && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.firstName.message)}</span>}
                     </div>
 
@@ -150,7 +151,7 @@ export default function PersonalInfo() {
                             نام خانوادگی <span className="text-danger">*</span>
                             {user?.isIdentityVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
                         </label>
-                        <input type="text" maxLength={50} {...register('lastName')} onInput={enforcePersian} className={errors.lastName ? 'error' : ''} readOnly={user?.isIdentityVerified} style={user?.isIdentityVerified ? { background: '#f1f5f9', color: '#64748b' } : {}} />
+                        <input type="text" maxLength={50} {...register('lastName')} onInput={enforcePersian} className={errors.lastName ? 'error' : ''} />
                         {errors.lastName && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.lastName.message)}</span>}
                     </div>
 
@@ -159,7 +160,7 @@ export default function PersonalInfo() {
                             کد ملی (۱۰ رقم) <span className="text-danger">*</span>
                             {user?.isIdentityVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
                         </label>
-                        <input type="text" maxLength={10} inputMode="numeric" {...register('nationalId')} onInput={(e) => enforceNumericLength(e, 10)} className={errors.nationalId ? 'error' : ''} readOnly={user?.isIdentityVerified} style={user?.isIdentityVerified ? { background: '#f1f5f9', color: '#64748b' } : {}} />
+                        <input type="text" maxLength={10} inputMode="numeric" {...register('nationalId')} onInput={(e) => enforceNumericLength(e, 10)} className={errors.nationalId ? 'error' : ''} />
                         {errors.nationalId && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.nationalId.message)}</span>}
                     </div>
 
@@ -175,22 +176,20 @@ export default function PersonalInfo() {
                                 <>
                                     <div
                                         className={`date-picker-input ${errors.birthDate ? 'error' : ''}`}
-                                        style={{ width: '100%', padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', background: user?.isIdentityVerified ? '#f1f5f9' : '#fff', color: user?.isIdentityVerified ? '#64748b' : 'inherit', cursor: user?.isIdentityVerified ? 'default' : 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center' }}
-                                        onClick={() => !user?.isIdentityVerified && setIsDatePickerOpen(true)}
+                                        style={{ width: '100%', padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', background: '#fff', color: 'inherit', cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center' }}
+                                        onClick={() => setIsDatePickerOpen(true)}
                                     >
                                         {field.value || <span style={{ color: '#94a3b8' }}>انتخاب تاریخ</span>}
                                     </div>
-                                    {!user?.isIdentityVerified && (
-                                        <CustomScrollDatePicker
-                                            isOpen={isDatePickerOpen}
-                                            onClose={() => setIsDatePickerOpen(false)}
-                                            onConfirm={(dateString) => {
-                                                field.onChange(dateString);
-                                                setIsDatePickerOpen(false);
-                                            }}
-                                            initialDate={field.value}
-                                        />
-                                    )}
+                                    <CustomScrollDatePicker
+                                        isOpen={isDatePickerOpen}
+                                        onClose={() => setIsDatePickerOpen(false)}
+                                        onConfirm={(dateString) => {
+                                            field.onChange(dateString);
+                                            setIsDatePickerOpen(false);
+                                        }}
+                                        initialDate={field.value}
+                                    />
                                 </>
                             )}
                         />
@@ -200,27 +199,35 @@ export default function PersonalInfo() {
                     <div className="input-group">
                         <label className={errors.birthCertificateNo ? 'error-label' : ''}>
                             شماره شناسنامه
-                            {user?.isIdentityVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
                         </label>
-                        <input type="text" maxLength={10} inputMode="numeric" {...register('birthCertificateNo')} onInput={(e) => enforceNumericLength(e, 10)} className={errors.birthCertificateNo ? 'error' : ''} readOnly={user?.isIdentityVerified} style={user?.isIdentityVerified ? { background: '#f1f5f9', color: '#64748b' } : {}} />
+                        <input type="text" maxLength={10} inputMode="numeric" {...register('birthCertificateNo')} onInput={(e) => enforceNumericLength(e, 10)} className={errors.birthCertificateNo ? 'error' : ''} />
                         {errors.birthCertificateNo && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.birthCertificateNo.message)}</span>}
                     </div>
 
                     <div className="input-group">
                         <label className={errors.fatherName ? 'error-label' : ''}>
                             نام پدر
-                            {user?.isIdentityVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
                         </label>
-                        <input type="text" maxLength={50} {...register('fatherName')} onInput={enforcePersian} className={errors.fatherName ? 'error' : ''} readOnly={user?.isIdentityVerified} style={user?.isIdentityVerified ? { background: '#f1f5f9', color: '#64748b' } : {}} />
+                        <input type="text" maxLength={50} {...register('fatherName')} onInput={enforcePersian} className={errors.fatherName ? 'error' : ''} />
                         {errors.fatherName && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.fatherName.message)}</span>}
                     </div>
 
                     <div className="input-group">
-                        <label className={errors.gender ? 'error-label' : ''}>جنسیت <span className="text-danger">*</span></label>
-                        <CustomSelect {...register('gender')} className={errors.gender ? 'error' : ''}>
-                            <option value="مرد">مرد</option>
-                            <option value="زن">زن</option>
-                        </CustomSelect>
+                        <label className={errors.gender ? 'error-label' : ''}>
+                            جنسیت <span className="text-danger">*</span>
+                            {user?.isIdentityVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
+                        </label>
+                        <Controller
+                            control={control}
+                            name="gender"
+                            render={({ field }) => (
+                                <CustomSelect {...field} className={errors.gender ? 'error' : ''}>
+                                    <option value="">انتخاب کنید...</option>
+                                    <option value="مرد">مرد</option>
+                                    <option value="زن">زن</option>
+                                </CustomSelect>
+                            )}
+                        />
                         {errors.gender && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.gender.message)}</span>}
                     </div>
 
@@ -238,59 +245,92 @@ export default function PersonalInfo() {
 
                     <div className="input-group">
                         <label>گروه خونی</label>
-                        <CustomSelect {...register('bloodGroup')}>
-                            <option value="">انتخاب کنید...</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                        </CustomSelect>
+                        <Controller
+                            control={control}
+                            name="bloodGroup"
+                            render={({ field }) => (
+                                <CustomSelect {...field}>
+                                    <option value="">انتخاب کنید...</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </CustomSelect>
+                            )}
+                        />
                     </div>
 
                     <div className="input-group">
                         <label>وضعیت تاهل</label>
-                        <CustomSelect {...register('maritalStatus')}>
-                            <option value="">انتخاب کنید...</option>
-                            <option value="مجرد">مجرد</option>
-                            <option value="متاهل">متاهل</option>
-                        </CustomSelect>
+                        <Controller
+                            control={control}
+                            name="maritalStatus"
+                            render={({ field }) => (
+                                <CustomSelect {...field}>
+                                    <option value="">انتخاب کنید...</option>
+                                    <option value="مجرد">مجرد</option>
+                                    <option value="متاهل">متاهل</option>
+                                </CustomSelect>
+                            )}
+                        />
                     </div>
 
                     <div className="input-group">
                         <label>وضعیت نظام وظیفه</label>
-                        <CustomSelect {...register('militaryServiceStatus')}>
-                            <option value="">انتخاب کنید...</option>
-                            <option value="مشمول">مشمول</option>
-                            <option value="معافیت تحصیلی">معافیت تحصیلی</option>
-                            <option value="معافیت دائم">معافیت دائم</option>
-                            <option value="پایان خدمت">پایان خدمت</option>
-                        </CustomSelect>
+                        <Controller
+                            control={control}
+                            name="militaryServiceStatus"
+                            render={({ field }) => (
+                                <CustomSelect {...field}>
+                                    <option value="">انتخاب کنید...</option>
+                                    <option value="مشمول">مشمول</option>
+                                    <option value="معافیت تحصیلی">معافیت تحصیلی</option>
+                                    <option value="معافیت دائم">معافیت دائم</option>
+                                    <option value="پایان خدمت">پایان خدمت</option>
+                                </CustomSelect>
+                            )}
+                        />
                     </div>
 
                     <div className="input-group">
-                        <label className={errors.religion ? 'error-label' : ''}>دین <span className="text-danger">*</span></label>
-                        <CustomSelect {...register('religion')} className={errors.religion ? 'error' : ''}>
-                            <option value="">انتخاب کنید...</option>
-                            <option value="اسلام">اسلام</option>
-                            <option value="مسیحیت">مسیحیت</option>
-                            <option value="یهودیت">یهودیت</option>
-                            <option value="زرتشتی">زرتشتی</option>
-                            <option value="سایر">سایر</option>
-                        </CustomSelect>
+                        <label className={errors.religion ? 'error-label' : ''}>
+                            دین <span className="text-danger">*</span>
+                            {user?.isIdentityVerified && <i className="fa fa-check-circle text-success" style={{ marginRight: '4px' }}></i>}
+                        </label>
+                        <Controller
+                            control={control}
+                            name="religion"
+                            render={({ field }) => (
+                                <CustomSelect {...field} className={errors.religion ? 'error' : ''}>
+                                    <option value="">انتخاب کنید...</option>
+                                    <option value="اسلام">اسلام</option>
+                                    <option value="مسیحیت">مسیحیت</option>
+                                    <option value="یهودیت">یهودیت</option>
+                                    <option value="زرتشتی">زرتشتی</option>
+                                    <option value="سایر">سایر</option>
+                                </CustomSelect>
+                            )}
+                        />
                         {errors.religion && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.religion.message)}</span>}
                     </div>
 
                     <div className="input-group">
                         <label className={errors.sect ? 'error-label' : ''}>مذهب</label>
-                        <CustomSelect {...register('sect')} className={errors.sect ? 'error' : ''}>
-                            <option value="">انتخاب کنید...</option>
-                            <option value="شیعه">شیعه</option>
-                            <option value="سنی">سنی</option>
-                        </CustomSelect>
+                        <Controller
+                            control={control}
+                            name="sect"
+                            render={({ field }) => (
+                                <CustomSelect {...field} className={errors.sect ? 'error' : ''}>
+                                    <option value="">انتخاب کنید...</option>
+                                    <option value="شیعه">شیعه</option>
+                                    <option value="سنی">سنی</option>
+                                </CustomSelect>
+                            )}
+                        />
                         {errors.sect && <span className="error-text"><i className="fa fa-exclamation-triangle"></i> {String(errors.sect.message)}</span>}
                     </div>
 

@@ -71,6 +71,19 @@ export default function StickySubmitButton({
         };
     }, []);
 
+    const hiddenSubmitRef = React.useRef<HTMLButtonElement>(null);
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (onClick) {
+            onClick();
+            return;
+        }
+        if (type === 'submit' && hiddenSubmitRef.current) {
+            e.preventDefault();
+            hiddenSubmitRef.current.click();
+        }
+    };
+
     // 1. DESKTOP RENDER: Portal the button into the top bar
     if (isDesktop && topBarElement) {
         const desktopButton = (
@@ -78,7 +91,7 @@ export default function StickySubmitButton({
                 type={type}
                 className="btn-top-action btn-submit-top"
                 disabled={loading}
-                onClick={onClick}
+                onClick={handleClick}
             >
                 <i className="fa fa-check" style={{ marginLeft: '8px' }}></i>
                 {loading ? loadingText : text}
@@ -86,6 +99,7 @@ export default function StickySubmitButton({
         );
         return (
             <div ref={wrapperRef} className="desktop-anchor" style={{ display: 'none' }}>
+                <button type="submit" ref={hiddenSubmitRef} style={{ display: 'none' }} />
                 {createPortal(desktopButton, topBarElement)}
             </div>
         );
@@ -101,7 +115,7 @@ export default function StickySubmitButton({
                 type={type}
                 className="sticky-submit-btn btn-app-primary"
                 disabled={loading}
-                onClick={onClick}
+                onClick={handleClick}
             >
                 <i className="fa fa-check" style={{ marginLeft: '8px' }}></i>
                 {loading ? loadingText : text}
@@ -113,6 +127,7 @@ export default function StickySubmitButton({
         <div ref={wrapperRef} className="mobile-anchor">
             {/* Spacer so the last form field isn't hidden behind the fixed button */}
             <div style={{ height: '80px', flexShrink: 0 }} className="mobile-only-spacer" />
+            <button type="submit" ref={hiddenSubmitRef} style={{ display: 'none' }} />
             {createPortal(mobileButton, document.body)}
         </div>
     );
