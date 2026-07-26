@@ -7,6 +7,11 @@ import StickySubmitButton from '../../components/StickySubmitButton';
 import { isValidIranianNationalId } from '../../utils/validations';
 import CustomScrollDatePicker from '../../components/CustomScrollDatePicker';
 import { useAuth } from '../../contexts/AuthContext';
+import DateObjectModule from "react-date-object";
+import persianModule from "react-date-object/calendars/persian";
+
+const DateObject = (DateObjectModule as any).default || DateObjectModule;
+const persian = (persianModule as any).default || persianModule;
 
 const schema = yup.object().shape({
     nationalId: yup.string().length(10, 'کد ملی باید دقیقاً ۱۰ رقم باشد')
@@ -14,6 +19,14 @@ const schema = yup.object().shape({
         .test('isValidNationalId', 'کد ملی وارد شده معتبر نیست', (value) => isValidIranianNationalId(value || ''))
         .required('کد ملی الزامی است'),
     birthDate: yup.string().required('تاریخ تولد الزامی است')
+        .test('not-future', 'تاریخ تولد نمی‌تواند در آینده باشد', function (value) {
+            if (!value) return true;
+            const today = new DateObject({ calendar: persian });
+            const todayStr = `${today.year}/${today.month.number.toString().padStart(2, '0')}/${today.day.toString().padStart(2, '0')}`;
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            const englishValue = value.replace(/[۰-۹]/g, (w: string) => persianDigits.indexOf(w).toString());
+            return englishValue <= todayStr;
+        })
 });
 
 type FormData = yup.InferType<typeof schema>;

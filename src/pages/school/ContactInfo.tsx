@@ -69,6 +69,7 @@ const SOCIAL_VALIDATIONS: Record<string, (val: string) => string | null> = {
     telegram: (val) => {
         const idPart = val.replace(/^(https?:\/\/)?(t\.me\/)/, '').replace(/^@/, '');
         if (/^[0-9]+$/.test(idPart)) return 'شناسه تلگرام نمی‌تواند فقط شامل عدد باشد';
+        if (/^[0-9]/.test(idPart)) return 'شناسه تلگرام باید با حرف شروع شود';
         return /^(https?:\/\/)?(t\.me\/[A-Za-z0-9_]{5,}|@[A-Za-z0-9_]{5,})$/.test(val) ? null : 'شناسه صحیح تلگرام وارد کنید (حداقل ۵ حرف)';
     },
     instagram: (val) => {

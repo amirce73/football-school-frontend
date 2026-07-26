@@ -127,6 +127,9 @@ namespace Footballit.API.Migrations
                     b.Property<string>("BackpackTrainingType")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Bale")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("BankName")
                         .HasColumnType("TEXT");
 

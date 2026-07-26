@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Footballit.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef058780dd699be03aaec3f56100572dd46b759f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9f80e7e86d7492f58038acc41d89567a11c7279")]
 [assembly: System.Reflection.AssemblyProductAttribute("Footballit.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Footballit.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

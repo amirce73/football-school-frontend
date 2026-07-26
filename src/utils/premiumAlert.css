@@ -1,0 +1,167 @@
+/* --- Premium Alert Modal --- */
+.fi-alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fi-alert-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fi-alert-modal {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 380px;
+    padding: 32px 24px 24px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    direction: rtl;
+}
+
+.fi-alert-overlay.show .fi-alert-modal {
+    transform: translateY(0) scale(1);
+}
+
+.fi-alert-icon-wrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -60px auto 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.fi-alert-icon-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.3;
+    z-index: -1;
+    animation: pulseIcon 2s infinite;
+}
+
+.fi-alert-icon {
+    font-size: 36px;
+    line-height: 1;
+}
+
+.fi-alert-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 12px;
+    font-family: inherit;
+}
+
+.fi-alert-msg {
+    font-size: 15px;
+    color: #475569;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.fi-alert-btn {
+    background: var(--primary);
+    color: #000;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.fi-alert-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.fi-alert-btn:active {
+    transform: translateY(0);
+}
+
+.fi-alert-success .fi-alert-icon-wrapper {
+    color: #10b981;
+    background: #d1fae5;
+}
+
+.fi-alert-success .fi-alert-btn {
+    background: #10b981;
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.fi-alert-error .fi-alert-icon-wrapper {
+    color: #ef4444;
+    background: #fee2e2;
+}
+
+.fi-alert-error .fi-alert-btn {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.fi-alert-warning .fi-alert-icon-wrapper {
+    color: #f59e0b;
+    background: #fef3c7;
+}
+
+.fi-alert-warning .fi-alert-btn {
+    background: #f59e0b;
+    color: white;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.fi-alert-info .fi-alert-icon-wrapper {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 20%, white);
+}
+
+@keyframes pulseIcon {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
